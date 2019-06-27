@@ -1,4 +1,4 @@
-> 写写代码，做做设计，  
+<!-- > 写写代码，做做设计，  
 > 离开世界之前，一切都是过程。
 
 Hey，我是黄玄，病毒种，进化程度不明，多出没于[博客](https://huangxuan.me)、[微博](weibo.com/huxpro)、[知乎](https://www.zhihu.com/people/huxpro/pins/posts)、[Twitter](https://twitter.com/Huxpro/)、[Github](http://github.com/huxpro)、[Medium](https://medium.com/@Huxpro) 等地带，绝招尚在开发中。
@@ -38,4 +38,4 @@ Hey，我是黄玄，病毒种，进化程度不明，多出没于[博客](https
 [6]: https://yanshuo.io/assets/player/?deck=58ac8598b123db0067292f92 "PWA Rehashing"
 [7]: https://yanshuo.io/assets/player/?deck=593ad6fbfe88c2006a0a0d6d "The State of PWA"
 [8]: https://yanshuo.io/assets/player/?deck=594d673d570c357d0698a950 "Building PWA"
-[9]: //huangxuan.me/jsconfcn2017/
+[9]: //huangxuan.me/jsconfcn2017/ -->
