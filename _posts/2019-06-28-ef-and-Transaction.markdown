@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Entity Framework和事务"
-subtitle: 'Entitty Frameword and Transaction'
+subtitle: 'Entitty Framework and Transaction'
 author: "Chi"
 date: 2019-06-28 09:00
 header-style: text
