@@ -68,6 +68,6 @@ using (var context = new BloggingContext())
 ## 参考
 
 > [数据库事务-维基百科](https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1)
-
+---
 > [事务-EF Core | Microsoft Docs](https://docs.microsoft.com/zh-cn/ef/core/saving/transactions)
 
