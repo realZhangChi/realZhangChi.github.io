@@ -9,6 +9,7 @@ catalog: true
 tags:
   - NLog
   - Getting Started
+  - 入门
 ---
 
 ## NLog简介
@@ -105,3 +106,8 @@ NLog支持一下几种log levels：
 - `Fatal` - 非常严重的错误！
 
 在写日志的时候日志系统不依赖于特定的输出目标(如文件、数据库等）。日志可以根据日志记录规则配置(logging-rules configuration)来写到多个不同的输出目标中。这种分离设计是我们可以保持在代码中来写记录日志的语句，并且很容易更改日志的记录方式和输出目标——只需要在一个位置更改日志配置就可以了。
+
+## 参考
+
+> [NLog](https://nlog-project.org/)
+> [Tutorial·NLog](https://github.com/nlog/nlog/wiki/Tutorial)
