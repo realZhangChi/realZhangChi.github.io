@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Entity Framework和事务"
-subtitle: 'Hello World, Hello My New Life!'
 author: "Chi"
 date: 2019-06-28 09:00
 header-style: text
