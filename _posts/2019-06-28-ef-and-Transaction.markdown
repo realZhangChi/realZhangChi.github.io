@@ -1,13 +1,17 @@
 ---
 layout: post
 title: "Entity Framework和事务"
+subtitle: 'Entitty Frameword and Transaction'
 author: "Chi"
 date: 2019-06-28 09:00
 header-style: text
 catalog: true
 tags:
   - EF
+  - Entity Framework
   - 数据库
+  - 事务
+  - Transaction
 ---
 
 ## 数据库事务
