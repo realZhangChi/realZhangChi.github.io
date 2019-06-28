@@ -39,7 +39,7 @@ tags:
 ``` C#
 using (var context = new BloggingContext())
 {
-    ==using (var transaction = context.Database.BeginTransaction())==
+    using (var transaction = context.Database.BeginTransaction())
     {
         try
         {
@@ -53,9 +53,9 @@ using (var context = new BloggingContext())
                 .OrderBy(b => b.Url)
                 .ToList();
 
-            ==// Commit transaction if all commands succeed, transaction will auto-rollback==
-            ==// when disposed if either commands fails==
-            ==transaction.Commit();==
+            // Commit transaction if all commands succeed, transaction will auto-rollback
+            // when disposed if either commands fails
+            transaction.Commit();
         }
         catch (Exception)
         {
