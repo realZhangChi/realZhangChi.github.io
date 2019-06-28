@@ -13,7 +13,7 @@ tags:
 
 ## 数据库事务
 
-数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。
+数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。事务允许以原子方式处理多个数据库操作。 如果已提交事务，则所有操作都会成功应用到数据库。 如果已回滚事务，则所有操作都不会应用到数据库。
 
 数据库事务通常包含了一个序列的对数据库的读/写操作。包含有以下两个目的：
 
@@ -29,7 +29,41 @@ tags:
 - 隔离性（Isolation）：多个事务并发执行时，一个事务的执行不应影响其他事务的执行。
 - 持久性（Durability）：已被提交的事务对数据库的修改应该永久保存在数据库中。
 
-## EF
+## 在EF中使用事务
+
+默认情况下，如果数据库提供程序支持事务，则会在事务中应用对`SaveChanges()`的单一调用中的所有更改。 如果其中有任何更改失败，则会回滚事务且所有更改都不会应用到数据库。 这意味着，`SaveChanges()` 可保证完全成功，或在出现错误时不修改数据库。
+
+对于大多数应用程序，默认行为已足够。 如果应用程序要求被视为有必要，则应该仅手动控制事务。
+可以使用 DbContext.Database API 开始、提交和回滚事务。
+
+``` C#
+using (var context = new BloggingContext())
+{
+    ==using (var transaction = context.Database.BeginTransaction())==
+    {
+        try
+        {
+            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
+            context.SaveChanges();
+
+            context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
+            context.SaveChanges();
+
+            var blogs = context.Blogs
+                .OrderBy(b => b.Url)
+                .ToList();
+
+            ==// Commit transaction if all commands succeed, transaction will auto-rollback==
+            ==// when disposed if either commands fails==
+            ==transaction.Commit();==
+        }
+        catch (Exception)
+        {
+            // TODO: Handle failure
+        }
+    }
+}
+```
 
 ## 参考
 
