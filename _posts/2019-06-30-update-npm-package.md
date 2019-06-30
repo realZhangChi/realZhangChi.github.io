@@ -19,7 +19,7 @@ tags:
 
 安装完成之后，就可以在项目中检查并更新依赖包了
 
-### 一 `npm-check-updates`可以使用所有依赖项的最新版本自动调整package.json
+**1.`npm-check-updates`可以使用所有依赖项的最新版本自动调整package.json**
 
 ``` shell
 npm install -g npm-check-updates
@@ -27,7 +27,7 @@ npm install -g npm-check-updates
 
 `npm-check-updates`只会更改我们的package.json文件。
 
-### 二、使用`ncu`查看当前目录下项目中存在的依赖项有哪些更新(这一步骤可以跳过，直接执行第三步即可。)
+**2.使用`ncu`查看当前目录下项目中存在的依赖项有哪些更新(这一步骤可以跳过，直接执行第三步即可。)**
 
 ``` shell
 $ ncu
@@ -42,7 +42,9 @@ $ ncu
 Run ncu -u to upgrade package.json
 ```
 
-### 三、使用`ncu -u`更新项目的package.json文件
+**3.使用`ncu -u`更新项目的package.json文件**
+
+> 在执行这个命令前需要确保我们的package.json使用了npm版本控制，并且所有的更改都已经提交，因为这一步操作将会重写我们的package.json
 
 ``` shell
 $ ncu -u
@@ -52,7 +54,7 @@ Upgrading package.json
  express           4.12.x  →   4.13.x
 ```
 
-### 四、运行`npm install`来安装新版本的包
+**4.运行`npm install`来安装新版本的包**
 
 在第一步的时候我们提到过，`npm-check-updates`只会更改我们的package.json文件，那么运行`npm install`则会进一步更新我们package-lock.json文件中记录的依赖项包版本。
 
