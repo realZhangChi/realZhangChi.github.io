@@ -44,7 +44,8 @@ Run ncu -u to upgrade package.json
 
 **3.使用`ncu -u`更新项目的package.json文件**
 
-> 在执行这个命令前需要确保我们的package.json使用了npm版本控制，并且所有的更改都已经提交，因为这一步操作将会重写我们的package.json
+> **在执行这个命令前需要确保我们的package.json使用了npm版本控制，并且所有的更改都已经提交，因为这一步操作将会重写我们的package.json。
+Make sure your package file is in version control and all changes have been committed. This will overwrite your package file.**
 
 ``` shell
 $ ncu -u
