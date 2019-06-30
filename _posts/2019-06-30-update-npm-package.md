@@ -38,8 +38,6 @@ $ ncu
  react-bootstrap  ^0.22.6  →  ^0.24.0
  react-a11y        ^0.1.1  →   ^0.2.6
  webpack          ~1.9.10  →  ~1.10.5
-
-Run ncu -u to upgrade package.json
 ```
 
 **3.使用`ncu -u`更新项目的package.json文件**
