@@ -71,8 +71,8 @@ netease_comment: false
 ba_track_id: bc367c7c5133d004c1e19a53b382fbd8
 
 # Google Analytics
-# ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-# ga_domain: huangxuan.me
+ga_track_id: 'UA-143066720-1'            # Format: UA-xxxxxx-xx
+ga_domain: realzhangchi.github.io
 
 
 
