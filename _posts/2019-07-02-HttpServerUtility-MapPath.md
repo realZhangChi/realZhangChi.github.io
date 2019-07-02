@@ -10,7 +10,7 @@ tags:
   - Web
 ---
 
-今天在工作中遇到了上传文件的问题。对于上传文件，以前我利用过FTP服务来实现过，而这次的需求是将文件保存在项目中，也就是Web应用程序中。
+今天在工作中遇到了上传文件的问题。对于上传文件，以前我利用FTP服务来实现过，而这次的需求是将文件保存在项目中，也就是Web应用程序中。
 
 如何在Controller中接受文件，很容易从网上找到解决方案，可是在接收到文件后，如何对其指定路径并保存让我束手无策。因为对文件进行保存的时候，是要对其指定绝对路径的，但是在生产环境中，在不同的服务器上其绝对路径是不同的，相同的只有相对路径，所以我们就要通过代码获取到当前的路径才可以。
 
@@ -74,3 +74,9 @@ public class SampleClass
 ## 注解
 
 如果`path`是`null`，则`MapPath`方法返回包含当前请求路径的目录的完整物理路径。使用`MapPath`方法所需要的参数（相对路径）无需是已经存在的文件或文件夹，但是需要注意的是，我们不可以指定此 Web 应用程序之外的路径。
+
+## 参考
+
+[HttpServerUtility Class](https://docs.microsoft.com/zh-cn/dotnet/api/system.web.httpserverutility?view=netframework-4.8)
+
+[HttpServerUtility.MapPath(String) Method](https://docs.microsoft.com/zh-cn/dotnet/api/system.web.httpserverutility.mappath?view=netframework-4.8)
