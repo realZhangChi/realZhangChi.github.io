@@ -7,7 +7,6 @@ date: 2019-06-28 09:00
 header-style: text
 catalog: true
 tags:
-  - EF
   - Entity Framework
   - 数据库
   - 事务
