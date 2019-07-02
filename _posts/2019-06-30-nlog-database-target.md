@@ -7,7 +7,7 @@ date: 2019-06-30 22:35
 header-style: text
 catalog: false
 tags:
-  - Nlog
+  - NLog
 ---
 
 这篇文章介绍了如何使用NLog通过ADO.NET来向数据库中写日志，数据库操作不会作为事务来执行。
