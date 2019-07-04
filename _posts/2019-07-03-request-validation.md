@@ -5,9 +5,9 @@ subtitle: 'Request Validation in ASP.NET'
 author: "Chi"
 date: 2019-07-02 21:13
 header-style: text
-catalog: true
+catalog: false
 tags:
-  - Design Patterns
+  - Request Validation
 ---
 
 在进行 Web 开发的时候，我用到了富文本编辑器。我们知道，富文本编辑器是以`html`格式存储内容的。我将富文本的内容作为 Controller 中 Action 的参数（ Model 中的一个字段）来接收的，那么在我运行的时候，通过浏览器的开发人员模式中看到这个请求返回了`error 500`。详细错误信息如下。
