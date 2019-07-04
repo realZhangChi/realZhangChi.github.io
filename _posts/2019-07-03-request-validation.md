@@ -19,7 +19,7 @@ tags:
 异常详细信息: System.Web.HttpRequestValidationException: 从客户端(model[description]="<b><u><strike>描述</st...")中检测到有潜在危险的 Request.Form 值。
 ```
 
-因为我们传送的数据包含`html`标记，所以我们的请求被拒绝了。浏览到网址[Request Validation in ASP.NET](https://docs.microsoft.com/zh-cn/previous-versions/aspnet/hh882339(v=vs.110))找到了解决办法。
+因为我们传送的数据包含`html`标记，所以我们的请求被拒绝了。浏览到网址[Request Validation in ASP.NET](https://docs.microsoft.com/zh-cn/previous-versions/aspnet/hh882339(v=vs.110))找到了解决办法。项目使用的是ASP.NET MVC,所以这里只记录了MVC的解决方案。
 
 ## 在 ASP.NET MVC 中禁用请求验证
 
@@ -42,9 +42,9 @@ tags:
 ``` C#
 [HttpPost]
 [ValidateInput(false)]
-public ActionResult Edit(string comment) 
+public ActionResult Edit(string comment)
 {
-    if (ModelState.IsValid) 
+    if (ModelState.IsValid)
     {
         //  Etc.
     }
@@ -64,3 +64,11 @@ public string Prop1 { get;  set; }
 ### 禁用特定字段的请求验证
 
 要禁用请求中特定字段的请求验证（例如，对于输入元素或查询字符串值），请在获取项目时调用Request.Unvalidated方法，如以下示例所示：
+
+``` C#
+var rawComment = Request.Unvalidated().Form["comment"];
+```
+
+## 参考资料
+
+[Request Validation in ASP.NET](https://docs.microsoft.com/en-us/previous-versions/aspnet/hh882339(v=vs.110))
