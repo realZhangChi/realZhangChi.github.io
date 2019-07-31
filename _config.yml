@@ -39,6 +39,7 @@ timezone: CN
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
 plugins: [jekyll-paginate]
+  - jekyll-seo-tag
 
 
 
