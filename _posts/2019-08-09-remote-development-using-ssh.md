@@ -94,11 +94,11 @@ ssh %REMOTEHOST% "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat ~/tmp.pub >> ~/.ssh
 
 1. 在VS Code中安装扩展`Remote Development`
 
-![Remote Development](..\img\in-post\2019-08-09-remote-development\2019-08-09-remote-development.png)
+![Remote Development](/img/in-post/2019-08-09-remote-development/2019-08-09-remote-development.png)
 
 2. 在VS Code中按下<kbd>F1</kbd>键，输入`Remote-SSH: Connect to Host`，可以按照示例输入`服务器用户名@服务器地址`，也可以选择生成一个SSH 配置文件，在相应位置输入用户名和地址即可：
 
-![ssh_user](..\img\in-post\2019-08-09-remote-development\ssh-user@box.png)
+![ssh_user](/img/in-post/2019-08-09-remote-development/ssh-user@box.png)
 
 至此配置完成，可以连接到服务器进行远程开发了。关于如何利用Docker和 ASP .NET Core来进行开发，稍后我会更新。
 
