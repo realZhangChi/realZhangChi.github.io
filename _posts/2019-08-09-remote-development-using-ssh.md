@@ -18,7 +18,7 @@ VS Code已经有了远程开发的功能。在此之前我曾经遇见过一个�
 
 VS Code Remote是基于SSH来实现的，那么我们的Windows本机则需要安装配置SSH。
 
-1. 以管理员模式打开PowerShell，运行命令`Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'`：
+**1. 以管理员模式打开PowerShell，运行命令`Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'`：**
 
 ```PowerShell
 Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
@@ -31,7 +31,7 @@ Name  : OpenSSH.Server~~~~0.0.1.0
 State : NotPresent
 ```
 
-2. 安装SSH客户端和服务端：
+**2. 安装SSH客户端和服务端：**
 
 ```PowerShell
 # 安装 OpenSSH 客户端
@@ -47,8 +47,7 @@ Online        : True
 RestartNeeded : False
 ```
 
-
-3. 初始化SSH服务配置：
+**3. 初始化SSH服务配置：**
 
 ```PowerShell
 Start-Service sshd
@@ -69,7 +68,7 @@ ECDSA key fingerprint is SHA256:(<a large string>).
 Are you sure you want to continue connecting (yes/no)?
 ```
 
-4. 配置SSH Key
+**4. 配置SSH Key**
  VS Code是使用SSH配置文件和基于SSH Key的验证来连接服务器的。
  在PowerShell中输入命令`ssh-keygen -t rsa -b 4096`：
 
@@ -92,16 +91,18 @@ ssh %REMOTEHOST% "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat ~/tmp.pub >> ~/.ssh
 
 ## VS Code配置
 
-1. 在VS Code中安装扩展`Remote Development`
+**1. 在VS Code中安装扩展`Remote Development`**
 
 ![Remote Development](/img/in-post/2019-08-09-remote-development/2019-08-09-remote-development.png)
 
-2. 在VS Code中按下<kbd>F1</kbd>键，输入`Remote-SSH: Connect to Host`，可以按照示例输入`服务器用户名@服务器地址`，也可以选择生成一个SSH 配置文件，在相应位置输入用户名和地址即可：
+**2. 在VS Code中按下<kbd>F1</kbd>键，输入`Remote-SSH: Connect to Host`，可以按照示例输入`服务器用户名@服务器地址`，也可以选择生成一个SSH 配置文件，在相应位置输入用户名和地址即可：**
 
 ![ssh_user](/img/in-post/2019-08-09-remote-development/ssh-user@box.png)
 
 至此配置完成，可以连接到服务器进行远程开发了。关于如何利用Docker和 ASP .NET Core来进行开发，稍后我会更新。
 
-> [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh#_getting-started)
-> [Install an OpenSSH compatible SSH client ](https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client)
-> [Configuring key based authentication](https://code.visualstudio.com/docs/remote/troubleshooting#_configuring-key-based-authentication)
+[Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh#_getting-started)
+
+[Install an OpenSSH compatible SSH client ](https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client)
+
+[Configuring key based authentication](https://code.visualstudio.com/docs/remote/troubleshooting#_configuring-key-based-authentication)
