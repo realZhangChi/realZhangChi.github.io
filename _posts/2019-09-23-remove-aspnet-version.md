@@ -31,7 +31,7 @@ public class MvcApplication : System.Web.HttpApplication
 
 ## Server
 
-在 `Global.asax.cs` 文件的 `Application_Start` 方法中添加方法 `Application_PreSendRequestHeaders`：
+在 `Global.asax.cs` 文件中添加方法 `Application_PreSendRequestHeaders`：
 
 ``` C#
 public class MvcApplication : System.Web.HttpApplication
