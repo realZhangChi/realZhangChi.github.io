@@ -103,6 +103,6 @@ ssh %REMOTEHOST% "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat ~/tmp.pub >> ~/.ssh
 
 [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh#_getting-started)
 
-[Install an OpenSSH compatible SSH client ](https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client)
+[Install an OpenSSH compatible SSH client](https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client)
 
 [Configuring key based authentication](https://code.visualstudio.com/docs/remote/troubleshooting#_configuring-key-based-authentication)
