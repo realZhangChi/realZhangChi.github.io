@@ -14,7 +14,7 @@ tags:
 
 ## IdentityServer
 
-![terminology]("/img/in-post/2019-09-27-identity-server-4-terminology/terminology.png")
+![terminology](/img/in-post/2019-09-27-identity-server-4-terminology/terminology.png)
 
 IdentityServer 是 OpenID Connect 提供程序，它实现了OpenID Connect 和 OAuth 2.0 协议。
 
