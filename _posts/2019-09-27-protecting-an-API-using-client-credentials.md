@@ -40,7 +40,7 @@ dotnet new is4empty -n IdentityServer
 
 这将创建以下文件:
 
-![file](/img/2019-09-27-protecting-an-API-using-client-credentials/file.png)
+![file](/img/in-post/2019-09-27-protecting-an-api/file.png)
 
 - `IdentityServer.csproj`-项目文件和`Properties\launchSettings.json`文件
 - `Program.cs`和`Startup.cs`-主应用程序入口点
@@ -142,11 +142,11 @@ public void ConfigureServices(IServiceCollection services)
 
 IdentityServer就是按照上述代码所示进行配置的。如果运行服务器并在浏览器中导航到<http://localhost:5000/.well-known/openid-configuration>，则应该看到IdentityServer文档。
 
-![discovery](/img/2019-09-27-protecting-an-API-using-client-credentials/1_discovery.png)
+![discovery](/img/in-post/2019-09-27-protecting-an-api/1_discovery.png)
 
 首次启动时，IdentityServer将创建一个开发人员签名密钥，该文件名为tempkey.rsa。
 
-![tempkey](/img/2019-09-27-protecting-an-API-using-client-credentials/tempkey.png)
+![tempkey](/img/in-post/2019-09-27-protecting-an-api/tempkey.png)
 
 无需将该文件签入源代码管理中，如果不存在该文件将被重新创建。
 
