@@ -56,3 +56,5 @@ IdentityServer具有许多功能：
 ## Access Token
 
 访问令牌(Access Token)允许客户端访问API资源。客户端请求访问令牌并携带访问令牌来访问API。访问令牌包含有关客户端和用户（如果有）的信息。API使用该信息来授权对其数据的访问。
+
+> [Terminology- Identity Server 4]("http://docs.identityserver.io/en/latest/intro/terminology.html")
