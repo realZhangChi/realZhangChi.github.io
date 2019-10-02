@@ -14,11 +14,12 @@ tags:
 
 ## 解决方案
 
-先创建一个目标尺寸的Graphics绘图图层，然后将原始图片进行等比缩放，在将缩放后的图片放置到绘图图层中间，并另存为新图片即可。
+先创建一个目标尺寸的Graphics绘图图层，然后将原始图片进行等比缩放，再将缩放后的图片放置到绘图图层中间，并另存为新图片即可。
 
 首先加载原始图片，并获取原始宽高值：
 
 ``` C#
+// tempFullFileName为原始图片路径
 var image = Image.FromFile(tempFullFileName);
 
 var originalWidth = image.Width;
@@ -107,4 +108,4 @@ private static void ResizeImage(string tempFullFileName, string fullFileName)
 }
 ```
 
-> ![c# Image resizing to different size while preserving aspect ratio](https://stackoverflow.com/a/2001692)
+> [c# Image resizing to different size while preserving aspect ratio](https://stackoverflow.com/a/2001692)
