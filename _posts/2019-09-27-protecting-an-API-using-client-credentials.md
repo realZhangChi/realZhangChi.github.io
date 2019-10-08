@@ -5,7 +5,7 @@ subtitle: 'Identity Server 4 Quickstart: Part 1  Protecting an API using Client 
 author: "Chi"
 date: 2019-09-27 14:40
 header-style: text
-catalog: false
+catalog: true
 tags:
   - Identity Server 4
   - Quickstart
@@ -140,7 +140,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-IdentityServer就是按照上述代码所示进行配置的。如果运行服务器并在浏览器中导航到<http://localhost:5000/.well-known/openid-configuration>，则应该看到IdentityServer文档。
+IdentityServer就是按照上述代码所示进行配置的。如果运行服务器并在浏览器中导航到<http://localhost:5000/.well-known/openid-configuration>，则应该看到IdentityServer发现文档(discovery document)。
 
 ![discovery](/img/in-post/2019-09-27-protecting-an-api/1_discovery.png)
 
@@ -241,3 +241,155 @@ public class Startup
 在浏览器上导航到控制器`http://localhost:5001/identity` 应该返回401状态代码。这意味着访问此API需要凭据，并且现在受IdentityServer保护。
 
 ## 添加客户端
+
+最后一步是编写一个请求访问令牌的客户端，然后使用该令牌访问API。再`src`目录下执行以下命令来添加一个Client项目：
+
+``` Powershell
+dotnet new console -n Client
+
+cd ..
+dotnet sln add .\src\Client\Client.csproj
+```
+
+### 全部代码
+
+打开`Program.cs`文件并进行编辑：
+
+``` C#
+using System.Net.Http;
+using System;
+using System.Threading.Tasks;
+using IdentityModel.Client;
+using Newtonsoft.Json.Linq;
+
+namespace Client
+{
+    class Program
+    {
+        private static async Task Main()
+        {
+            // discover endpoints from metadata
+            var client = new HttpClient();
+
+            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5000");
+            if (disco.IsError)
+            {
+                Console.WriteLine(disco.Error);
+                return;
+            }
+
+            // request token
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = "client",
+                ClientSecret = "secret",
+
+                Scope = "api1"
+            });
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return;
+            }
+
+            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine("\n\n");
+
+            // call api
+            var apiClient = new HttpClient();
+            apiClient.SetBearerToken(tokenResponse.AccessToken);
+
+            var response = await apiClient.GetAsync("http://localhost:5001/identity");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
+            }
+        }
+    }
+}
+```
+
+客户端程序异步调用`Main`方法，以运行异步http调用。异步调用`Main`方法从`C# 7.1` 开始支持。将以下代码添加到`Client.csproj`的`PropertyGroup`节点中以使用最新版本的C#：
+
+``` csproj
+<LangVersion>latest</LangVersion>
+```
+
+IdentityServer上的令牌端点实现了OAuth 2.0协议，我们可以使用原始HTTP来访问它。但是，通过使用`IdentityModel`客户端库，可以更方便的进行协议交互。将`IdentityModel`Nuget包添加到Client项目中，在Client项目路径下执行以下命令：
+
+``` Powershell
+dotnet add package IdentityModel
+```
+
+### 访问IdentityServer发现文档(discovery document)
+
+IdnetityModel可以根据基地址从元数据中自动查找IdentityServer发现文档(discovery document)端点地址：
+
+``` C#
+// discover endpoints from metadata
+var client = new HttpClient();
+var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5000");
+if (disco.IsError)
+{
+    Console.WriteLine(disco.Error);
+    return;
+}
+```
+
+### 请求token令牌
+
+接下来，可以使用IdentityServer发现文档(discovery document)中的信息向IdentityServer请求令牌以访问`api1`：
+
+``` C#
+// request token
+var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+{
+    Address = disco.TokenEndpoint,
+
+    ClientId = "client",
+    ClientSecret = "secret",
+    Scope = "api1"
+});
+
+if (tokenResponse.IsError)
+{
+    Console.WriteLine(tokenResponse.Error);
+    return;
+}
+
+Console.WriteLine(tokenResponse.Json);
+```
+
+其中`ClientId`、`ClientSecret`和`Scope`已在`IdentityServer`项目中的`Config.cs`文件中定义。
+
+### 使用token令牌访问Api
+
+要将访问令牌发送到API，通常使用HTTP授权标头。这是使用SetBearerToken扩展方法完成的：
+
+``` C#
+var client = new HttpClient();
+client.SetBearerToken(tokenResponse.AccessToken);
+
+var response = await client.GetAsync("http://localhost:5001/identity");
+if (!response.IsSuccessStatusCode)
+{
+    Console.WriteLine(response.StatusCode);
+}
+else
+{
+    var content = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(JArray.Parse(content));
+}
+
+```
+
+## 参考
+
+> [Protecting an API using Client Credentials](http://docs.identityserver.io/en/latest/quickstarts/1_client_credentials.html#protecting-an-api-using-client-credentials)
