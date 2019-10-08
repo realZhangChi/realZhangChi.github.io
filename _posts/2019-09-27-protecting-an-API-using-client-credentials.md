@@ -242,7 +242,7 @@ public class Startup
 
 ## 添加客户端
 
-最后一步是编写一个请求访问令牌的客户端，然后使用该令牌访问API。再`src`目录下执行以下命令来添加一个Client项目：
+最后一步是编写一个请求访问令牌的客户端，然后使用该令牌访问API。在`src`目录下执行以下命令来添加一个Client项目：
 
 ``` Powershell
 dotnet new console -n Client
