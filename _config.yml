@@ -4,8 +4,8 @@ SEOTitle: 张驰的博客 | Chi Blog
 header-img: img/home-bg.jpg
 email: zliming@outolook.com
 description: "张驰 | 这里是 @Chi张驰 的个人博客，与你一起发现更大的世界。"
-keyword: "张驰, Chi, realZhangChi, realChi, Zhang Chi, Chi Zhang, 张驰的博客, Chi Blog, 博客, 个人网站, 互联网, Web, .NET, 前端, .NET Core, Mobile"
-url: "https://realzhangchi.github.io/"              # your host, for absolute URL
+keyword: "张驰, Chi, realZhangChi, realChi, Zhang Chi, Chi Zhang, 张驰的博客, Chi Blog, 博客, 个人网站, 互联网, Web, .NET, 前端, .NET Core, Mobile, Angular, Blazor"
+url: "https://blog.zhangchi.fun/"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.

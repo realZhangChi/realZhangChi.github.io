@@ -1,6 +1,6 @@
 # Chi Blog
 
-### [View Live Chi Blog &rarr;](https://realzhangchi.github.io/)
+## [View Live Chi Blog &rarr;](https://blog.zhangchi.fun/)
 
 ## Reference
 
