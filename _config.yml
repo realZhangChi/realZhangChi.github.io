@@ -66,6 +66,7 @@ kramdown:
 
 # Netease settings
 netease_comment: false
+gitcomment: true
 
 
 

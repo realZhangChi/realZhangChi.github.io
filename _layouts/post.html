@@ -65,6 +65,12 @@ layout: default
                 <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
                 <!-- 网易云跟帖 评论框 end -->
                 {% endif %}
+
+                {% if site.gitcomment %}
+                <!-- gitcomment 评论框 start -->
+                <div id="gitcomment"></div>
+                <!-- gitcomment 评论框 end -->
+                {% endif %}
             </div>  
 
     <!-- Side Catalog Container -->
@@ -103,6 +109,24 @@ layout: default
 <!-- add support for mathjax by voleking-->
 {% if page.mathjax %}
   {% include mathjax_support.html %}
+{% endif %}
+
+{% if site.gitcomment %}
+<!-- gitcomment js代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        owner: 'realZhangChi',
+        repo: 'blog.comment',
+        oauth: {
+            client_id: '55d33e03ec6ad9b227e6',
+            client_secret: '167daa077652480dc39404e186e300223e039d7e',
+        },
+    })
+    gitment.render('gitcomment')
+</script>
+<!-- gitcomment js代码 end -->
 {% endif %}
 
 {% if site.netease_comment %}
