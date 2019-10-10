@@ -71,12 +71,20 @@
             var curProtocol = window.location.protocol.split(':')[0];
             if (curProtocol === 'https') {
                 bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
+            } else {
                 bp.src = 'http://push.zhanzhang.baidu.com/push.js';
             }
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(bp, s);
         })();
     </script>
+
+    <!-- force-https -->
+    {% if site.force-https %}
+    <script>
+        // Don't force http when serving the website locally
+        if (window.location.protocol != "https:")
+            window.location.protocol = "https";
+    </script>
+    {% endif %}
 </head>
