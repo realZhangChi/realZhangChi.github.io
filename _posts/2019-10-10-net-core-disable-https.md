@@ -42,4 +42,6 @@ app.UseHttpsRedirection();
 
 对于通过CLI来运行应用，也可以使用 `--urls` 参数来达到同样的效果。例如： `dotnet run --urls=http://0.0.0.0:5000,https://0.0.0.0:5001`。那么想要只使用HTTP，把命令中的`https`移除掉就好了。
 
+## 参考
+
 > [ASP.NET Core 2.1 + Kestrel (How to disable HTTPS)](https://stackoverflow.com/a/52533725)
