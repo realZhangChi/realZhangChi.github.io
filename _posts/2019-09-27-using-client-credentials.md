@@ -7,9 +7,8 @@ date: 2019-09-27 14:40
 header-style: text
 catalog: true
 tags:
-
-  + Identity Server 4
-  + Quickstart
+  - Identity Server 4
+  - Quickstart
 
 ---
 
