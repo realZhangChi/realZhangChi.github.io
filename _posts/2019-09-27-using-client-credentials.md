@@ -7,8 +7,10 @@ date: 2019-09-27 14:40
 header-style: text
 catalog: true
 tags:
-  - Identity Server 4
-  - Quickstart
+
+  + Identity Server 4
+  + Quickstart
+
 ---
 
 ## 源代码
@@ -24,9 +26,9 @@ tags:
 dotnet new -i IdentityServer4.Templates
 ```
 
-## 初始化ASP.NET Core 应用
+## 初始化ASP. NET Core 应用
 
-首先为应用程序创建一个目录，然后使用我们的模板创建一个包含基本IdentityServer安装程序的ASP.NET Core应用程序，例如：
+首先为应用程序创建一个目录，然后使用我们的模板创建一个包含基本IdentityServer安装程序的ASP. NET Core应用程序，例如：
 
 ``` Powershell
 md quickstart
@@ -42,9 +44,9 @@ dotnet new is4empty -n IdentityServer
 
 ![file](/img/in-post/2019-09-27-protecting-an-api/file.png)
 
-- `IdentityServer.csproj`-项目文件和`Properties\launchSettings.json`文件
-- `Program.cs`和`Startup.cs`-主应用程序入口点
-- `Config.cs`-IdentityServer资源和客户端配置文件
+* `IdentityServer.csproj` -项目文件和 `Properties\launchSettings.json` 文件
+* `Program.cs` 和 `Startup.cs` -主应用程序入口点
+* `Config.cs` -IdentityServer资源和客户端配置文件
 
 如果要获得Visual Studio支持，可以添加如下解决方案文件：
 
@@ -68,11 +70,14 @@ API是系统中要保护的资源。资源定义可以通过多种方式加载�
 ``` C#
 public static IEnumerable<ApiResource> GetApis()
 {
+
     return new List<ApiResource>
     {
         new ApiResource("api1", "My API")
     };
+
 }
+
 ```
 
 > 如果在生产环境中使用它，那么给API取一个逻辑名称就很重要。开发人员将使用它通过身份服务器连接到API。它应该用简单的术语向开发人员和用户描述API。
@@ -87,6 +92,7 @@ new ApiResource("afcpayroll", "Acme Fireworks Co. payroll")
 
 ``` C#
 new ApiResource("testapi", "My first api")
+
 ```
 
 ## 定义客户端
@@ -122,7 +128,7 @@ public static IEnumerable<Client> GetClients()
 }
 ```
 
-可以将`ClientId`和`ClientSecret`视为应用程序本身的登录名和密码。它将您的应用程序标识到身份服务器，以便它知道哪个应用程序正在尝试与其连接。
+可以将 `ClientId` 和 `ClientSecret` 视为应用程序本身的登录名和密码。它将您的应用程序标识到身份服务器，以便它知道哪个应用程序正在尝试与其连接。
 
 ## 配置IdentityServer
 
@@ -131,13 +137,16 @@ public static IEnumerable<Client> GetClients()
 ``` C#
 public void ConfigureServices(IServiceCollection services)
 {
+
     var builder = services.AddIdentityServer()
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddInMemoryApiResources(Config.GetApis())
         .AddInMemoryClients(Config.GetClients());
 
     // omitted for brevity
+
 }
+
 ```
 
 IdentityServer就是按照上述代码所示进行配置的。如果运行服务器并在浏览器中导航到<http://localhost:5000/.well-known/openid-configuration>，则应该看到IdentityServer发现文档(discovery document)。
@@ -154,7 +163,7 @@ IdentityServer就是按照上述代码所示进行配置的。如果运行服务
 
 接下来在解决方案中添加一个API项目。
 
-在`src`目录下执行命令：
+在 `src` 目录下执行命令：
 
 ``` Powershell
 dotnet new web -n Api
@@ -167,7 +176,7 @@ cd ..
 dotnet sln add .\src\Api\Api.csproj
 ```
 
-将API应用程序配置为仅在<http://localhost:5001>上运行。可以通过编辑`Properties`文件夹中的`launchSettings.json`文件来实现。将应用程序URL设置更改为：
+将API应用程序配置为仅在<http://localhost:5001>上运行。可以通过编辑 `Properties` 文件夹中的 `launchSettings.json` 文件来实现。将应用程序URL设置更改为：
 
 ``` json
 "applicationUrl": "http://localhost:5001"
@@ -175,19 +184,22 @@ dotnet sln add .\src\Api\Api.csproj
 
 ### 控制器
 
-添加文件夹`Controllers`和控制器`IdentityController`（如果使用的是Visual Studio，请在API项目中选择`API controller empty`）：
+添加文件夹 `Controllers` 和控制器 `IdentityController` （如果使用的是Visual Studio，请在API项目中选择 `API controller empty` ）：
 
 ``` C#
 [Route("identity")]
 [Authorize]
 public class IdentityController : ControllerBase
 {
+
     [HttpGet]
     public IActionResult Get()
     {
         return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
     }
+
 }
+
 ```
 
 稍后将使用此控制器来测试授权要求，并通过API来将身份声明(claims identity)可视化。
@@ -196,8 +208,8 @@ public class IdentityController : ControllerBase
 
 最后一步是将身份验证服务添加到DI（依赖注入），并将身份验证中间件添加到管道。这将：
 
-- 验证传入令牌以确保它来自受信任的发行者
-- 验证令牌是否可以与此API一起使用（也称audience）
+* 验证传入令牌以确保它来自受信任的发行者
+* 验证令牌是否可以与此API一起使用（也称audience）
 
 更改 *Startup* 文件:
 
@@ -236,13 +248,13 @@ public class Startup
 }
 ```
 
-`AddAuthentication`将身份验证服务添加到DI并将`“Bearer”`配置为默认方案。`UseAuthentication`将身份验证中间件添加到管道中，因此将在每次对主机的调用中自动执行身份验证。
+`AddAuthentication` 将身份验证服务添加到DI并将 `“Bearer”` 配置为默认方案。 `UseAuthentication` 将身份验证中间件添加到管道中，因此将在每次对主机的调用中自动执行身份验证。
 
-在浏览器上导航到控制器`http://localhost:5001/identity` 应该返回401状态代码。这意味着访问此API需要凭据，并且现在受IdentityServer保护。
+在浏览器上导航到控制器 `http://localhost:5001/identity` 应该返回401状态代码。这意味着访问此API需要凭据，并且现在受IdentityServer保护。
 
 ## 添加客户端
 
-最后一步是编写一个请求访问令牌的客户端，然后使用该令牌访问API。在`src`目录下执行以下命令来添加一个Client项目：
+最后一步是编写一个请求访问令牌的客户端，然后使用该令牌访问API。在 `src` 目录下执行以下命令来添加一个Client项目：
 
 ``` Powershell
 dotnet new console -n Client
@@ -253,17 +265,18 @@ dotnet sln add .\src\Client\Client.csproj
 
 ### 全部代码
 
-打开`Program.cs`文件并进行编辑：
+打开 `Program.cs` 文件并进行编辑：
 
 ``` C#
-using System.Net.Http;
+using System. Net. Http;
 using System;
-using System.Threading.Tasks;
-using IdentityModel.Client;
-using Newtonsoft.Json.Linq;
+using System. Threading. Tasks;
+using IdentityModel. Client;
+using Newtonsoft. Json. Linq;
 
 namespace Client
 {
+
     class Program
     {
         private static async Task Main()
@@ -313,16 +326,18 @@ namespace Client
             }
         }
     }
+
 }
+
 ```
 
-客户端程序异步调用`Main`方法，以运行异步http调用。异步调用`Main`方法从`C# 7.1` 开始支持。将以下代码添加到`Client.csproj`的`PropertyGroup`节点中以使用最新版本的C#：
+客户端程序异步调用 `Main` 方法，以运行异步http调用。异步调用 `Main` 方法从 `C# 7.1` 开始支持。将以下代码添加到 `Client.csproj` 的 `PropertyGroup` 节点中以使用最新版本的C#：
 
 ``` csproj
 <LangVersion>latest</LangVersion>
 ```
 
-IdentityServer上的令牌端点实现了OAuth 2.0协议，我们可以使用原始HTTP来访问它。但是，通过使用`IdentityModel`客户端库，可以更方便的进行协议交互。将`IdentityModel`Nuget包添加到Client项目中，在Client项目路径下执行以下命令：
+IdentityServer上的令牌端点实现了OAuth 2.0协议，我们可以使用原始HTTP来访问它。但是，通过使用 `IdentityModel` 客户端库，可以更方便的进行协议交互。将 `IdentityModel` Nuget包添加到Client项目中，在Client项目路径下执行以下命令：
 
 ``` Powershell
 dotnet add package IdentityModel
@@ -335,17 +350,20 @@ IdnetityModel可以根据基地址从元数据中自动查找IdentityServer发�
 ``` C#
 // discover endpoints from metadata
 var client = new HttpClient();
-var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5000");
-if (disco.IsError)
+var disco = await client. GetDiscoveryDocumentAsync("http://localhost:5000");
+if (disco. IsError)
 {
+
     Console.WriteLine(disco.Error);
     return;
+
 }
+
 ```
 
 ### 请求token令牌
 
-接下来，可以使用IdentityServer发现文档(discovery document)中的信息向IdentityServer请求令牌以访问`api1`：
+接下来，可以使用IdentityServer发现文档(discovery document)中的信息向IdentityServer请求令牌以访问 `api1` ：
 
 ``` C#
 // request token
@@ -367,7 +385,7 @@ if (tokenResponse.IsError)
 Console.WriteLine(tokenResponse.Json);
 ```
 
-其中`ClientId`、`ClientSecret`和`Scope`已在`IdentityServer`项目中的`Config.cs`文件中定义。
+其中 `ClientId` 、 `ClientSecret` 和 `Scope` 已在 `IdentityServer` 项目中的 `Config.cs` 文件中定义。
 
 ### 使用token令牌访问Api
 
@@ -375,17 +393,21 @@ Console.WriteLine(tokenResponse.Json);
 
 ``` C#
 var client = new HttpClient();
-client.SetBearerToken(tokenResponse.AccessToken);
+client. SetBearerToken(tokenResponse. AccessToken);
 
-var response = await client.GetAsync("http://localhost:5001/identity");
-if (!response.IsSuccessStatusCode)
+var response = await client. GetAsync("http://localhost:5001/identity");
+if (!response. IsSuccessStatusCode)
 {
+
     Console.WriteLine(response.StatusCode);
+
 }
 else
 {
+
     var content = await response.Content.ReadAsStringAsync();
     Console.WriteLine(JArray.Parse(content));
+
 }
 
 ```
