@@ -15,7 +15,7 @@ tags:
 
 这篇文章是紧接着 [Identity Server 4 教程 Part 1: 使用客户端凭据保护API](https://blog.zhangchi.fun/2019/09/27/using-client-credentials/) 的Identity Server 4系列文章的第二部分。这里涉及到的一些代码，是在上一篇文章的基础之上进行了修改。
 
-我们可以通过[IdentityServer4 repository]找到官方示例源码，也可以访问[我的 github repository](https://github.com/realZhangChi/IdentityServer4)来获取我在学习过程中的实践代码。
+我们可以通过[IdentityServer4 repository]("https://github.com/IdentityServer/IdentityServer4/blob/master/samples")找到官方示例源码，也可以访问[我的 github repository](https://github.com/realZhangChi/IdentityServer4)来获取我在学习过程中的实践代码。
 
 OAuth 2.0 resource owner password grant允许客户端将用户名和密码发送到令牌服务（token service），并获得代表该用户的访问令牌（access token）。
 
