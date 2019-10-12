@@ -114,6 +114,10 @@ var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequ
 
 `sub`声明的是否存在，使API可以区分出来代表客户端的调用和代表用户的调用。
 
+## 相关章节
+
+[Identity Server 4 教程 Part 1: 使用客户端凭据保护API](https://blog.zhangchi.fun/2019/09/27/using-client-credentials/)
+
 ## 参考
 
 > [Protecting an API using Passwords](http://docs.identityserver.io/en/latest/quickstarts/2_resource_owner_passwords.html)

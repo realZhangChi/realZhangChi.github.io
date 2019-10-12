@@ -412,7 +412,7 @@ else
 
 ```
 
-## Part 2
+## 相关章节
 
 [Identity Server 4 教程 Part 2: 使用密码保护API](https://blog.zhangchi.fun/2019/10/12/using-passwords/)
 
