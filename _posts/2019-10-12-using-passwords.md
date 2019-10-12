@@ -3,7 +3,7 @@ layout: post
 title: "Identity Server 4 教程 Part 2: 使用密码保护API"
 subtitle: 'Identity Server 4 Quickstarts Part 2: Protecting an API using Passwords'
 author: "Chi"
-date: 2019-09-27 14:40
+date: 2019-10-12 10:46
 header-style: text
 catalog: true
 tags:
