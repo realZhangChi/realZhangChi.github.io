@@ -1,21 +1,22 @@
 ---
 layout: post
-title: "Identity Server 4 Quickstart: Part 1 使用客户端凭据保护API"
-subtitle: 'Identity Server 4 Quickstart: Part 1  Protecting an API using Client Credentials'
+title: "Identity Server 4 教程 Part 1: 使用客户端凭据保护API"
+subtitle: 'Identity Server 4 Quickstarts Part 1: Protecting an API using Client Credentials'
 author: "Chi"
 date: 2019-09-27 14:40
 header-style: text
 catalog: true
 tags:
   - Identity Server 4
-  - Quickstart
-
+  - Quickstarts
 ---
 
 ## 源代码
 
-与所有这些快速入门一样，可以在[IdentityServer4 repository]("https://github.com/IdentityServer/IdentityServer4/blob/master/samples")中找到它的源代码。
-此快速入门的项目是[Quickstart #1: Securing an API using Client Credentials]("https://github.com/IdentityServer/IdentityServer4/tree/master/samples/Quickstarts/1_ClientCredentials")
+可以在[IdentityServer4 repository]("https://github.com/IdentityServer/IdentityServer4/blob/master/samples")中找到它的源代码。
+此快速入门的项目是[Quickstart #1: Securing an API using Client Credentials]("https://github.com/IdentityServer/IdentityServer4/tree/master/samples/Quickstarts/1_ClientCredentials")。
+
+也可以访问[我的 github repository](https://github.com/realZhangChi/IdentityServer4)来获取我在学习过程中的实践代码。
 
 ## 准备
 
@@ -410,6 +411,10 @@ else
 }
 
 ```
+
+## Part 2
+
+[Identity Server 4 教程 Part 2: 使用密码保护API](https://blog.zhangchi.fun/2019/10/12/using-passwords/)
 
 ## 参考
 
