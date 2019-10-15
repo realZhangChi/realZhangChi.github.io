@@ -5,7 +5,7 @@ subtitle: 'Install Node.js 10.X LTS latest version in CentOS 7'
 author: "Chi"
 date: 2019-10-15 16:19
 header-style: text
-catalog: true
+catalog: false
 tags:
   - CentOS 7
   - Node.js
