@@ -86,3 +86,11 @@
         window.location.protocol = "https";
 </script>
 {% endif %}
+<script type="text/javascript">
+    host = window.location.host;
+    console.log(host);
+    if (host != 'blog.zhangchi.fun') {
+        var hash = window.location.hash;
+        window.location.href = hash ? 'https://blog.zhangchi.fun' + '/' + hash : 'https://blog.zhangchi.fun';
+    }
+</script>
