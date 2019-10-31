@@ -161,7 +161,7 @@ var builder = services.AddIdentityServer()
 
 ## 将MVC客户端添加到IdentityServer配置
 
-最后一步是将MVC客户端的新配置项添加到IdentityServer。
+接下来需要将MVC客户端的新配置项添加到IdentityServer。
 
 基于OpenID Connect的客户端与我们添加的OAuth 2.0客户端非常相似。但是，由于OIDC中的数据传输流始终是交互式的，因此我们需要在配置中添加一些重定向URL。
 
@@ -212,8 +212,33 @@ public static IEnumerable<Client> Clients =>
 
 ![login](/img/in-post/2019-10-31-user-authentication/login.png)
 
-登录之后，IdentityServer将重定向回MVC客户端，在该客户端上，OpenID Connect身份验证处理程序将处理响应，并通过设置cookie在本地保存登录用户的信息。
+登录之后，IdentityServer将重定向回MVC客户端，在该客户端上，OpenID Connect身份验证处理程序将处理响应，并通过设置cookie在本地保存登录用户的信息。MVC视图将显示cookie的内容。
 
-最后，MVC视图将显示cookie的内容。
+![claims1](/img/in-post/2019-10-31-user-authentication/claims_1.png)
 
-coming soon...
+![claims2](/img/in-post/2019-10-31-user-authentication/claims_2.png)
+
+## 添加登出
+
+最后为MVC客户端用户添加登出功能。
+
+使用IdentityServer之类的身份验证服务，用户登出时仅清除本地应用程序cookie是不够的，还需要与Identity Server通信清除单点登录会话（session）。
+
+确切的协议步骤在OpenID Connect处理程序内部实现，只需将以下代码添加到某个控制器即可触发注销：
+
+``` C#
+public IActionResult Logout()
+{
+    return SignOut("Cookies", "oidc");
+}
+```
+
+这将清除本地cookie，然后重定向到IdentityServer。IdentityServer将清除其cookie，然后为用户提供一个链接以返回到MVC应用程序。
+
+## 相关章节
+
+[Identity Server 4 教程 Part 2: 使用密码保护API](https://blog.zhangchi.fun/2019/10/12/using-passwords/)
+
+## 参考
+
+> [Interactive Applications with ASP.NET Core](http://docs.identityserver.io/en/latest/quickstarts/2_interactive_aspnetcore.html)
