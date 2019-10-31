@@ -119,4 +119,101 @@ app.UseEndpoints(endpoints =>
 </dl>
 ```
 
-coming
+如果现在使用浏览器打开这个项目的页面，将尝试重定向到IdentityServer-这将导致错误，因为尚未注册MVC客户端。
+
+## 添加对OpenID Connect Identity Scope的支持
+
+与OAuth 2.0相似，OpenID Connect也使用了“scopes”这个概念。类似的，“scopes”代表我们要保护的内容也就是客户端要访问的内容。与OAuth不同的是，OIDC中的“scopes”不代表API，而是身份数据，例如用户ID，名称或电子邮件地址。
+
+通过修改`Config.cs`中的`Ids`属性，添加对标准`openid`（subject id）和`profile`（名字，姓氏等）“scopes”的支持：
+
+``` C#
+public static IEnumerable<IdentityResource> Ids =>
+    new List<IdentityResource>
+    {
+        new IdentityResources.OpenId(),
+        new IdentityResources.Profile(),
+    };
+```
+
+在`Startup.cs`中向IdentityServer注册身份资源：
+
+``` C#
+var builder = services.AddIdentityServer()
+    .AddInMemoryIdentityResources(Config.Ids)
+    .AddInMemoryApiResources(Config.Apis)
+    .AddInMemoryClients(Config.Clients);
+```
+
+## 添加测试用户
+
+示例UI还带有一个内存“用户数据库”。可以通过添加`AddTestUsers`扩展方法在IdentityServer中启用它：
+
+``` C#
+var builder = services.AddIdentityServer()
+    .AddInMemoryIdentityResources(Config.Ids)
+    .AddInMemoryApiResources(Config.Apis)
+    .AddInMemoryClients(Config.Clients)
+    .AddTestUsers(TestUsers.Users);
+```
+
+导航到TestUsers类时，您会看到已定义了两个名为alice和bob的用户以及一些身份声明。我们可以使用这些用户登录。
+
+## 将MVC客户端添加到IdentityServer配置
+
+最后一步是将MVC客户端的新配置项添加到IdentityServer。
+
+基于OpenID Connect的客户端与我们添加的OAuth 2.0客户端非常相似。但是，由于OIDC中的数据传输流始终是交互式的，因此我们需要在配置中添加一些重定向URL。
+
+客户端列表应如下所示：
+
+``` C#
+public static IEnumerable<Client> Clients =>
+    new List<Client>
+    {
+        // machine to machine client (from quickstart 1)
+        new Client
+        {
+            ClientId = "client",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+
+            AllowedGrantTypes = GrantTypes.ClientCredentials,
+            // scopes that client has access to
+            AllowedScopes = { "api1" }
+        },
+        // interactive ASP.NET Core MVC client
+        new Client
+        {
+            ClientId = "mvc",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+
+            AllowedGrantTypes = GrantTypes.Code,
+            RequireConsent = false,
+            RequirePkce = true,
+
+            // where to redirect to after login
+            RedirectUris = { "http://localhost:5002/signin-oidc" },
+
+            // where to redirect to after logout
+            PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
+
+            AllowedScopes = new List<string>
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Profile
+            }
+        }
+    };
+```
+
+## 测试客户端
+
+导航到受保护的页面将触发身份认证，这时网页应当重定向到IdentityServer上的登录页面。
+
+![login](/img/in-post/2019-10-31-user-authentication/login.png)
+
+登录之后，IdentityServer将重定向回MVC客户端，在该客户端上，OpenID Connect身份验证处理程序将处理响应，并通过设置cookie在本地保存登录用户的信息。
+
+最后，MVC视图将显示cookie的内容。
+
+coming soon...
