@@ -118,6 +118,8 @@ var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequ
 
 [Identity Server 4 教程 Part 1: 使用客户端凭据保护API](https://blog.zhangchi.fun/2019/09/27/using-client-credentials/)
 
+[Identity Server 4 教程: Part 3 添加ASP.NET Core交互应用程序](https://blog.zhangchi.fun/2019/10/31/user-authentication/)
+
 ## 参考
 
 > [Protecting an API using Passwords](http://docs.identityserver.io/en/latest/quickstarts/2_resource_owner_passwords.html)
