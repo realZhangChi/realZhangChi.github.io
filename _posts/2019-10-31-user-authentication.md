@@ -239,6 +239,8 @@ public IActionResult Logout()
 
 [Identity Server 4 教程 Part 2: 使用密码保护API](https://blog.zhangchi.fun/2019/10/12/using-passwords/)
 
+[Identity Server 4 教程: Part 4 用户验证和API访问](https://blog.zhangchi.fun/2019/11/01/api-access/)
+
 ## 参考
 
 > [Interactive Applications with ASP.NET Core](http://docs.identityserver.io/en/latest/quickstarts/2_interactive_aspnetcore.html)
