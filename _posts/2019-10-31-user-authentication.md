@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "Identity Server 4 教程: Part 3 添加ASP.NET Core交互应用程序"
-subtitle: 'Identity Server 4 Quickstarts Part 3: Interactive Applications with ASP.NET Core'
+subtitle: 'Identity Server 4 Quick Start Part 3: Interactive Applications with ASP.NET Core'
 author: "Chi"
 date: 2019-10-31 14:22
 header-style: text
 catalog: true
 tags:
   - Identity Server 4
-  - Quickstarts
+  - Quick Start
 ---
 
 ## 前言
@@ -243,4 +243,4 @@ public IActionResult Logout()
 
 ## 参考
 
-> [Interactive Applications with ASP.NET Core](http://docs.identityserver.io/en/latest/quickstarts/2_interactive_aspnetcore.html)
+> [Interactive Applications with ASP.NET Core](http://docs.identityserver.io/en/latest/Quick Start/2_interactive_aspnetcore.html)

@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "Identity Server 4 教程: Part 4 用户验证和API访问"
-subtitle: 'Identity Server 4 Quickstarts Part 4: ASP.NET Core and API access'
+subtitle: 'Identity Server 4 Quick Start Part 4: ASP.NET Core and API access'
 author: "Chi"
 date: 2019-11-01 14:00
 header-style: text
 catalog: true
 tags:
   - Identity Server 4
-  - Quickstarts
+  - Quick Start
 ---
 
 ## 前言
@@ -121,4 +121,4 @@ public async Task<IActionResult> CallApi()
 
 ## 参考
 
-> [ASP.NET Core and API access](http://docs.identityserver.io/en/latest/quickstarts/3_aspnetcore_and_apis.html)
+> [ASP.NET Core and API access](http://docs.identityserver.io/en/latest/Quick Start/3_aspnetcore_and_apis.html)

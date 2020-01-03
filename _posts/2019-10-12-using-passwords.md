@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "Identity Server 4 教程 Part 2: 使用密码保护API"
-subtitle: 'Identity Server 4 Quickstarts Part 2: Protecting an API using Passwords'
+subtitle: 'Identity Server 4 Quick Start Part 2: Protecting an API using Passwords'
 author: "Chi"
 date: 2019-10-12 10:46
 header-style: text
 catalog: true
 tags:
   - Identity Server 4
-  - Quickstarts
+  - Quick Start
 ---
 
 ## 前言
@@ -122,4 +122,4 @@ var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequ
 
 ## 参考
 
-> [Protecting an API using Passwords](http://docs.identityserver.io/en/latest/quickstarts/2_resource_owner_passwords.html)
+> [Protecting an API using Passwords](http://docs.identityserver.io/en/latest/Quick Start/2_resource_owner_passwords.html)
