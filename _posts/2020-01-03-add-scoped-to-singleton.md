@@ -5,7 +5,7 @@ subtitle: 'Register the lifecycle as a Scoped dependency and inject it into the 
 author: "Chi"
 date: 2020-01-03 14:00
 header-style: text
-catalog: true
+catalog: false
 tags:
   - ASP.NET Core
   - Dependency Injection
