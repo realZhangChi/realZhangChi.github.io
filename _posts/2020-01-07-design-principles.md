@@ -78,4 +78,6 @@ tags:
 
 ## 优先考虑组成而不是继承
 
+***Favor composition over inheritance.（优先考虑组成而不是继承。）***
+
 HAS-A(有一个）比IS-A（是一个）要好。HAS-A在我们的`Duck`系统中可以描述为：每一个`Duck`都**HAS-A有一个**`FlyBehavior`，还**HAS-A有一个**`QuackBehavior`，`Duck`委托它们来处理`Fly`和`Quack`的行为。**优先考虑组合而不是继承**让我们的系统拥有更多的灵活性，封装变化，还可以在运行时动态更改类的行为。
