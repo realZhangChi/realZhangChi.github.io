@@ -20,6 +20,8 @@ tags:
 
 其中令我感触颇深的是，“面向接口而不是实现编程”颠覆了我一直以来的认识。
 
+> 文章中示例代码为原书中截图，C#代码参照文末提供链接。
+
 ## 开始
 
 书中用了一个很形象的示例：模拟鸭子程序（SimUDuck）。系统的最初设计使用标准的OO技术，并创建了一个Duck基类，所有其他Duck类型都继承自该基类。
@@ -56,8 +58,24 @@ tags:
 
 设计原则：***Program to an interface, not an implementation.（面向接口而不是实现编程。）***
 
-在这里，面向接口而不是实现编程，和封装变化是相辅相成的。值得注意的是，这里所说的接口，
+在这里，面向接口而不是实现编程，和封装变化是相辅相成的。值得注意的是，这里所说的接口，并不是我们代码层面上的`interface`,"面向接口编程（Program to an interface）所表达的意思实际上是面向基类编程（Program to a supertype），核心思想是利用面向对象编程的**多态性**。在代码的具体实现上，我们既可以用`Interface`来作为我们所面向的接口，也可以用一个抽象的基类来作为我们面向的接口。遵循面向接口编程，对模拟鸭子程序的`Fly`和`Quack`行为进行设计，我们可以定义接口`IFlyBehavior`、`IQuackBehavior`来代表行为`Fly`和`Quack`，接口的实现则是行为具体的表现形式。我们可以将接口的不同实现类，来赋值给`Duck`的不同子类，从而利用**继承**及**多态**来实现**面向接口编程**。类图如下：
 
-我们可以定义接口来代表行为：`IFlyBehavior`,`IQuackBehavior`。接口的实现则是行为具体的表现形式。我们可以将接口的不同实现类，来赋值给`Duck`的不同子类。
+![Program To Interface](/img/in-post/2020-01-07-design-principles/program-to-interface.jpg)
 
-coming soon...
+`FlyBehavior`是一个所有不同的`Fly`类都要继承的接口或基类，其中定义了`Fly`方法。不同的`Fly`类有不同的`Fly`方法实现。`QuackBehavior`类似。
+
+接下来我们对`Duck`类进行更改，将`Fly`和`Quack`委托出去，不再通过`Duck`类或其子类的方法来实现。
+
+1. 首先我们在`Duck`类中定义两个代表`FlyBehavior`和`QuackBehavior`的变量。这两个变量的值是不同的`Duck`所需要的特定`FlyBehavior`、`QuackBehavior`的子类：![Instance Variables](/img/in-post/2020-01-07-design-principles/instance-variables.jpg)
+
+2. 然后实现`PerformQuack`方法：![Implement PerformQuack](/img/in-post/2020-01-07-design-principles/implement-performQuack.jpg)
+
+3. 为`FlyBehavior`和`QuackBehavior`赋值：![Implement PerformQuack](/img/in-post/2020-01-07-design-principles/implement-performQuack.jpg)
+
+至此我们就实现了面向接口编程。
+
+我们还可以动态设置`Duck`的行为，只需要为`Duck`类的`FlyBehavior`、`QuackBehavior`提供`Set`方法（在C#中，使用自动属性即可）。
+
+## 优先考虑组成而不是继承
+
+HAS-A(有一个）比IS-A（是一个）要好。HAS-A在我们的`Duck`系统中可以描述为：每一个`Duck`都**HAS-A有一个**`FlyBehavior`，还**HAS-A有一个**`QuackBehavior`，`Duck`委托它们来处理`Fly`和`Quack`的行为。**优先考虑组合而不是继承**让我们的系统拥有更多的灵活性，封装变化，还可以在运行时动态更改类的行为。
