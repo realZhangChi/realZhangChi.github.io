@@ -70,7 +70,7 @@ tags:
 
 2. 然后实现`PerformQuack`方法：![Implement PerformQuack](/img/in-post/2020-01-07-design-principles/implement-performQuack.jpg)
 
-3. 为`FlyBehavior`和`QuackBehavior`赋值：![Implement PerformQuack](/img/in-post/2020-01-07-design-principles/assignment.jpg)
+3. 为`FlyBehavior`和`QuackBehavior`赋值：![Assignment](/img/in-post/2020-01-07-design-principles/assignment.jpg)
 
 至此我们就实现了面向接口编程。
 
