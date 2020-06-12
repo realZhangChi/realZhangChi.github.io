@@ -3,7 +3,7 @@ layout: post
 title: "《CQRS Documents by Greg Young》翻译：事件作为存储机制"
 subtitle: 'CQRS Documents by Greg Young - Events as a Storage Mechanism'
 author: "Chi"
-date: 2020-06-08 10:00
+date: 2020-06-12 10:00
 header-style: text
 catalog: true
 tags:
