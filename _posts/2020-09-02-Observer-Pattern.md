@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Observer Pattern"
-subtitle: "Observer Pattern"
+subtitle: "Keeping your Objects in the know"
 author: "Chi"
 date: 2020-09-02 15:00
 header-style: text
