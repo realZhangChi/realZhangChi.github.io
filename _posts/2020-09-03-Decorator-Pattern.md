@@ -3,7 +3,7 @@ layout: post
 title: "Decorator Pattern"
 subtitle: "Decorating Objects"
 author: "Chi"
-date: 2020-09-02 15:00
+date: 2020-09-03 10:00
 header-style: text
 catalog: true
 tags:
