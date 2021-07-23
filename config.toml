@@ -44,6 +44,8 @@ theme = "LoveIt"
 
   [params.social]
     GitHub = "realZhangChi"
+    Email = "zliming@outlook.com"
+    RSS = true
 
   [params.analytics]
     enable = true
@@ -52,6 +54,8 @@ theme = "LoveIt"
       id = "G-QW27WMQ83S"
       # 是否匿名化用户 IP
       anonymizeIP = false
+    [params.analytics.baidu]
+      id = "cfd310057297c08d0f7072e16e333a3a"
 
 [menu]
   [[menu.main]]
