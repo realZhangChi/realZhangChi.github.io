@@ -2,6 +2,11 @@
 title: "Abp太重了？轻量化Abp框架"
 date: 2021-07-23T09:48:24+08:00
 draft: false
+author: "张驰"
+authorLink: "https://github.com/realZhangChi"
+description: "轻量化Abp框架"
+tags: ["Abp"]
+categories: ["Abp"]
 ---
 
 在进行框架的选型时，经常会听到“***框架太重了”之类的声音，比如“Abp太重了，不适合我们...”。事实上，Abp框架真的很重吗？
