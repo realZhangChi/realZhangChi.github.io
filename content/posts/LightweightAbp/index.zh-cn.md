@@ -365,3 +365,7 @@ public class BookController : AbpController
 在这里我们从一个不同的角度来认识了Abp框架，显而易见，对于Abp来讲，是否太“重”，和我们对他的认知及使用方式有很大的关联。
 
 项目示例代码将托管在[Github](https://github.com/realZhangChi/LightweightAbp)中。
+
+## 致谢
+
+感谢Abp群（QQ群：48039003）的群友们提供的热心帮助。
