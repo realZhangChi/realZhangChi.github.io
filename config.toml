@@ -2,7 +2,7 @@ baseURL = "https://blog.zhangchi.fun/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "我的博客"
+title = "Chi"
 theme = "LoveIt"
 
 
