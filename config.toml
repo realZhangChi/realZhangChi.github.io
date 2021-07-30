@@ -57,6 +57,31 @@ theme = "LoveIt"
     [params.analytics.baidu]
       id = "cfd310057297c08d0f7072e16e333a3a"
 
+  [params.page]
+    [params.page.toc]
+      # 是否使用目录
+      enable = true
+      # LoveIt 新增 | 0.2.9 是否保持使用文章前面的静态目录
+      keepStatic = false
+      # 是否使侧边目录自动折叠展开
+      auto = true
+    # LoveIt 新增 | 0.2.0 代码配置
+    [params.page.code]
+      # 是否显示代码块的复制按钮
+      copy = true
+      # 默认展开显示的代码行数
+      maxShownLines = 30
+    [params.page.comment]
+      enable = true
+      # Gitalk 评论系统设置
+      [params.page.comment.gitalk]
+        # LoveIt 新增 | 0.1.1
+        enable = true
+        owner = "realZhangChi"
+        repo = "blog.comment"
+        clientId = "55d33e03ec6ad9b227e6"
+        clientSecret = "167daa077652480dc39404e186e300223e039d7e"
+
 # 页面底部信息配置
   [params.footer]
     enable = true
