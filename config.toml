@@ -73,14 +73,27 @@ theme = "LoveIt"
       maxShownLines = 30
     [params.page.comment]
       enable = true
-      # Gitalk 评论系统设置
-      [params.page.comment.gitalk]
-        # LoveIt 新增 | 0.1.1
+      # Valine 评论系统设置
+      [params.page.comment.valine]
         enable = true
-        owner = "realZhangChi"
-        repo = "blog.comment"
-        clientId = "55d33e03ec6ad9b227e6"
-        clientSecret = "167daa077652480dc39404e186e300223e039d7e"
+        appId = "SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz"
+        appKey = "cP0gHgQ51CAYfWlron7uSq2B"
+        placeholder = ""
+        avatar = "robohash"
+        meta= ['nick','mail','link']
+        pageSize = 10
+        lang = "zh-CN"
+        visitor = true
+        recordIP = true
+        highlight = true
+        enableQQ = true
+        #serverURLs = ""
+        # LoveIt 新增 | 0.2.6 emoji 数据文件名称, 默认是 "google.yml"
+        # ("apple.yml", "google.yml", "facebook.yml", "twitter.yml")
+        # 位于 "themes/LoveIt/assets/data/emoji/" 目录
+        # 可以在你的项目下相同路径存放你自己的数据文件:
+        # "assets/data/emoji/"
+        emoji = "google.yml"
 
 # 页面底部信息配置
   [params.footer]
