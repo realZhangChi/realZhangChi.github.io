@@ -24,7 +24,7 @@ theme = "LoveIt"
       # 主页显示头像的 URL
       avatarURL = "/images/avatar.jpg"
       # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
-      title = "The rose is in her hand, the flavor is mine."
+      title = "Chi's Blog"
       # 主页显示的网站副标题
       subtitle = "水之积也不厚，则其负大舟也无力；风之积也不厚，则其负大翼也无力。"
       # 是否为副标题显示打字机动画
@@ -32,7 +32,7 @@ theme = "LoveIt"
       # 是否显示社交账号
       social = true
       # LoveIt 新增 | 0.2.0 免责声明 (支持 HTML 格式)
-      disclaimer = ""
+      # disclaimer = ""
     # 主页文章列表
     [params.home.posts]
       enable = true
@@ -56,6 +56,24 @@ theme = "LoveIt"
       anonymizeIP = false
     [params.analytics.baidu]
       id = "cfd310057297c08d0f7072e16e333a3a"
+
+# 页面底部信息配置
+  [params.footer]
+    enable = true
+    # LoveIt 新增 | 0.2.0 自定义内容 (支持 HTML 格式)
+    #custom = ''
+    # LoveIt 新增 | 0.2.0 是否显示 Hugo 和主题信息
+    hugo = true
+    # LoveIt 新增 | 0.2.0 是否显示版权信息
+    copyright = true
+    # LoveIt 新增 | 0.2.0 是否显示作者
+    author = true
+    # 网站创立年份
+    since = 2021
+    # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
+    #icp = ""
+    # 许可协议信息 (支持 HTML 格式)
+    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
 [menu]
   [[menu.main]]
