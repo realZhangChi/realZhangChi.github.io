@@ -34,9 +34,13 @@ categories: ["Book"]
    2. 添加项目
       1. 实现Api
 5. Framework and Drivers
+   1. ef层
 
 ## 第三章 完善框架
 
 1. 数据迁移及种子数据
 2. 多租户与数据迁移
 3. 数据迁移控制台项目
+4. 认证授权
+5. 权限控制
+6. SettingsManagement
