@@ -77,3 +77,11 @@ categories: ["Book"]
 ## 第三部分 模块化
 
 框架模块和应用模块
+
+设置模块，
+
+讲store，讲模块化生命周期，讲Options模式，讲ValueProvider模式，讲空对象模式，
+
+讲对象扩展
+
+讲数据provider，功能Contributor，数据Accessor
