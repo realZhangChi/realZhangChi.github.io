@@ -17,14 +17,12 @@ categories: ["Book"]
    简介、基础设施、架构、模块化、cli、帮助方法
 2. 模块化
    简介、如何定义模块、配置依赖注入
-3. 依赖注入
-   约定大于配置
-4. 创建控制台Acme.BookStore
-   1. 通过dotnet cli 创建.net core 控制台应用
+3. 创建控制台Acme.BookStore
+   1. 通过dotnet cli 创建 .net core 控制台应用
    2. 引入nuget依赖，定义模块
    3. 配置依赖注入
    4. 运行
-5. 总结
+4. 总结
 
 ### 第二章 整洁架构与领域驱动设计
 
@@ -53,7 +51,38 @@ categories: ["Book"]
    6. 运行项目
 4. 总结
 
-## 第二部分 基础设施
+## 第二部分 框架
+
+### 第三章 应用程序及模块
+
+1. 应用程序
+   1. 概念及定义
+   2. 功能
+   3. 创建
+2. 模块
+   1. 概念及定义
+   2. 生命周期及ModuleLifecycleContributor
+   3. Manager
+
+### 第四章 依赖注入与替换
+
+1. Ioc Principal简介
+2. 服务注册
+   1. 约定大于配置
+   2. 接口
+   3. 特性
+3. DI
+   1. 构造函数
+   2. 属性
+   3. 方法？列权限？
+4. 替换默认实现
+
+### 第五章 AOP
+
+1. AOP概念简介
+2. Interface介绍及框架中的AOP
+3. 实现AOP
+4. 自定义返回值（Filter？）
 
 ### 第三章 身份验证
 
@@ -68,11 +97,6 @@ categories: ["Book"]
 
 ### 第六章 动态代理
 
-### 第七章 AOP
-
-1. Interface介绍及框架中的AOP
-2. 实现AOP
-3. 自定义返回值（Filter？）
 
 ## 第三部分 模块化
 
@@ -81,7 +105,14 @@ categories: ["Book"]
 设置模块，
 
 讲store，讲模块化生命周期，讲Options模式，讲ValueProvider模式，讲空对象模式，
+Setting模块，Provider Pattern，Bridge Pattern，factory and abstract pattern, 策略模式
 
 讲对象扩展
 
 讲数据provider，功能Contributor，数据Accessor
+
+讲更新时并发时间戳问题
+
+实战，利用DataFilter实现数据权限
+
+讲乐观并发？
