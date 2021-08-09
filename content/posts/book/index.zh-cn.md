@@ -58,7 +58,19 @@ categories: ["Book"]
 
 ## 第三部分 框架
 
-### 第五章 应用程序及模块
+### 第五章 源码简介
+
+1. 文件目录概述
+2. framework
+   1. src
+   2. test
+3. modules
+   1. 示例module解决方案
+      1. src
+      2. test
+4. templates
+
+### 第六章 应用程序及模块
 
 1. 应用程序
    1. 概念及定义
@@ -69,43 +81,43 @@ categories: ["Book"]
    2. 生命周期及ModuleLifecycleContributor
    3. Manager
 
-### 第六章 依赖注入与替换
+### 第七章 依赖注入与替换
 
-1. Ioc Principal简介
+1. **Ioc Principal**简介
 2. 服务注册
    1. 约定大于配置
    2. 接口
    3. 特性
-3. DI
+3. **DI**
    1. 构造函数
    2. 属性
    3. 方法注入？列权限？
 4. 替换默认实现
 
-### 第七章 AOP
+### 第八章 AOP
 
-1. AOP概念简介
-2. Interface介绍及框架中的AOP
+1. **AOP**概念简介
+2. 动态代理，Interface介绍及框架中的AOP，**适配器模式**
 3. 实现AOP
 4. 自定义返回值（Filter？）
 
-### 第八章 工作单元
+### 第九章 工作单元与数据库事务
 
 1. 如何开启
    1. 约定
    2. 特性
    3. 手动控制
    4. 关闭
+   5. 回调事件
 2. 事务
    1. 开启事务
-   2. 事务隔离级别
-3. 回调事件
-   1. 完成
-   2. 失败
-4. 源码
-   1. 拦截器
-   2. Manager
-   3. DatabaseApi和TransactionApi
+      1. 事务隔离级别
+   2. 工作单元如何判断事务
+      1. **AOP**
+      2. **依赖倒置**
+   3. 多DbContext
+      1. Manager
+      2. DatabaseApi和TransactionApi
 
 ### 第九章 多租户
 
