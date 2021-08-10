@@ -119,27 +119,25 @@ categories: ["Book"]
       1. Manager
       2. DatabaseApi和TransactionApi
 
-### 第九章 多租户
+### 第十章 XSRF/CSRF/Anti-Forgery、CorrelationId、UOW
 
-### AspNetCore、AspNetCoreMvc
-
-XSRF/CSRF/Anti-Forgery、CorrelationId、UOW
-
-### 第三章 身份验证
+### 第十一章 身份验证
 
 将在Abp 5.0发布后开始
 
-### 第四章 授权与权限管理
+### 第十二章 授权与权限管理
 
-### 第五章 多租户系统
+### 第十三章 多租户系统
 
-1. 配置与使用多租户
-2. 多租户数据迁移
+### 第十四章 动态代理
 
-### 第六章 动态代理
-
+### 第十五章 Blazor界面
 
 ## 第三部分 模块化
+
+### 第十六章 框架模块
+
+### 第十七章 应用模块
 
 框架模块和应用模块
 
