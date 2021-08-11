@@ -20,7 +20,7 @@ categories: ["Book"]
 3. 创建控制台Acme.BookStore
    1. 通过dotnet cli 创建 .net core 控制台应用
    2. 引入nuget依赖，定义模块
-   3. 配置依赖注入
+   3. 配置Autofac
    4. 运行
 4. 总结
 
@@ -28,6 +28,43 @@ categories: ["Book"]
 
 目录需调整，按照Abp分层架构来讲，需DDD知识储备，整章围绕整洁架构与依赖倒置开展。
 展示层、基础设施层与Interface Adapters的关系
+
+## 第二章 领域层
+
+1. 领域层概念简介
+2. 创建Domain.Shard
+   1. 项目概述及项目意义
+   2. 创建`BookType`枚举
+3. 创建Domain
+   1. 项目概述及项目意义（通俗介绍or架构理论介绍？）
+   2. 创建`Book`聚合
+      1. 实体及聚合职责
+      2. Abp中的聚合及实体基类
+   3. 创建`IBookRepository`
+      1. 仓储职责
+   4. 创建`DomainService`
+      1. 领域服务职责
+4. 领域层
+   1. 整洁架构中Entities
+   2. 作用及意义
+   3. 最佳实践
+      1. 聚合、实体
+      2. 仓储
+      3. 领域服务
+
+## 第三章 应用层
+
+1. 应用层概念简介
+   1. 应用服务简介
+      1. 职责
+2. 创建Application.Contracts
+   1. 项目概述及项目意义
+   2. 数据传输对象的意义、创建`Dto`
+   3. 创建`IBookAppService`
+3. 创建Application
+   1. 项目概述及项目意义
+   2. 创建`BookAppService`
+4. 
 
 ### 第二章 整洁架构
 
@@ -119,25 +156,27 @@ categories: ["Book"]
       1. Manager
       2. DatabaseApi和TransactionApi
 
-### 第十章 XSRF/CSRF/Anti-Forgery、CorrelationId、UOW
+### 第九章 多租户
 
-### 第十一章 身份验证
+### AspNetCore、AspNetCoreMvc
+
+XSRF/CSRF/Anti-Forgery、CorrelationId、UOW
+
+### 第三章 身份验证
 
 将在Abp 5.0发布后开始
 
-### 第十二章 授权与权限管理
+### 第四章 授权与权限管理
 
-### 第十三章 多租户系统
+### 第五章 多租户系统
 
-### 第十四章 动态代理
+1. 配置与使用多租户
+2. 多租户数据迁移
 
-### 第十五章 Blazor界面
+### 第六章 动态代理
+
 
 ## 第三部分 模块化
-
-### 第十六章 框架模块
-
-### 第十七章 应用模块
 
 框架模块和应用模块
 
@@ -155,3 +194,6 @@ Setting模块，Provider Pattern，Bridge Pattern，factory and abstract pattern
 实战，利用DataFilter实现数据权限
 
 讲乐观并发？
+
+TODO： 依赖注入尽早讲
+TODO： 依赖倒置尽早讲
