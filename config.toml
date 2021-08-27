@@ -2,15 +2,15 @@ baseURL = "https://blog.zhangchi.fun/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "Chi"
+title = "张驰的博客"
 theme = "LoveIt"
 
 
 [params]
   # LoveIt 主题版本
   version = "0.2.X"
-  description = "张驰的博客"
-  keywords = ["C#", ".NET", "Abp"]
+  description = ".NET Core、Abp框架、领域驱动、设计模式及程序架构等知识分享"
+  keywords = ["C#", ".NET", "Abp", ".NET Core", "架构", "领域驱动", "DDD", "整洁架构", "设计模式"]
 
   # 主页配置
   [params.home]
