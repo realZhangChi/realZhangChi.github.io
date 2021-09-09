@@ -149,6 +149,14 @@ theme = "LoveIt"
     url = "/friend/"
     title = ""
     weight = 5
+  [[menu.main]]
+    identifier = "about"
+    pre = ""
+    post = ""
+    name = "关于我"
+    url = "https://profile.zhangchi.fun"
+    title = ""
+    weight = 6
 
 # Hugo 解析文档的配置
 [markup]
