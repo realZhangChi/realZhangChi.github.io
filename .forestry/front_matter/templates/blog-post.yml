@@ -26,3 +26,5 @@ fields:
 - type: list
   name: categories
   label: categories
+pages:
+- content/posts/dependency-injection-in-maui/maui.md
