@@ -27,4 +27,4 @@ fields:
   name: categories
   label: categories
 pages:
-- content/posts/dependency-injection-in-maui/maui.md
+- content/posts/dependency-injection-in-maui/index.zh-cn.md
