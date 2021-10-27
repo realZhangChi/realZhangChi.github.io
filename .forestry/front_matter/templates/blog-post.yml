@@ -12,10 +12,11 @@ fields:
 - type: text
   name: author
   label: author
-  default: Chi Zhang
+  default: 张驰
 - type: text
   name: authorLink
   label: authorLink
+  default: https://github.com/realZhangChi
 - type: text
   name: description
   label: description
