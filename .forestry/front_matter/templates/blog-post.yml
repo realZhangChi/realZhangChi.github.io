@@ -8,9 +8,11 @@ fields:
 - type: datetime
   name: date
   label: date
+  default: now
 - type: text
   name: author
   label: author
+  default: Chi Zhang
 - type: text
   name: authorLink
   label: authorLink
