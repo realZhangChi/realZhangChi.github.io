@@ -15,7 +15,7 @@ title = "如何在Maui中使用依赖注入"
 
 ## 容器
 
-容器负责构造并注入服务，并管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器`ServiceProvider`，可以使用`IServiceProvider`来解析依赖的服务。
+容器负责构造并注入服务，管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器`ServiceProvider`，可以使用`IServiceProvider`来解析依赖的服务。
 
 一般地，在应用程序启动时，将服务注册到`IServiceCollection`中，然后调用`BuildServiceProvider`扩展方法，即可得到`IServiceProvider`容器。
 
@@ -28,42 +28,38 @@ title = "如何在Maui中使用依赖注入"
 应用程序启动时，调用`MauiProgram.cs`中的 `CreateMauiApp`设置并构造`MauiApp`。首先调用 `CreateMauiAppBuilder`创建一个构造器，通过这个构造器完成创建`MauiApp`所需的全部设置，其中包括服务注册，最终通过`Build`方法构造 `MauiApp` 实例。
 
     public static class MauiProgram
+    {
+      public static MauiApp CreateMauiApp()
+      {
+        var builder = MauiApp.CreateBuilder();
+    
+        builder
+        .UseMauiApp<App>()
+        .ConfigureFonts(fonts =>
         {
-            public static MauiApp CreateMauiApp()
-            {
-                var builder = MauiApp.CreateBuilder();
+        	fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+        });
     
-                builder
-                    .UseMauiApp<App>()
-                    .ConfigureFonts(fonts =>
-                    {
-                        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    });
+        return builder.Build();
+      }
+    }
+
+在.NET中注册服务，就是在应用程序启动时，将服务注册到 `IServiceCollection` 中。在`MauiAppBuilder`中，存在`IServiceCollection`类型的属性`Services`。因此，在 Maui 应用程序中注册服务，只需在构造`MauiApp`时将服务添加到`MauiAppBuilder`中的 `Services`中。
+
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
     
-                return builder.Build();
-            }
-        }
-
-在.NET中注册服务，就是在应用程序启动时，将服务注册到 `IServiceCollection` 中。在`MauiAppBuilder`中，存在`IServiceCollection`类型的属性`Services`。因此，在 Maui 应用程序中注册服务，只需在构造`MauiApp`时将服务添加到`MauiAppBuilder`中的 `Services`中即可。
-
+        ...
     
-            public static MauiApp CreateMauiApp()
-            {
-                var builder = MauiApp.CreateBuilder();
-                
-                ...
+        builder.Services.AddSingleton<MainPage>();
     
-                builder.Services.AddSingleton<MainPage>();
-    
-                return builder.Build();
-            }
-     
+        return builder.Build();
+    }
 
-在使用依赖关系注入时，要从容器中解析服务。通过调用`IServiceCollection`的扩展方法 `BuildServiceProvider`可以获取 `IServiceProvider`容器实例。
+在进行依赖关系注入时，需要从容器中解析服务。通过调用`IServiceCollection`的扩展方法 `BuildServiceProvider`可以构造获取 `IServiceProvider`容器实例。
 
-调用`MauiAppBuilder`的`Build`方法时获取 `MauiApp`实例时，将调用`MauiAppBuilder`中 `Services`的`BuildServiceProvider`方法，构造出`IServiceProvider`并赋值给`MauiApp`中的`Services`属性。
-
-至此，完成了服务注册及容器构造的步骤。
+调用`MauiAppBuilder`的`Build`方法获取 `MauiApp`实例时，将调用`BuildServiceProvider`，构造出`IServiceProvider`并赋值给`MauiApp`中的`Services`属性。
 
 ## 注入服务
 
