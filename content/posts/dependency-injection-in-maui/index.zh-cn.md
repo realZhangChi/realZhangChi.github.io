@@ -15,7 +15,9 @@ title = "如何在Maui中使用依赖注入"
 
 ## 容器
 
-容器负责构造并注入服务，并管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器`ServiceProvider`，可以使用`IServiceProvider`来检索依赖的服务对象。一般地，在应用程序启动时，将服务注册到`IServiceCollection`中，然后调用`BuildServiceProvider`扩展方法，即可得到`IServiceProvider`容器。
+容器负责构造并注入服务，并管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器`ServiceProvider`，可以使用`IServiceProvider`来解析依赖的服务。
+
+一般地，在应用程序启动时，将服务注册到`IServiceCollection`中，然后调用`BuildServiceProvider`扩展方法，即可得到`IServiceProvider`容器。
 
 在 Maui 中，生成`IServiceProvider`的过程是框架自动完成的，只需要在`MauiProgram.cs`中将服务注册到`IServiceCollection`即可。
 
@@ -25,7 +27,37 @@ title = "如何在Maui中使用依赖注入"
 
 应用程序启动时，调用`MauiProgram.cs`中的 `CreateMauiApp`设置并构造`MauiApp`。首先调用 `CreateMauiAppBuilder`创建一个构造器，通过这个构造器完成创建`MauiApp`所需的全部设置，其中包括服务注册，最终通过`Build`方法构造 `MauiApp` 实例。
 
-正如上一节所描述的，在.NET中注册服务，就是在应用程序启动时，将服务注册到 `IServiceCollection` 中。在`MauiAppBuilder`中，存在`IServiceCollection`类型的属性`Services`。因此，在 Maui 应用程序中注册服务，只需在构造`MauiApp`时将服务添加到`MauiAppBuilder`中的 `Services`中即可。
+    public static class MauiProgram
+        {
+            public static MauiApp CreateMauiApp()
+            {
+                var builder = MauiApp.CreateBuilder();
+    
+                builder
+                    .UseMauiApp<App>()
+                    .ConfigureFonts(fonts =>
+                    {
+                        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    });
+    
+                return builder.Build();
+            }
+        }
+
+在.NET中注册服务，就是在应用程序启动时，将服务注册到 `IServiceCollection` 中。在`MauiAppBuilder`中，存在`IServiceCollection`类型的属性`Services`。因此，在 Maui 应用程序中注册服务，只需在构造`MauiApp`时将服务添加到`MauiAppBuilder`中的 `Services`中即可。
+
+    
+            public static MauiApp CreateMauiApp()
+            {
+                var builder = MauiApp.CreateBuilder();
+                
+                ...
+    
+                builder.Services.AddSingleton<MainPage>();
+    
+                return builder.Build();
+            }
+     
 
 在使用依赖关系注入时，要从容器中解析服务。通过调用`IServiceCollection`的扩展方法 `BuildServiceProvider`可以获取 `IServiceProvider`容器实例。
 
