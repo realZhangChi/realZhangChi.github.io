@@ -4,7 +4,6 @@ authorLink = "https://github.com/realZhangChi"
 categories = ["maui"]
 date = 2021-10-27T10:31:05Z
 description = "如何在Maui中使用依赖注入"
-draft = true
 tags = ["dependency injection", "maui"]
 title = "如何在Maui中使用依赖注入"
 
@@ -67,6 +66,24 @@ title = "如何在Maui中使用依赖注入"
 
 依赖关系注入通常有构造函数注入、属性注入与方法注入三种方式。在 Maui 中，一般会使用构造方法注入依赖项，在平台代码中有时也会直接通过`MauiApp`实例来解析依赖项。
 
-## 生命周期
+    public partial class App : Application
+    {
+        public App(MainPage mainPage)
+        {
+            InitializeComponent();
+    
+            MainPage = mainPage;
+        }
+    }
 
-## 最佳实践
+将`MainPage`注册到容器中后，可以通过构造函数注入的方式将其作为依赖项注入。在特定平台的代码中，有时无法使用构造函数注入，这时可以直接通过容器解析依赖项。
+
+    public class MyActivity : MauiAppCompatActivity
+    {
+        private readonly IHelloService _helloService;
+    
+        public MyActivity()
+        {
+            _helloService = MauiApplication.Current.Services.GetRequiredService<IHelloService>();
+        }
+    }
