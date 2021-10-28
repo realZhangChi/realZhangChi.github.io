@@ -16,7 +16,7 @@
 <meta name=application-name content="张驰的博客">
 <meta name=apple-mobile-web-app-title content="张驰的博客"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://blog.zhangchi.fun/posts/dependency-injection-in-maui/><link rel=prev href=https://blog.zhangchi.fun/posts/lightweightabp/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"如何在Maui中使用依赖注入","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/blog.zhangchi.fun\/posts\/dependency-injection-in-maui\/"},"genre":"posts","keywords":"dependency injection, maui","wordcount":1301,"url":"https:\/\/blog.zhangchi.fun\/posts\/dependency-injection-in-maui\/","datePublished":"2021-10-27T10:31:05+00:00","dateModified":"2021-10-27T10:31:05+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"如何在Maui中使用依赖注入"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://blog.zhangchi.fun/posts/dependency-injection-in-maui/><link rel=prev href=https://blog.zhangchi.fun/posts/lightweightabp/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"如何在Maui中使用依赖注入","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/blog.zhangchi.fun\/posts\/dependency-injection-in-maui\/"},"genre":"posts","keywords":"dependency injection, maui","wordcount":1295,"url":"https:\/\/blog.zhangchi.fun\/posts\/dependency-injection-in-maui\/","datePublished":"2021-10-27T10:31:05+00:00","dateModified":"2021-10-27T10:31:05+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"如何在Maui中使用依赖注入"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -57,7 +57,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">如何在Maui中使用依赖注入</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/maui/><i class="far fa-folder fa-fw"></i>maui</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-27>2021-10-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1301 字&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-27>2021-10-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1295 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/posts/dependency-injection-in-maui/ class=leancloud_visitors data-flag-title=如何在Maui中使用依赖注入>
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
@@ -76,12 +76,12 @@
 </div><div class=content id=content><p>依赖关系注入(DI)是 .NET 中的一等公民，如果熟悉 .NET 开发，对依赖注入则不会陌生。依赖关系注入是一种在类及其依赖关系之间实现控制反转(IoC)的技术，其中要反转的是获取依赖项的过程。通过依赖关系注入，分离了对象构建和对象使用的关注点，提高了代码的可读性和重用性。</p>
 <p>.NET Multi-platform App UI 框架支持依赖关系注入软件设计模式。在 MVVM 模式中，依赖注入通常用于注册和解析视图模型，并注册和解析视图模型所依赖的服务。</p>
 <h2 id=容器>容器</h2>
-<p>容器负责构造并注入服务，管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器<code>ServiceProvider</code>，可以使用<code>IServiceProvider</code>来解析依赖的服务。</p>
+<p>容器负责构造并注入服务，管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器<code>IServiceProvider</code>，可以使用<code>IServiceProvider</code>来解析依赖的服务。</p>
 <p>一般地，在应用程序启动时，将服务注册到<code>IServiceCollection</code>中，然后调用<code>BuildServiceProvider</code>扩展方法，即可得到<code>IServiceProvider</code>容器。</p>
 <p>在 Maui 中，生成<code>IServiceProvider</code>的过程是框架自动完成的，只需要在<code>MauiProgram.cs</code>中将服务注册到<code>IServiceCollection</code>即可。</p>
 <h2 id=注册服务>注册服务</h2>
 <p>在注入服务前，必须先将服务注册到容器中。Maui 内置的容器<code>ISeviceProvider</code>位于<code>MauiApp</code>中。</p>
-<p>应用程序启动时，调用<code>MauiProgram.cs</code>中的 <code>CreateMauiApp</code>设置并构造<code>MauiApp</code>。首先调用 <code>CreateMauiAppBuilder</code>创建一个构造器，通过这个构造器完成创建<code>MauiApp</code>所需的全部设置，其中包括服务注册，最终通过<code>Build</code>方法构造 <code>MauiApp</code> 实例。</p>
+<p>应用程序启动时，调用<code>MauiProgram.cs</code>中的 <code>CreateMauiApp</code>设置并构造<code>MauiApp</code>。首先调用 <code>CreateBuilder</code>创建一个构造器，通过这个构造器完成创建<code>MauiApp</code>所需的全部设置，其中包括服务注册，最终通过<code>Build</code>方法构造 <code>MauiApp</code> 实例。</p>
 <pre><code>public static class MauiProgram
 {
   public static MauiApp CreateMauiApp()
