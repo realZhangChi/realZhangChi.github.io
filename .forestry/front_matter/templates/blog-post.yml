@@ -28,4 +28,4 @@ fields:
   label: categories
 pages:
 - content/posts/dependency-injection-in-maui/index.zh-cn.md
-- content/posts/use-httpclient-of-abp-in-maui/maui-abp-httpclient.md
+- content/posts/use-httpclient-of-abp-in-maui/index.zh-cn.md
