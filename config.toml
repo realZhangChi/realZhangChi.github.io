@@ -51,11 +51,11 @@ theme = "LoveIt"
     enable = true
     # Google Analytics
     [params.analytics.google]
-      id = "G-QW27WMQ83S"
+      id = "G-7XYGV0J1G6"
       # 是否匿名化用户 IP
       anonymizeIP = false
     [params.analytics.baidu]
-      id = "cfd310057297c08d0f7072e16e333a3a"
+      id = "260d395bb54739f609224ea4d367d1bf"
 
   [params.page]
     [params.page.toc]
