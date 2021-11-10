@@ -2,7 +2,7 @@ baseURL = "https://zhangchi.io/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "张驰的博客 | .NET Knowledge Base"
+title = "张驰的博客"
 theme = "LoveIt"
 
 
