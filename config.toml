@@ -1,8 +1,8 @@
-baseURL = "https://blog.zhangchi.fun/"
+baseURL = "https://zhangchi.io/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "张驰的博客"
+title = "张驰的博客 | .NET Knowledge Base"
 theme = "LoveIt"
 
 
@@ -154,7 +154,7 @@ theme = "LoveIt"
     pre = ""
     post = ""
     name = "关于我"
-    url = "https://profile.zhangchi.fun"
+    url = "https://profile.zhangchi.io"
     title = ""
     weight = 6
 
