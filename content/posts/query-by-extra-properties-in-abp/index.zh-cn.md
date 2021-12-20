@@ -11,8 +11,8 @@ title = "query-by-extra-properties-in-abp"
 +++
 # Intro
 
-Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据库表的`ExtraProperties`字段中，因此无法直接将额外属性作为查询条件。这篇文章将详细描述如何来根据额外属性进行查询。
+Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。额外属性是以json对象的形式存储在数据库表的`ExtraProperties`字段中，因此无法直接将额外属性作为查询条件。这篇文章将详细描述如何来根据额外属性进行查询。
 
-# Entity Framework Core数据库映射
+# 通过EF.Functions
 
-直接对ExtraProperties属性进行模糊查询，会存在性能问题，因此对于可能会作为存储查询条件的额外属性，需要将其映射为数据库表中单独的一列。
+EF Core通过定义`EF.Functions`扩展方法来调用某些数据库函数，`JsonContains`就是其中之一。`JsonContains`可判断值为Json对象格式的某一列中，是否包含指定Json对象。在Abp中，当需要以额外属性作为条件进行查询时，可在`EntityFrameworkCore`的仓储中调用`JsonContains`来实现。
