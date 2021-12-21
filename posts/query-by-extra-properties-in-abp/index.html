@@ -4,19 +4,19 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>如何在Maui中使用依赖注入 - 张驰的博客</title><meta name=Description content="如何在Maui中使用依赖注入"><meta property="og:title" content="如何在Maui中使用依赖注入">
-<meta property="og:description" content="如何在Maui中使用依赖注入">
+<title>在Abp中通过ExtraProperties进行查询 - 张驰的博客</title><meta name=Description content=".NET Core、Abp框架、领域驱动、设计模式及程序架构等知识分享"><meta property="og:title" content="在Abp中通过ExtraProperties进行查询">
+<meta property="og:description" content="Intro Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/dependency-injection-in-maui/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-10-27T10:31:05+00:00">
-<meta property="article:modified_time" content="2021-10-27T10:31:05+00:00">
+<meta property="og:url" content="https://zhangchi.io/posts/query-by-extra-properties-in-abp/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-12-17T08:16:35+00:00">
+<meta property="article:modified_time" content="2021-12-17T08:16:35+00:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="如何在Maui中使用依赖注入">
-<meta name=twitter:description content="如何在Maui中使用依赖注入">
+<meta name=twitter:title content="在Abp中通过ExtraProperties进行查询">
+<meta name=twitter:description content="Intro Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据">
 <meta name=application-name content="张驰的博客">
 <meta name=apple-mobile-web-app-title content="张驰的博客"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/dependency-injection-in-maui/><link rel=prev href=https://zhangchi.io/posts/lightweightabp/><link rel=next href=https://zhangchi.io/posts/query-by-extra-properties-in-abp/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"如何在Maui中使用依赖注入","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/dependency-injection-in-maui\/"},"genre":"posts","keywords":"dependency injection, maui","wordcount":1295,"url":"https:\/\/zhangchi.io\/posts\/dependency-injection-in-maui\/","datePublished":"2021-10-27T10:31:05+00:00","dateModified":"2021-10-27T10:31:05+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"如何在Maui中使用依赖注入"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/query-by-extra-properties-in-abp/><link rel=prev href=https://zhangchi.io/posts/dependency-injection-in-maui/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"在Abp中通过ExtraProperties进行查询","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/query-by-extra-properties-in-abp\/"},"genre":"posts","keywords":"abp","wordcount":797,"url":"https:\/\/zhangchi.io\/posts\/query-by-extra-properties-in-abp\/","datePublished":"2021-12-17T08:16:35+00:00","dateModified":"2021-12-17T08:16:35+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":""}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -55,10 +55,10 @@
 <div class=container><div class=toc id=toc-auto>
 <h2 class=toc-title>目录</h2>
 <div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">如何在Maui中使用依赖注入</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/maui/><i class="far fa-folder fa-fw"></i>maui</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-27>2021-10-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1295 字&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/posts/dependency-injection-in-maui/ class=leancloud_visitors data-flag-title=如何在Maui中使用依赖注入>
+</div><article class="page single"><h1 class="single-title animated flipInX">在Abp中通过ExtraProperties进行查询</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp/><i class="far fa-folder fa-fw"></i>Abp</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-17>2021-12-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 797 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=/posts/query-by-extra-properties-in-abp/ class=leancloud_visitors data-flag-title=在Abp中通过ExtraProperties进行查询>
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
@@ -66,81 +66,46 @@
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#容器>容器</a></li>
-<li><a href=#注册服务>注册服务</a></li>
-<li><a href=#注入服务>注入服务</a></li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>依赖关系注入(DI)是 .NET 中的一等公民，如果熟悉 .NET 开发，对依赖注入则不会陌生。依赖关系注入是一种在类及其依赖关系之间实现控制反转(IoC)的技术，其中要反转的是获取依赖项的过程。通过依赖关系注入，分离了对象构建和对象使用的关注点，提高了代码的可读性和重用性。</p>
-<p>.NET Multi-platform App UI 框架支持依赖关系注入软件设计模式。在 MVVM 模式中，依赖注入通常用于注册和解析视图模型，并注册和解析视图模型所依赖的服务。</p>
-<h2 id=容器>容器</h2>
-<p>容器负责构造并注入服务，管理服务的生命周期。拥有依赖项的类，只需关注对于依赖项的使用，无需关注依赖项的创建与管理——这个过程由容器进行处理。.NET 中提供了内置的服务容器<code>IServiceProvider</code>，可以使用<code>IServiceProvider</code>来解析依赖的服务。</p>
-<p>一般地，在应用程序启动时，将服务注册到<code>IServiceCollection</code>中，然后调用<code>BuildServiceProvider</code>扩展方法，即可得到<code>IServiceProvider</code>容器。</p>
-<p>在 Maui 中，生成<code>IServiceProvider</code>的过程是框架自动完成的，只需要在<code>MauiProgram.cs</code>中将服务注册到<code>IServiceCollection</code>即可。</p>
-<h2 id=注册服务>注册服务</h2>
-<p>在注入服务前，必须先将服务注册到容器中。Maui 内置的容器<code>ISeviceProvider</code>位于<code>MauiApp</code>中。</p>
-<p>应用程序启动时，调用<code>MauiProgram.cs</code>中的 <code>CreateMauiApp</code>设置并构造<code>MauiApp</code>。首先调用 <code>CreateBuilder</code>创建一个构造器，通过这个构造器完成创建<code>MauiApp</code>所需的全部设置，其中包括服务注册，最终通过<code>Build</code>方法构造 <code>MauiApp</code> 实例。</p>
-<pre><code>public static class MauiProgram
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div>
+</div><div class=content id=content><h1 id=intro>Intro</h1>
+<p>Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据库表的<code>ExtraProperties</code>字段中，因此无法直接将额外属性作为查询条件。对于额外属性，Abp支持将其通过Entity Framework Core映射为数据库表的单独字段，因此我们可以利用数据库映射来实现根据额外属性进行查询。</p>
+<h1 id=数据库映射>数据库映射</h1>
+<p>将额外属性映射为数据库表字段非常容易。</p>
+<p>通过Abp启动模板创建的解决方案中，预先生成了处理数据库映射的<code>*EfCoreEntityExtensionMappings</code>类，它位于*.EntityFrameworkCore项目中。在项目启动时，将会执行其中的<code>Configure</code>方法，通过<code>OneTimeRunner</code>执行一次操作。</p>
+<p>在<code>OneTimeRunner.Run()</code>方法的Action参数中，通过<code>ObjectExtensionManager</code>来处理额外属性到数据库表字段的映射。</p>
+<pre><code>ObjectExtensionManager.Instance
+    .AddOrUpdateProperty&lt;IdentityUser, string&gt;(
+        &quot;Gender&quot;,
+        options =&gt;
+        {
+            options.MapEfCore((b, p) =&gt;
+            {
+                b.HasIndex(&quot;Gender&quot;);
+                p.IsRequired().HasDefaultValue(string.Empty);
+                p.HasMaxLength(8);
+            });
+        }
+    );
+</code></pre>
+<p>在<code>AddOrUpdateProperty</code>方法中还可以设置表字段长度等，也可设置表的属性如索引。</p>
+<p>添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为<code>Gender</code>的字段。</p>
+<h1 id=查询>查询</h1>
+<p>在*.EntityFramework.Core项目中创建仓储，并创建查询方法。</p>
+<pre><code>public async Task&lt;IdentityUser&gt; GetUserByGenderAsync(string gender)
 {
-  public static MauiApp CreateMauiApp()
-  {
-    var builder = MauiApp.CreateBuilder();
-
-    builder
-    .UseMauiApp&lt;App&gt;()
-    .ConfigureFonts(fonts =&gt;
-    {
-    	fonts.AddFont(&quot;OpenSans-Regular.ttf&quot;, &quot;OpenSansRegular&quot;);
-    });
-
-    return builder.Build();
-  }
+    return await (await GetDbSetAsync())
+        .FromSqlRaw($&quot;select * from AbpUsers where Gender == '{gender}'&quot;)
+        .FirstOrDefaultAsync();
 }
 </code></pre>
-<p>在.NET中注册服务，就是在应用程序启动时，将服务注册到 <code>IServiceCollection</code> 中。在<code>MauiAppBuilder</code>中，存在<code>IServiceCollection</code>类型的属性<code>Services</code>。因此，在 Maui 应用程序中注册服务，只需在构造<code>MauiApp</code>时将服务添加到<code>MauiAppBuilder</code>中的 <code>Services</code>中。</p>
-<pre><code>public static MauiApp CreateMauiApp()
-{
-    var builder = MauiApp.CreateBuilder();
-
-    ...
-
-    builder.Services.AddSingleton&lt;MainPage&gt;();
-
-    return builder.Build();
-}
-</code></pre>
-<p>在进行依赖关系注入时，需要从容器中解析服务。通过调用<code>IServiceCollection</code>的扩展方法 <code>BuildServiceProvider</code>可以构造获取 <code>IServiceProvider</code>容器实例。</p>
-<p>调用<code>MauiAppBuilder</code>的<code>Build</code>方法获取 <code>MauiApp</code>实例时，将调用<code>BuildServiceProvider</code>，构造出<code>IServiceProvider</code>并赋值给<code>MauiApp</code>中的<code>Services</code>属性。</p>
-<h2 id=注入服务>注入服务</h2>
-<p>注册服务后，可以通过容器来解析服务实例，也可将其作为依赖项进行注入。</p>
-<p>依赖关系注入通常有构造函数注入、属性注入与方法注入三种方式。在 Maui 中，一般会使用构造方法注入依赖项，在平台代码中有时也会直接通过<code>MauiApp</code>实例来解析依赖项。</p>
-<pre><code>public partial class App : Application
-{
-    public App(MainPage mainPage)
-    {
-        InitializeComponent();
-
-        MainPage = mainPage;
-    }
-}
-</code></pre>
-<p>将<code>MainPage</code>注册到容器中后，可以通过构造函数注入的方式将其作为依赖项注入。在特定平台的代码中，有时无法使用构造函数注入，这时可以直接通过容器解析依赖项。</p>
-<pre><code>public class MyActivity : MauiAppCompatActivity
-{
-    private readonly IHelloService _helloService;
-
-    public MyActivity()
-    {
-        _helloService = MauiApplication.Current.Services.GetRequiredService&lt;IHelloService&gt;();
-    }
-}</code></pre>
+<p>调用方法<code>GetUserByGenderAsync</code>并传入<code>gender</code>参数即可根据<code>Gender</code>进行查询。</p>
+<h1 id=summary>Summary</h1>
+<p>在这篇文章中，描述了如何对额外属性进行数据库映射，以及将额外属性作为查询条件检索数据。值得注意的是，将额外属性作为查询条件并不是最佳实践，如果可能的话应当尽量避免。此外，如需将拥有额外属性的<code>Entity</code>通过AutoMapper映射为<code>Dto</code>，不要忘记对<code>Dto</code>进行扩展并配置<code>AutoMapperProfile</code>。</p>
 </div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
-<span>更新于 2021-10-27</span>
+<span>更新于 2021-12-17</span>
 </div>
 <div class=post-info-license></div>
 </div>
@@ -152,13 +117,12 @@
 </div>
 </div>
 <div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/dependency-injection/>dependency injection</a>,&nbsp;<a href=/tags/maui/>maui</a></section>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/abp/>Abp</a></section>
 <section>
 <span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
 </section>
 </div>
-<div class=post-nav><a href=/posts/lightweightabp/ class=prev rel=prev title=Abp太重了？轻量化Abp框架><i class="fas fa-angle-left fa-fw"></i>Abp太重了？轻量化Abp框架</a>
-<a href=/posts/query-by-extra-properties-in-abp/ class=next rel=next title=在Abp中通过ExtraProperties进行查询>在Abp中通过ExtraProperties进行查询<i class="fas fa-angle-right fa-fw"></i></a></div>
+<div class=post-nav><a href=/posts/dependency-injection-in-maui/ class=prev rel=prev title=如何在Maui中使用依赖注入><i class="fas fa-angle-left fa-fw"></i>如何在Maui中使用依赖注入</a></div>
 </div>
 <div id=comments><div id=valine class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
