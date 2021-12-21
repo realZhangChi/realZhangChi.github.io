@@ -66,10 +66,17 @@
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div>
-</div><div class=content id=content><h1 id=intro>Intro</h1>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#intro>Intro</a></li>
+<li><a href=#数据库映射>数据库映射</a></li>
+<li><a href=#查询>查询</a></li>
+<li><a href=#summary>Summary</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><h2 id=intro>Intro</h2>
 <p>Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据库表的<code>ExtraProperties</code>字段中，因此无法直接将额外属性作为查询条件。对于额外属性，Abp支持将其通过Entity Framework Core映射为数据库表的单独字段，因此我们可以利用数据库映射来实现根据额外属性进行查询。</p>
-<h1 id=数据库映射>数据库映射</h1>
+<h2 id=数据库映射>数据库映射</h2>
 <p>将额外属性映射为数据库表字段非常容易。</p>
 <p>通过Abp启动模板创建的解决方案中，预先生成了处理数据库映射的<code>*EfCoreEntityExtensionMappings</code>类，它位于*.EntityFrameworkCore项目中。在项目启动时，将会执行其中的<code>Configure</code>方法，通过<code>OneTimeRunner</code>执行一次操作。</p>
 <p>在<code>OneTimeRunner.Run()</code>方法的Action参数中，通过<code>ObjectExtensionManager</code>来处理额外属性到数据库表字段的映射。</p>
@@ -89,7 +96,7 @@
 </code></pre>
 <p>在<code>AddOrUpdateProperty</code>方法中还可以设置表字段长度等，也可设置表的属性如索引。</p>
 <p>添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为<code>Gender</code>的字段。</p>
-<h1 id=查询>查询</h1>
+<h2 id=查询>查询</h2>
 <p>在*.EntityFramework.Core项目中创建仓储，并创建查询方法。</p>
 <pre><code>public async Task&lt;IdentityUser&gt; GetUserByGenderAsync(string gender)
 {
@@ -99,7 +106,7 @@
 }
 </code></pre>
 <p>调用方法<code>GetUserByGenderAsync</code>并传入<code>gender</code>参数即可根据<code>Gender</code>进行查询。</p>
-<h1 id=summary>Summary</h1>
+<h2 id=summary>Summary</h2>
 <p>在这篇文章中，描述了如何对额外属性进行数据库映射，以及将额外属性作为查询条件检索数据。值得注意的是，将额外属性作为查询条件并不是最佳实践，如果可能的话应当尽量避免。此外，如需将拥有额外属性的<code>Entity</code>通过AutoMapper映射为<code>Dto</code>，不要忘记对<code>Dto</code>进行扩展并配置<code>AutoMapperProfile</code>。</p>
 </div><div class=post-footer id=post-footer>
 <div class=post-info>
