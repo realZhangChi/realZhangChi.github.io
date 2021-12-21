@@ -5,7 +5,7 @@ categories = ["abp"]
 date = 2021-12-17T08:16:35Z
 description = ""
 tags = ["abp"]
-title = "在Abp中通过ExtraProperties进行查询"
+title = "在Abp中根据ExtraProperties进行查询"
 
 +++
 # Intro
