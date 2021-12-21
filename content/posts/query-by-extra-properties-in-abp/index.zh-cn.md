@@ -4,9 +4,8 @@ authorLink = "https://github.com/realZhangChi"
 categories = ["abp"]
 date = 2021-12-17T08:16:35Z
 description = ""
-draft = true
 tags = ["abp"]
-title = "query-by-extra-properties-in-abp"
+title = "在Abp中通过ExtraProperties进行查询"
 
 +++
 # Intro
@@ -22,14 +21,36 @@ Abp框架提供了实体扩展系统，允许在不对类的定义进行更改�
 在`OneTimeRunner.Run()`方法的Action参数中，通过`ObjectExtensionManager`来处理额外属性到数据库表字段的映射。
 
     ObjectExtensionManager.Instance
-        .AddOrUpdateProperty<IdentityUser, int>(
+        .AddOrUpdateProperty<IdentityUser, string>(
             "Gender",
             options =>
             {
-                options.MapEfCore((_, p) => p.HasMaxLength(8));
+                options.MapEfCore((b, p) =>
+                {
+                    b.HasIndex("Gender");
+                    p.IsRequired().HasDefaultValue(string.Empty);
+                    p.HasMaxLength(8);
+                });
             }
         );
 
-通过以上代码即可完成额外属性到表字段的映射。添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为`Gender`的字段。
+在`AddOrUpdateProperty`方法中还可以设置表字段长度等，也可设置表的属性如索引。
+
+添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为`Gender`的字段。
 
 # 查询
+
+在*.EntityFramework.Core项目中创建仓储，并创建查询方法。
+
+    public async Task<IdentityUser> GetUserByGenderAsync(string gender)
+    {
+        return await (await GetDbSetAsync())
+            .FromSqlRaw($"select * from AbpUsers where Gender == '{gender}'")
+            .FirstOrDefaultAsync();
+    }
+
+调用方法`GetUserByGenderAsync`并传入`gender`参数即可根据`Gender`进行查询。
+
+# Summary
+
+在这篇文章中，描述了如何对额外属性进行数据库映射，以及将额外属性作为查询条件检索数据。值得注意的是，将额外属性作为查询条件并不是最佳实践，如果可能的话应当尽量避免。此外，如需将拥有额外属性的`Entity`通过AutoMapper映射为`Dto`，不要忘记对`Dto`进行扩展并配置`AutoMapperProfile`。
