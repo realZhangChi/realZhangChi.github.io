@@ -3,7 +3,7 @@ author = "张驰"
 authorLink = "https://github.com/realZhangChi"
 categories = ["abp"]
 date = 2021-12-17T08:16:35Z
-description = ""
+description = "在Abp框架中，如何将ExtraProperties额外属性作为查询条件进行数据检索。"
 tags = ["abp"]
 title = "在Abp中根据ExtraProperties进行查询"
 
