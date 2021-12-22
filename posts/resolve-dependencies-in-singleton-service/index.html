@@ -4,19 +4,19 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>禁用ASP.NET Core开发环境的HTTPS - 张驰的博客</title><meta name=Description content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。"><meta property="og:title" content="禁用ASP.NET Core开发环境的HTTPS">
-<meta property="og:description" content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。">
+<title>在单例服务中解析依赖项 - 张驰的博客</title><meta name=Description content="如何在生命周期为Singleton的服务中，解析生命周期为Scoped或Transient的依赖项。 "><meta property="og:title" content="在单例服务中解析依赖项">
+<meta property="og:description" content="如何在生命周期为Singleton的服务中，解析生命周期为Scoped或Transient的依赖项。 ">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/configure-protocol-and-port/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-12-22T04:33:11+00:00">
-<meta property="article:modified_time" content="2021-12-22T04:33:11+00:00">
+<meta property="og:url" content="https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-12-22T06:22:01+00:00">
+<meta property="article:modified_time" content="2021-12-22T06:22:01+00:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="禁用ASP.NET Core开发环境的HTTPS">
-<meta name=twitter:description content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。">
+<meta name=twitter:title content="在单例服务中解析依赖项">
+<meta name=twitter:description content="如何在生命周期为Singleton的服务中，解析生命周期为Scoped或Transient的依赖项。 ">
 <meta name=application-name content="张驰的博客">
 <meta name=apple-mobile-web-app-title content="张驰的博客"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/configure-protocol-and-port/><link rel=prev href=https://zhangchi.io/posts/query-by-extra-properties-in-abp/><link rel=next href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"禁用ASP.NET Core开发环境的HTTPS","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/configure-protocol-and-port\/"},"genre":"posts","keywords":"ASP.NET Core","wordcount":563,"url":"https:\/\/zhangchi.io\/posts\/configure-protocol-and-port\/","datePublished":"2021-12-22T04:33:11+00:00","dateModified":"2021-12-22T04:33:11+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=prev href=https://zhangchi.io/posts/configure-protocol-and-port/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"在单例服务中解析依赖项","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/resolve-dependencies-in-singleton-service\/"},"genre":"posts","keywords":"dependency injection, .NET","wordcount":420,"url":"https:\/\/zhangchi.io\/posts\/resolve-dependencies-in-singleton-service\/","datePublished":"2021-12-22T06:22:01+00:00","dateModified":"2021-12-22T06:22:01+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"如何在生命周期为Singleton的服务中，解析生命周期为Scoped或Transient的依赖项。 "}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -55,10 +55,10 @@
 <div class=container><div class=toc id=toc-auto>
 <h2 class=toc-title>目录</h2>
 <div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">禁用ASP.NET Core开发环境的HTTPS</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/asp.net-core/><i class="far fa-folder fa-fw"></i>ASP.NET Core</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-22>2021-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 563 字&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=/posts/configure-protocol-and-port/ class=leancloud_visitors data-flag-title="禁用ASP.NET Core开发环境的HTTPS">
+</div><article class="page single"><h1 class="single-title animated flipInX">在单例服务中解析依赖项</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/.net/><i class="far fa-folder fa-fw"></i>.NET</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-22>2021-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 420 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id=/posts/resolve-dependencies-in-singleton-service/ class=leancloud_visitors data-flag-title=在单例服务中解析依赖项>
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
@@ -66,78 +66,31 @@
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div>
-</div><div class=content id=content><p>在开发ASP.NET Core的项目时，默认地是使用HTTPS安全协议的。有时候可能不希望在本地的开发环境中使用HTTPS，更改这一默认行为非常简单。</p>
-<ol>
-<li>
-<p>移除<code>UseHttpsRedirection</code>中间件</p>
-<p><code>app.UseHttpsRedirection</code>中间件会将所有HTTP请求重定向到HTTPS，因此首先我们需要将其删除。中间件配置一般在Program.cs或Startup.cs中。</p>
-</li>
-<li>
-<p>配置launchSettings.json</p>
-<p>launchSettings.json在项目的Properties目录下，它只对本地的<strong>开发环境</strong>生效，部署时会被忽略。通过<code>dotnet new</code>或者Visual Studio生成的ASP.NET Core项目会创建launchSettings.json文件。</p>
-<pre><code>{
-  &quot;iisSettings&quot;: {
-    &quot;windowsAuthentication&quot;: false,
-    &quot;anonymousAuthentication&quot;: true,
-    &quot;iisExpress&quot;: {
-      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
-      &quot;sslPort&quot;: 44324
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#解决方案>解决方案</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p>在依赖注入系统中，依赖项的生命周期通常分为瞬时的（Transient）、作用域的（Scoped）、单例的（Singleton）三种。单例生命周期的服务通常会在首次调用时创建，后续每此调用都会使用同一实例。</p>
+<p>单例服务若依赖其他生命周期为瞬时或作用域的服务时，无法通过构造函数注入依赖项。构造函数只会在创建实例时调用一次，若将依赖项通过构造函数注入并赋值给单例服务的本地成员，依赖项的生命周期结束后销毁后，指向依赖项的本地成员将会指向空引用，且永远不会再次被赋值（只在调用构造函数时赋值）。运行时会抛出异常<code>Cannot consume scoped service 'XXX' from singleton 'XXX'.</code>。</p>
+<h2 id=解决方案>解决方案</h2>
+<p>在依赖瞬时生命周期或作用域生命周期依赖项的单例服务中，不直接通过构造函数注入依赖项，而是注入<code>IServiceScopeFactory</code>，在需要用到依赖项的方法中，通过<code>IServiceScopeFactory</code>创建作用域并解析依赖项。</p>
+<pre><code>public class MySingletonService : IMySingletonService
+{
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    public MySingletonService(IServiceScopeFactory scopeFactory)
+    {
+        _scopeFactory = scopeFactory;
     }
-  },
-  &quot;profiles&quot;: {
-    &quot;WebApplication1&quot;: {
-      &quot;commandName&quot;: &quot;Project&quot;,
-      &quot;dotnetRunMessages&quot;: true,
-      &quot;launchBrowser&quot;: true,
-      &quot;applicationUrl&quot;: &quot;https://localhost:7072;http://localhost:5072&quot;,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    },
-    &quot;IIS Express&quot;: {
-      &quot;commandName&quot;: &quot;IISExpress&quot;,
-      &quot;launchBrowser&quot;: true,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
+    
+    public void Scoped()
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService&lt;MyDbContext&gt;();
     }
-  }
 }
 </code></pre>
-<p>将<code>applicationUrl</code>从https更改为http即可更改默认的应用启动Url，若使用IIS启动，还需将<code>iisSettings</code>中的<code>sslPort</code>设为0。</p>
-<pre><code>{
-  &quot;iisSettings&quot;: {
-    &quot;windowsAuthentication&quot;: false,
-    &quot;anonymousAuthentication&quot;: true,
-    &quot;iisExpress&quot;: {
-      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
-      &quot;sslPort&quot;: 0
-    }
-  },
-  &quot;profiles&quot;: {
-    &quot;WebApplication1&quot;: {
-      &quot;commandName&quot;: &quot;Project&quot;,
-      &quot;dotnetRunMessages&quot;: true,
-      &quot;launchBrowser&quot;: true,
-      &quot;applicationUrl&quot;: &quot;http://localhost:5072&quot;,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    },
-    &quot;IIS Express&quot;: {
-      &quot;commandName&quot;: &quot;IISExpress&quot;,
-      &quot;launchBrowser&quot;: true,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    }
-  }
-}
-</code></pre>
-</li>
-</ol>
-<p>此外，在launchSettings.json中，也可以通过<code>applicationUrl</code>更改应用启动的端口号。</p>
 </div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
@@ -154,13 +107,12 @@
 </div>
 </div>
 <div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/asp.net-core/>ASP.NET Core</a></section>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/dependency-injection/>dependency injection</a>,&nbsp;<a href=/tags/.net/>.NET</a></section>
 <section>
 <span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
 </section>
 </div>
-<div class=post-nav><a href=/posts/query-by-extra-properties-in-abp/ class=prev rel=prev title=在Abp中根据ExtraProperties进行查询><i class="fas fa-angle-left fa-fw"></i>在Abp中根据ExtraProperties进行查询</a>
-<a href=/posts/resolve-dependencies-in-singleton-service/ class=next rel=next title=在单例服务中解析依赖项>在单例服务中解析依赖项<i class="fas fa-angle-right fa-fw"></i></a></div>
+<div class=post-nav><a href=/posts/configure-protocol-and-port/ class=prev rel=prev title="禁用ASP.NET Core开发环境的HTTPS"><i class="fas fa-angle-left fa-fw"></i>禁用ASP.NET Core开发环境的HTTPS</a></div>
 </div>
 <div id=comments><div id=valine class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
