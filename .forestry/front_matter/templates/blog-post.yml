@@ -31,4 +31,5 @@ pages:
 - content/posts/dependency-injection-in-maui/index.zh-cn.md
 - content/posts/entropy-of-code/index.zh-cn.md
 - content/posts/query-by-extra-properties-in-abp/index.zh-cn.md
+- content/posts/resolve-dependencies-in-singleton-service/index.zh-cn.md
 - content/posts/use-httpclient-of-abp-in-maui/index.zh-cn.md
