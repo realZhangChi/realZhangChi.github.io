@@ -2,7 +2,7 @@ baseURL = "https://zhangchi.io/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "张驰的博客"
+title = "ZhangChi.io"
 theme = "LoveIt"
 
 
@@ -20,7 +20,7 @@ theme = "LoveIt"
     [params.home.profile]
       enable = true
       # Gravatar 邮箱，用于优先在主页显示的头像
-      gravatarEmail = ""
+      gravatarEmail = "zliming@outlook.com"
       # 主页显示头像的 URL
       avatarURL = "/images/avatar.jpg"
       # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
@@ -109,9 +109,9 @@ theme = "LoveIt"
     # 网站创立年份
     since = 2021
     # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
-    icp = "<a href='https://beian.miit.gov.cn/' target='_blank'>鲁ICP备2021031664</a>"
+    # icp = "<a href='https://beian.miit.gov.cn/' target='_blank'>鲁ICP备2021031664</a>"
     # 许可协议信息 (支持 HTML 格式)
-    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+    # license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
 [menu]
   [[menu.main]]
