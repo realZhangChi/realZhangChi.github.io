@@ -2,7 +2,7 @@ baseURL = "https://zhangchi.io/"
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 hasCJKLanguage = true
-title = "ZhangChi.io"
+title = "zhangchi.io"
 theme = "LoveIt"
 
 
@@ -24,7 +24,7 @@ theme = "LoveIt"
       # 主页显示头像的 URL
       avatarURL = "/images/avatar.jpg"
       # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
-      title = "Chi's Blog"
+      title = "zhangchi.io"
       # 主页显示的网站副标题
       subtitle = "水之积也不厚，则其负大舟也无力；风之积也不厚，则其负大翼也无力。"
       # 是否为副标题显示打字机动画
