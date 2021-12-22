@@ -4,19 +4,19 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>在Abp中根据ExtraProperties进行查询 - 张驰的博客</title><meta name=Description content="在Abp框架中，如何将ExtraProperties额外属性作为查询条件进行数据检索。"><meta property="og:title" content="在Abp中根据ExtraProperties进行查询">
-<meta property="og:description" content="在Abp框架中，如何将ExtraProperties额外属性作为查询条件进行数据检索。">
+<title>禁用ASP.NET Core开发环境的HTTPS - 张驰的博客</title><meta name=Description content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。"><meta property="og:title" content="禁用ASP.NET Core开发环境的HTTPS">
+<meta property="og:description" content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/query-by-extra-properties-in-abp/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-12-17T08:16:35+00:00">
-<meta property="article:modified_time" content="2021-12-17T08:16:35+00:00">
+<meta property="og:url" content="https://zhangchi.io/posts/configure-protocol-and-port/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-12-22T04:33:11+00:00">
+<meta property="article:modified_time" content="2021-12-22T04:33:11+00:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="在Abp中根据ExtraProperties进行查询">
-<meta name=twitter:description content="在Abp框架中，如何将ExtraProperties额外属性作为查询条件进行数据检索。">
+<meta name=twitter:title content="禁用ASP.NET Core开发环境的HTTPS">
+<meta name=twitter:description content="配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。">
 <meta name=application-name content="张驰的博客">
 <meta name=apple-mobile-web-app-title content="张驰的博客"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/query-by-extra-properties-in-abp/><link rel=prev href=https://zhangchi.io/posts/dependency-injection-in-maui/><link rel=next href=https://zhangchi.io/posts/configure-protocol-and-port/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"在Abp中根据ExtraProperties进行查询","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/query-by-extra-properties-in-abp\/"},"genre":"posts","keywords":"abp","wordcount":797,"url":"https:\/\/zhangchi.io\/posts\/query-by-extra-properties-in-abp\/","datePublished":"2021-12-17T08:16:35+00:00","dateModified":"2021-12-17T08:16:35+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"在Abp框架中，如何将ExtraProperties额外属性作为查询条件进行数据检索。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/configure-protocol-and-port/><link rel=prev href=https://zhangchi.io/posts/query-by-extra-properties-in-abp/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"禁用ASP.NET Core开发环境的HTTPS","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/configure-protocol-and-port\/"},"genre":"posts","keywords":"ASP.NET Core","wordcount":563,"url":"https:\/\/zhangchi.io\/posts\/configure-protocol-and-port\/","datePublished":"2021-12-22T04:33:11+00:00","dateModified":"2021-12-22T04:33:11+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"配置在开发环境中使用HTTP而不是HTTPS，配置不同的端口号。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -55,10 +55,10 @@
 <div class=container><div class=toc id=toc-auto>
 <h2 class=toc-title>目录</h2>
 <div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">在Abp中根据ExtraProperties进行查询</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp/><i class="far fa-folder fa-fw"></i>Abp</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-17>2021-12-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 797 字&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=/posts/query-by-extra-properties-in-abp/ class=leancloud_visitors data-flag-title=在Abp中根据ExtraProperties进行查询>
+</div><article class="page single"><h1 class="single-title animated flipInX">禁用ASP.NET Core开发环境的HTTPS</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/asp.net-core/><i class="far fa-folder fa-fw"></i>ASP.NET Core</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-22>2021-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 563 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id=/posts/configure-protocol-and-port/ class=leancloud_visitors data-flag-title="禁用ASP.NET Core开发环境的HTTPS">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
@@ -66,51 +66,83 @@
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#数据库映射>数据库映射</a></li>
-<li><a href=#查询>查询</a></li>
-<li><a href=#总结>总结</a></li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>Abp框架提供了实体扩展系统，允许在不对类的定义进行更改的情况下，向对象中添加额外的属性。默认地，额外属性是以json对象的形式存储在数据库表的<code>ExtraProperties</code>字段中，因此无法直接将额外属性作为查询条件。对于额外属性，Abp支持将其通过Entity Framework Core映射为数据库表的单独字段，因此我们可以利用数据库映射来实现根据额外属性进行查询。</p>
-<h2 id=数据库映射>数据库映射</h2>
-<p>将额外属性映射为数据库表字段非常容易。</p>
-<p>通过Abp启动模板创建的解决方案中，预先生成了处理数据库映射的<code>*EfCoreEntityExtensionMappings</code>类，它位于*.EntityFrameworkCore项目中。在项目启动时，将会执行其中的<code>Configure</code>方法，通过<code>OneTimeRunner</code>执行一次操作。</p>
-<p>在<code>OneTimeRunner.Run()</code>方法的Action参数中，通过<code>ObjectExtensionManager</code>来处理额外属性到数据库表字段的映射。</p>
-<pre><code>ObjectExtensionManager.Instance
-    .AddOrUpdateProperty&lt;IdentityUser, string&gt;(
-        &quot;Gender&quot;,
-        options =&gt;
-        {
-            options.MapEfCore((b, p) =&gt;
-            {
-                b.HasIndex(&quot;Gender&quot;);
-                p.IsRequired().HasDefaultValue(string.Empty);
-                p.HasMaxLength(8);
-            });
-        }
-    );
-</code></pre>
-<p>在<code>AddOrUpdateProperty</code>方法中还可以设置表字段长度等，也可设置表的属性如索引。</p>
-<p>添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为<code>Gender</code>的字段。</p>
-<h2 id=查询>查询</h2>
-<p>在*.EntityFramework.Core项目中创建仓储，并创建查询方法。</p>
-<pre><code>public async Task&lt;IdentityUser&gt; GetUserByGenderAsync(string gender)
-{
-    return await (await GetDbSetAsync())
-        .FromSqlRaw($&quot;select * from AbpUsers where Gender == '{gender}'&quot;)
-        .FirstOrDefaultAsync();
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div>
+</div><div class=content id=content><p>在开发ASP.NET Core的项目时，默认地是使用HTTPS安全协议的。有时候可能不希望在本地的开发环境中使用HTTPS，更改这一默认行为非常简单。</p>
+<ol>
+<li>
+<p>移除<code>UseHttpsRedirection</code>中间件</p>
+<p><code>app.UseHttpsRedirection</code>中间件会将所有HTTP请求重定向到HTTPS，因此首先我们需要将其删除。中间件配置一般在Program.cs或Startup.cs中。</p>
+</li>
+<li>
+<p>配置launchSettings.json</p>
+<p>launchSettings.json在项目的Properties目录下，它只对本地的<strong>开发环境</strong>生效，部署时会被忽略。通过<code>dotnet new</code>或者Visual Studio生成的ASP.NET Core项目会创建launchSettings.json文件。</p>
+<pre><code>{
+  &quot;iisSettings&quot;: {
+    &quot;windowsAuthentication&quot;: false,
+    &quot;anonymousAuthentication&quot;: true,
+    &quot;iisExpress&quot;: {
+      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
+      &quot;sslPort&quot;: 44324
+    }
+  },
+  &quot;profiles&quot;: {
+    &quot;WebApplication1&quot;: {
+      &quot;commandName&quot;: &quot;Project&quot;,
+      &quot;dotnetRunMessages&quot;: true,
+      &quot;launchBrowser&quot;: true,
+      &quot;applicationUrl&quot;: &quot;https://localhost:7072;http://localhost:5072&quot;,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    },
+    &quot;IIS Express&quot;: {
+      &quot;commandName&quot;: &quot;IISExpress&quot;,
+      &quot;launchBrowser&quot;: true,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    }
+  }
 }
 </code></pre>
-<p>调用方法<code>GetUserByGenderAsync</code>并传入<code>gender</code>参数即可根据<code>Gender</code>进行查询。</p>
-<h2 id=总结>总结</h2>
-<p>在这篇文章中，描述了如何对额外属性进行数据库映射，以及将额外属性作为查询条件检索数据。值得注意的是，将额外属性作为查询条件并不是最佳实践，如果可能的话应当尽量避免。此外，如需将拥有额外属性的<code>Entity</code>通过AutoMapper映射为<code>Dto</code>，不要忘记对<code>Dto</code>进行扩展并配置<code>AutoMapperProfile</code>。</p>
+<p>将<code>applicationUrl</code>从https更改为http即可更改默认的应用启动Url，若使用IIS启动，还需将<code>iisSettings</code>中的<code>sslPort</code>设为0。</p>
+<pre><code>{
+  &quot;iisSettings&quot;: {
+    &quot;windowsAuthentication&quot;: false,
+    &quot;anonymousAuthentication&quot;: true,
+    &quot;iisExpress&quot;: {
+      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
+      &quot;sslPort&quot;: 0
+    }
+  },
+  &quot;profiles&quot;: {
+    &quot;WebApplication1&quot;: {
+      &quot;commandName&quot;: &quot;Project&quot;,
+      &quot;dotnetRunMessages&quot;: true,
+      &quot;launchBrowser&quot;: true,
+      &quot;applicationUrl&quot;: &quot;http://localhost:5072&quot;,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    },
+    &quot;IIS Express&quot;: {
+      &quot;commandName&quot;: &quot;IISExpress&quot;,
+      &quot;launchBrowser&quot;: true,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    }
+  }
+}
+</code></pre>
+</li>
+</ol>
+<p>此外，在launchSettings.json中，也可以通过<code>applicationUrl</code>更改应用启动的端口号。</p>
 </div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
-<span>更新于 2021-12-17</span>
+<span>更新于 2021-12-22</span>
 </div>
 <div class=post-info-license></div>
 </div>
@@ -122,13 +154,12 @@
 </div>
 </div>
 <div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/abp/>Abp</a></section>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/asp.net-core/>ASP.NET Core</a></section>
 <section>
 <span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
 </section>
 </div>
-<div class=post-nav><a href=/posts/dependency-injection-in-maui/ class=prev rel=prev title=如何在Maui中使用依赖注入><i class="fas fa-angle-left fa-fw"></i>如何在Maui中使用依赖注入</a>
-<a href=/posts/configure-protocol-and-port/ class=next rel=next title="禁用ASP.NET Core开发环境的HTTPS">禁用ASP.NET Core开发环境的HTTPS<i class="fas fa-angle-right fa-fw"></i></a></div>
+<div class=post-nav><a href=/posts/query-by-extra-properties-in-abp/ class=prev rel=prev title=在Abp中根据ExtraProperties进行查询><i class="fas fa-angle-left fa-fw"></i>在Abp中根据ExtraProperties进行查询</a></div>
 </div>
 <div id=comments><div id=valine class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
