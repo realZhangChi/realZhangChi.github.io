@@ -27,7 +27,6 @@ fields:
   name: categories
   label: categories
 pages:
-- content/posts/configure-the-scheme-and-port/index.zh-cn.md
 - content/posts/dependency-injection-in-maui/index.zh-cn.md
 - content/posts/entropy-of-code/index.zh-cn.md
 - content/posts/query-by-extra-properties-in-abp/index.zh-cn.md
