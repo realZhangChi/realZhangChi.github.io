@@ -27,6 +27,7 @@ fields:
   name: categories
   label: categories
 pages:
+- content/posts/abp-tutorial-create-project/index.zh-cn.md
 - content/posts/configure-protocol-and-port/index.zh-cn.md
 - content/posts/dependency-injection-in-maui/index.zh-cn.md
 - content/posts/entropy-of-code/index.zh-cn.md
