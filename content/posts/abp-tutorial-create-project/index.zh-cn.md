@@ -21,18 +21,47 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 ## 集成Abp
 
+### 第一个模块
+
 添加`Volo.Abp.Autofac`和`Volo.Abp.AspNetCore.Mvc` Nuget包引用至项目中，创建C#类文件命名为`BookStoreModule`更改代码如下：
 
-    using Volo.Abp.AspNetCore.Mvc;
-    using Volo.Abp.Modularity;
-    
-    namespace BookStore;
-    
     [DependsOn(
+        typeof(AbpAutofacModule),
         typeof(AbpAspNetCoreMvcModule))]
     public class BookStoreModule : AbpModule
     {
-        
+        public override void ConfigureServices(ServiceConfigurationContext context)
+        {
+            ConfigureSwaggerServices(context);
+        }
+    
+        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+        {
+            var app = context.GetApplicationBuilder();
+            var env = context.GetEnvironment();
+    
+            app.UseRouting();
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            app.UseConfiguredEndpoints();
+        }
+    
+    
+        private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
+        {
+            context.Services.AddSwaggerGen();
+        }
     }
 
 Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。
+
+在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在`ConfigureServices`方法中注册了Swagger相关服务。
+
+在应用程序启动时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的`OnApplicationInitialization`方法，通常在这个方法中会构建出中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。
+
+### 配置Abp应用
+
+Abp框架中定义了
