@@ -16,7 +16,7 @@
 <meta name=application-name content="zhangchi.io">
 <meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-create-project/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-1 创建项目","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-create-project\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1707,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-create-project\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目开始，添加Abp应用、模块来集成Abp框架。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-create-project/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-1 创建项目","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-create-project\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1696,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-create-project\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目开始，添加Abp应用、模块来集成Abp框架。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -57,7 +57,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-1 创建项目</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1707 字&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1696 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/posts/abp-tutorial-create-project/ class=leancloud_visitors data-flag-title="Abp极简教程-1 创建项目">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
@@ -89,99 +89,82 @@
 <p>首先需要添加<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code> Nuget包引用至项目中以集成Abp框架。</p>
 <h3 id=abp应用>Abp应用</h3>
 <p>Abp框架中定义了<code>IAbpApplication</code>应用，项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。将Program.cs更改如下：</p>
-<pre><code>var builder = WebApplication.CreateBuilder(args);
-builder.Host
-    .UseAutofac();
-builder.Services.AddApplication&lt;BookStoreModule&gt;(
-    options =&gt;
-    {
-        options.Services.ReplaceConfiguration(builder.Configuration);
-    });
-var app = builder.Build();
-app.InitializeApplication();
-await app.RunAsync();
-</code></pre>
-<p><code>AddApplication</code>扩展方法向依赖注入系统中中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为<code>BookStoreModule</code>的模块。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
+<span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
+    <span class=p>.</span><span class=n>UseAutofac</span><span class=p>();</span>
+<span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>BookStoreModule</span><span class=p>&gt;(</span>
+    <span class=n>options</span> <span class=p>=&gt;</span>
+    <span class=p>{</span>
+        <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
+    <span class=p>});</span>
+<span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
+<span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
+<span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
+</code></pre></div><p><code>AddApplication</code>扩展方法向依赖注入系统中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为<code>BookStoreModule</code>的模块。</p>
 <p><code>InitializeApplication</code>扩展方法初始化Abp应用，它将会根据模块的依赖关系初始化启动模块及其依赖的模块。</p>
 <h3 id=模块>模块</h3>
 <p>创建C#类文件命名为<code>BookStoreModule</code>更改代码如下：</p>
-<pre><code>[DependsOn(
-    typeof(AbpAutofacModule),
-    typeof(AbpAspNetCoreMvcModule))]
-public class BookStoreModule : AbpModule
-{
-    public override void ConfigureServices(ServiceConfigurationContext context)
-    {
-        ConfigureSwaggerServices(context);
-    }
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[DependsOn(
+</span><span class=na>    typeof(AbpAutofacModule),
+</span><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
+<span class=k>public</span> <span class=k>class</span> <span class=nc>BookStoreModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>context</span><span class=p>);</span>
+    <span class=p>}</span>
 
-    public override void OnApplicationInitialization(ApplicationInitializationContext context)
-    {
-        var app = context.GetApplicationBuilder();
-        var env = context.GetEnvironment();
+    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
+        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
 
-        app.UseRouting();
-        if (env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-        app.UseConfiguredEndpoints();
-    }
+        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
+        <span class=k>if</span> <span class=p>(</span><span class=n>env</span><span class=p>.</span><span class=n>IsDevelopment</span><span class=p>())</span>
+        <span class=p>{</span>
+            <span class=n>app</span><span class=p>.</span><span class=n>UseSwagger</span><span class=p>();</span>
+            <span class=n>app</span><span class=p>.</span><span class=n>UseSwaggerUI</span><span class=p>();</span>
+        <span class=p>}</span>
+        <span class=n>app</span><span class=p>.</span><span class=n>UseConfiguredEndpoints</span><span class=p>();</span>
+    <span class=p>}</span>
 
 
-    private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
-    {
-        context.Services.AddSwaggerGen();
-    }
-}
-</code></pre>
-<p>Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自<code>AbpModule</code>的类，并以<code>Module</code>后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过<code>DependsOn</code>特性来定义。</p>
+    <span class=k>private</span> <span class=k>static</span> <span class=k>void</span> <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddSwaggerGen</span><span class=p>();</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自<code>AbpModule</code>的类，并以<code>Module</code>后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过<code>DependsOn</code>特性来定义。每个C#项目只应定义一个模块。</p>
 <p>在<code>ConfigureServices</code>方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在<code>ConfigureServices</code>方法中注册了Swagger相关服务。<code>ConfigureServices</code>方法将在实例化Abp应用的时候调用。</p>
 <p>初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的<code>OnApplicationInitialization</code>方法，通常在这个方法中会构建中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。</p>
 <h3 id=日志>日志</h3>
 <p>添加Nuget包引用<code>Serilog.AspNetCore</code>、<code>Serilog.Sinks.Async</code>到项目中，并更改Program.cs。</p>
-<pre><code>Log.Logger = new LoggerConfiguration()
-#if DEBUG
-    .MinimumLevel.Debug()
-#else
-    .MinimumLevel.Information()
-#endif
-    .MinimumLevel.Override(&quot;Microsoft&quot;, LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.Async(c =&gt; c.File(&quot;Logs/logs-.txt&quot;, rollingInterval: RollingInterval.Day))
-#if DEBUG
-    .WriteTo.Async(c =&gt; c.Console())
-#endif
-    .CreateLogger();
-
-try
-{
-    var builder = WebApplication.CreateBuilder(args);
-    builder.Host
-        .UseAutofac()
-        .UseSerilog();
-    builder.Services.AddApplication&lt;BookStoreModule&gt;(
-        options =&gt;
-        {
-            options.Services.ReplaceConfiguration(builder.Configuration);
-        });
-    var app = builder.Build();
-    app.InitializeApplication();
-    await app.RunAsync();
-    return 0;
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, &quot;Host terminated unexpectedly!&quot;);
-    return 1;
-}
-finally
-{
-    Log.CloseAndFlush();
-}
-</code></pre>
-<p>在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过<code>try</code>块包括起来捕获异常，在<code>catch</code>块中记录启动异常日志，在<code>finally</code>块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要<code>UseSerilog</code>扩展方法注册Serilog日志服务（第20行代码）。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>try</span>
+<span class=p>{</span>
+    <span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
+    <span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
+        <span class=p>.</span><span class=n>UseAutofac</span><span class=p>()</span>
+        <span class=p>.</span><span class=n>UseSerilog</span><span class=p>();</span>
+    <span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>BookStoreModule</span><span class=p>&gt;(</span>
+        <span class=n>options</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
+        <span class=p>});</span>
+    <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
+    <span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
+    <span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
+    <span class=k>return</span> <span class=m>0</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=k>catch</span> <span class=p>(</span><span class=n>Exception</span> <span class=n>ex</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>Log</span><span class=p>.</span><span class=n>Fatal</span><span class=p>(</span><span class=n>ex</span><span class=p>,</span> <span class=s>&#34;Host terminated unexpectedly!&#34;</span><span class=p>);</span>
+    <span class=k>return</span> <span class=m>1</span><span class=p>;</span>
+<span class=p>}</span>
+<span class=k>finally</span>
+<span class=p>{</span>
+    <span class=n>Log</span><span class=p>.</span><span class=n>CloseAndFlush</span><span class=p>();</span>
+<span class=p>}</span>
+</code></pre></div><p>在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过<code>try</code>块包括起来捕获异常，在<code>catch</code>块中记录启动异常日志，在<code>finally</code>块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要<code>UseSerilog</code>扩展方法注册Serilog日志服务（第20行代码）。</p>
 <h3 id=启动>启动</h3>
 <p>启动应用此时应导航到Swagger页面并可调用<code>WeatherForecast</code>接口获取数据。</p>
 <h2 id=总结>总结</h2>
