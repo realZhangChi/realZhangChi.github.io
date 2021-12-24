@@ -26,19 +26,21 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。将Program.cs更改如下：
 
-    var builder = WebApplication.CreateBuilder(args);
-    builder.Host
-        .UseAutofac();
-    builder.Services.AddApplication<BookStoreModule>(
-        options =>
-        {
-            options.Services.ReplaceConfiguration(builder.Configuration);
-        });
-    var app = builder.Build();
-    app.InitializeApplication();
-    await app.RunAsync();
+```C#
+var builder = WebApplication.CreateBuilder(args);
+builder.Host
+    .UseAutofac();
+builder.Services.AddApplication<BookStoreModule>(
+    options =>
+    {
+        options.Services.ReplaceConfiguration(builder.Configuration);
+    });
+var app = builder.Build();
+app.InitializeApplication();
+await app.RunAsync();
+```
 
-`AddApplication`扩展方法向依赖注入系统中中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`BookStoreModule`的模块。
+`AddApplication`扩展方法向依赖注入系统中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`BookStoreModule`的模块。
 
 `InitializeApplication`扩展方法初始化Abp应用，它将会根据模块的依赖关系初始化启动模块及其依赖的模块。
 
@@ -46,38 +48,40 @@ Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并
 
 创建C#类文件命名为`BookStoreModule`更改代码如下：
 
-    [DependsOn(
-        typeof(AbpAutofacModule),
-        typeof(AbpAspNetCoreMvcModule))]
-    public class BookStoreModule : AbpModule
+```C#
+[DependsOn(
+    typeof(AbpAutofacModule),
+    typeof(AbpAspNetCoreMvcModule))]
+public class BookStoreModule : AbpModule
+{
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            ConfigureSwaggerServices(context);
-        }
-    
-        public override void OnApplicationInitialization(ApplicationInitializationContext context)
-        {
-            var app = context.GetApplicationBuilder();
-            var env = context.GetEnvironment();
-    
-            app.UseRouting();
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            app.UseConfiguredEndpoints();
-        }
-    
-    
-        private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
-        {
-            context.Services.AddSwaggerGen();
-        }
+        ConfigureSwaggerServices(context);
     }
 
-Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。
+    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    {
+        var app = context.GetApplicationBuilder();
+        var env = context.GetEnvironment();
+
+        app.UseRouting();
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        app.UseConfiguredEndpoints();
+    }
+
+
+    private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
+    {
+        context.Services.AddSwaggerGen();
+    }
+}
+```
+
+Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。每个C#项目只应定义一个模块。
 
 在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在`ConfigureServices`方法中注册了Swagger相关服务。`ConfigureServices`方法将在实例化Abp应用的时候调用。
 
@@ -87,45 +91,33 @@ Abp设计为模块化的应用程序框架，每一个模块都应定义一个�
 
 添加Nuget包引用`Serilog.AspNetCore`、`Serilog.Sinks.Async`到项目中，并更改Program.cs。
 
-    Log.Logger = new LoggerConfiguration()
-    #if DEBUG
-        .MinimumLevel.Debug()
-    #else
-        .MinimumLevel.Information()
-    #endif
-        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-        .Enrich.FromLogContext()
-        .WriteTo.Async(c => c.File("Logs/logs-.txt", rollingInterval: RollingInterval.Day))
-    #if DEBUG
-        .WriteTo.Async(c => c.Console())
-    #endif
-        .CreateLogger();
-    
-    try
-    {
-        var builder = WebApplication.CreateBuilder(args);
-        builder.Host
-            .UseAutofac()
-            .UseSerilog();
-        builder.Services.AddApplication<BookStoreModule>(
-            options =>
-            {
-                options.Services.ReplaceConfiguration(builder.Configuration);
-            });
-        var app = builder.Build();
-        app.InitializeApplication();
-        await app.RunAsync();
-        return 0;
-    }
-    catch (Exception ex)
-    {
-        Log.Fatal(ex, "Host terminated unexpectedly!");
-        return 1;
-    }
-    finally
-    {
-        Log.CloseAndFlush();
-    }
+```C#
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Host
+        .UseAutofac()
+        .UseSerilog();
+    builder.Services.AddApplication<BookStoreModule>(
+        options =>
+        {
+            options.Services.ReplaceConfiguration(builder.Configuration);
+        });
+    var app = builder.Build();
+    app.InitializeApplication();
+    await app.RunAsync();
+    return 0;
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly!");
+    return 1;
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+```
 
 在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过`try`块包括起来捕获异常，在`catch`块中记录启动异常日志，在`finally`块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要`UseSerilog`扩展方法注册Serilog日志服务（第20行代码）。
 
