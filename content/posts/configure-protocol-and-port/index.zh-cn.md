@@ -17,37 +17,40 @@ title = "禁用ASP.NET Core开发环境的HTTPS"
 
    launchSettings.json在项目的Properties目录下，它只对本地的**开发环境**生效，部署时会被忽略。通过`dotnet new`或者Visual Studio生成的ASP.NET Core项目会创建launchSettings.json文件。
 
-       {
-         "iisSettings": {
-           "windowsAuthentication": false,
-           "anonymousAuthentication": true,
-           "iisExpress": {
-             "applicationUrl": "http://localhost:16717",
-             "sslPort": 44324
-           }
-         },
-         "profiles": {
-           "WebApplication1": {
-             "commandName": "Project",
-             "dotnetRunMessages": true,
-             "launchBrowser": true,
-             "applicationUrl": "https://localhost:7072;http://localhost:5072",
-             "environmentVariables": {
-               "ASPNETCORE_ENVIRONMENT": "Development"
-             }
-           },
-           "IIS Express": {
-             "commandName": "IISExpress",
-             "launchBrowser": true,
-             "environmentVariables": {
-               "ASPNETCORE_ENVIRONMENT": "Development"
-             }
-           }
-         }
-       }
+  ```json
+  {
+    "iisSettings": {
+      "windowsAuthentication": false,
+      "anonymousAuthentication": true,
+      "iisExpress": {
+        "applicationUrl": "http://localhost:16717",
+        "sslPort": 44324
+      }
+    },
+    "profiles": {
+      "WebApplication1": {
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "launchBrowser": true,
+        "applicationUrl": "https://localhost:7072;http://localhost:5072",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      },
+      "IIS Express": {
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      }
+    }
+  }
+  ```
 
    将`applicationUrl`从https更改为http即可更改默认的应用启动Url，若使用IIS启动，还需将`iisSettings`中的`sslPort`设为0。
 
+  ```json
        {
          "iisSettings": {
            "windowsAuthentication": false,
@@ -76,5 +79,6 @@ title = "禁用ASP.NET Core开发环境的HTTPS"
            }
          }
        }
+  ```
 
 此外，在launchSettings.json中，也可以通过`applicationUrl`更改应用启动的端口号。

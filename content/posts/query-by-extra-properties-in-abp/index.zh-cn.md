@@ -18,19 +18,21 @@ Abp框架提供了实体扩展系统，允许在不对类的定义进行更改�
 
 在`OneTimeRunner.Run()`方法的Action参数中，通过`ObjectExtensionManager`来处理额外属性到数据库表字段的映射。
 
-    ObjectExtensionManager.Instance
-        .AddOrUpdateProperty<IdentityUser, string>(
-            "Gender",
-            options =>
+```C#
+ObjectExtensionManager.Instance
+    .AddOrUpdateProperty<IdentityUser, string>(
+        "Gender",
+        options =>
+        {
+            options.MapEfCore((b, p) =>
             {
-                options.MapEfCore((b, p) =>
-                {
-                    b.HasIndex("Gender");
-                    p.IsRequired().HasDefaultValue(string.Empty);
-                    p.HasMaxLength(8);
-                });
-            }
-        );
+                b.HasIndex("Gender");
+                p.IsRequired().HasDefaultValue(string.Empty);
+                p.HasMaxLength(8);
+            });
+        }
+    );
+```
 
 在`AddOrUpdateProperty`方法中还可以设置表字段长度等，也可设置表的属性如索引。
 
@@ -40,12 +42,14 @@ Abp框架提供了实体扩展系统，允许在不对类的定义进行更改�
 
 在*.EntityFramework.Core项目中创建仓储，并创建查询方法。
 
-    public async Task<IdentityUser> GetUserByGenderAsync(string gender)
-    {
-        return await (await GetDbSetAsync())
-            .FromSqlRaw($"select * from AbpUsers where Gender == '{gender}'")
-            .FirstOrDefaultAsync();
-    }
+```C#
+public async Task<IdentityUser> GetUserByGenderAsync(string gender)
+{
+    return await (await GetDbSetAsync())
+        .FromSqlRaw($"select * from AbpUsers where Gender == '{gender}'")
+        .FirstOrDefaultAsync();
+}
+```
 
 调用方法`GetUserByGenderAsync`并传入`gender`参数即可根据`Gender`进行查询。
 

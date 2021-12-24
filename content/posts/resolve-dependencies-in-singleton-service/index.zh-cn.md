@@ -16,19 +16,20 @@ title = "在单例服务中解析依赖项"
 
 在依赖瞬时生命周期或作用域生命周期依赖项的单例服务中，不直接通过构造函数注入依赖项，而是注入`IServiceScopeFactory`，在需要用到依赖项的方法中，通过`IServiceScopeFactory`创建作用域并解析依赖项。
 
-    public class MySingletonService : IMySingletonService
+```C#
+public class MySingletonService : IMySingletonService
+{
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    public MySingletonService(IServiceScopeFactory scopeFactory)
     {
-        private readonly IServiceScopeFactory _scopeFactory;
-    
-        public MySingletonService(IServiceScopeFactory scopeFactory)
-        {
-            _scopeFactory = scopeFactory;
-        }
-        
-        public void Scoped()
-        {
-            using var scope = _scopeFactory.CreateScope();
-            var ctx = scope.ServiceProvider.GetRequiredService<MyDbContext>();
-        }
+        _scopeFactory = scopeFactory;
     }
-    
+
+    public void Scoped()
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+    }
+}
+```

@@ -26,35 +26,39 @@ title = "如何在Maui中使用依赖注入"
 
 应用程序启动时，调用`MauiProgram.cs`中的 `CreateMauiApp`设置并构造`MauiApp`。首先调用 `CreateBuilder`创建一个构造器，通过这个构造器完成创建`MauiApp`所需的全部设置，其中包括服务注册，最终通过`Build`方法构造 `MauiApp` 实例。
 
-    public static class MauiProgram
+```C#
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
     {
-      public static MauiApp CreateMauiApp()
-      {
-        var builder = MauiApp.CreateBuilder();
-    
-        builder
-        .UseMauiApp<App>()
-        .ConfigureFonts(fonts =>
-        {
-        	fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-        });
-    
-        return builder.Build();
-      }
+    var builder = MauiApp.CreateBuilder();
+
+    builder
+    .UseMauiApp<App>()
+    .ConfigureFonts(fonts =>
+    {
+        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+    });
+
+    return builder.Build();
     }
+}
+```
 
 在.NET中注册服务，就是在应用程序启动时，将服务注册到 `IServiceCollection` 中。在`MauiAppBuilder`中，存在`IServiceCollection`类型的属性`Services`。因此，在 Maui 应用程序中注册服务，只需在构造`MauiApp`时将服务添加到`MauiAppBuilder`中的 `Services`中。
 
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-    
-        ...
-    
-        builder.Services.AddSingleton<MainPage>();
-    
-        return builder.Build();
-    }
+```C#
+public static MauiApp CreateMauiApp()
+{
+    var builder = MauiApp.CreateBuilder();
+
+    ...
+
+    builder.Services.AddSingleton<MainPage>();
+
+    return builder.Build();
+}
+```
 
 在进行依赖关系注入时，需要从容器中解析服务。通过调用`IServiceCollection`的扩展方法 `BuildServiceProvider`可以构造获取 `IServiceProvider`容器实例。
 
@@ -66,24 +70,28 @@ title = "如何在Maui中使用依赖注入"
 
 依赖关系注入通常有构造函数注入、属性注入与方法注入三种方式。在 Maui 中，一般会使用构造方法注入依赖项，在平台代码中有时也会直接通过`MauiApp`实例来解析依赖项。
 
-    public partial class App : Application
+```C#
+public partial class App : Application
+{
+    public App(MainPage mainPage)
     {
-        public App(MainPage mainPage)
-        {
-            InitializeComponent();
-    
-            MainPage = mainPage;
-        }
+        InitializeComponent();
+
+        MainPage = mainPage;
     }
+}
+```
 
 将`MainPage`注册到容器中后，可以通过构造函数注入的方式将其作为依赖项注入。在特定平台的代码中，有时无法使用构造函数注入，这时可以直接通过容器解析依赖项。
 
-    public class MyActivity : MauiAppCompatActivity
+```C#
+public class MyActivity : MauiAppCompatActivity
+{
+    private readonly IHelloService _helloService;
+
+    public MyActivity()
     {
-        private readonly IHelloService _helloService;
-    
-        public MyActivity()
-        {
-            _helloService = MauiApplication.Current.Services.GetRequiredService<IHelloService>();
-        }
+        _helloService = MauiApplication.Current.Services.GetRequiredService<IHelloService>();
     }
+}
+```
