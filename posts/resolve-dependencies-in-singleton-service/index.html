@@ -75,23 +75,22 @@
 <p>单例服务若依赖其他生命周期为瞬时或作用域的服务时，无法通过构造函数注入依赖项。构造函数只会在创建实例时调用一次，若将依赖项通过构造函数注入并赋值给单例服务的本地成员，依赖项的生命周期结束后销毁后，指向依赖项的本地成员将会指向空引用，且永远不会再次被赋值（只在调用构造函数时赋值）。运行时会抛出异常<code>Cannot consume scoped service 'XXX' from singleton 'XXX'.</code>。</p>
 <h2 id=解决方案>解决方案</h2>
 <p>在依赖瞬时生命周期或作用域生命周期依赖项的单例服务中，不直接通过构造函数注入依赖项，而是注入<code>IServiceScopeFactory</code>，在需要用到依赖项的方法中，通过<code>IServiceScopeFactory</code>创建作用域并解析依赖项。</p>
-<pre><code>public class MySingletonService : IMySingletonService
-{
-    private readonly IServiceScopeFactory _scopeFactory;
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>class</span> <span class=nc>MySingletonService</span> <span class=p>:</span> <span class=n>IMySingletonService</span>
+<span class=p>{</span>
+    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IServiceScopeFactory</span> <span class=m>_</span><span class=n>scopeFactory</span><span class=p>;</span>
 
-    public MySingletonService(IServiceScopeFactory scopeFactory)
-    {
-        _scopeFactory = scopeFactory;
-    }
-    
-    public void Scoped()
-    {
-        using var scope = _scopeFactory.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService&lt;MyDbContext&gt;();
-    }
-}
-</code></pre>
-</div><div class=post-footer id=post-footer>
+    <span class=k>public</span> <span class=n>MySingletonService</span><span class=p>(</span><span class=n>IServiceScopeFactory</span> <span class=n>scopeFactory</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=m>_</span><span class=n>scopeFactory</span> <span class=p>=</span> <span class=n>scopeFactory</span><span class=p>;</span>
+    <span class=p>}</span>
+
+    <span class=k>public</span> <span class=k>void</span> <span class=n>Scoped</span><span class=p>()</span>
+    <span class=p>{</span>
+        <span class=k>using</span> <span class=nn>var</span> <span class=n>scope</span> <span class=p>=</span> <span class=m>_</span><span class=n>scopeFactory</span><span class=p>.</span><span class=n>CreateScope</span><span class=p>();</span>
+        <span class=kt>var</span> <span class=n>ctx</span> <span class=p>=</span> <span class=n>scope</span><span class=p>.</span><span class=n>ServiceProvider</span><span class=p>.</span><span class=n>GetRequiredService</span><span class=p>&lt;</span><span class=n>MyDbContext</span><span class=p>&gt;();</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>

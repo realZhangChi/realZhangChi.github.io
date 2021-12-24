@@ -78,32 +78,30 @@
 <p>将额外属性映射为数据库表字段非常容易。</p>
 <p>通过Abp启动模板创建的解决方案中，预先生成了处理数据库映射的<code>*EfCoreEntityExtensionMappings</code>类，它位于*.EntityFrameworkCore项目中。在项目启动时，将会执行其中的<code>Configure</code>方法，通过<code>OneTimeRunner</code>执行一次操作。</p>
 <p>在<code>OneTimeRunner.Run()</code>方法的Action参数中，通过<code>ObjectExtensionManager</code>来处理额外属性到数据库表字段的映射。</p>
-<pre><code>ObjectExtensionManager.Instance
-    .AddOrUpdateProperty&lt;IdentityUser, string&gt;(
-        &quot;Gender&quot;,
-        options =&gt;
-        {
-            options.MapEfCore((b, p) =&gt;
-            {
-                b.HasIndex(&quot;Gender&quot;);
-                p.IsRequired().HasDefaultValue(string.Empty);
-                p.HasMaxLength(8);
-            });
-        }
-    );
-</code></pre>
-<p>在<code>AddOrUpdateProperty</code>方法中还可以设置表字段长度等，也可设置表的属性如索引。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=n>ObjectExtensionManager</span><span class=p>.</span><span class=n>Instance</span>
+    <span class=p>.</span><span class=n>AddOrUpdateProperty</span><span class=p>&lt;</span><span class=n>IdentityUser</span><span class=p>,</span> <span class=kt>string</span><span class=p>&gt;(</span>
+        <span class=s>&#34;Gender&#34;</span><span class=p>,</span>
+        <span class=n>options</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>options</span><span class=p>.</span><span class=n>MapEfCore</span><span class=p>((</span><span class=n>b</span><span class=p>,</span> <span class=n>p</span><span class=p>)</span> <span class=p>=&gt;</span>
+            <span class=p>{</span>
+                <span class=n>b</span><span class=p>.</span><span class=n>HasIndex</span><span class=p>(</span><span class=s>&#34;Gender&#34;</span><span class=p>);</span>
+                <span class=n>p</span><span class=p>.</span><span class=n>IsRequired</span><span class=p>().</span><span class=n>HasDefaultValue</span><span class=p>(</span><span class=kt>string</span><span class=p>.</span><span class=n>Empty</span><span class=p>);</span>
+                <span class=n>p</span><span class=p>.</span><span class=n>HasMaxLength</span><span class=p>(</span><span class=m>8</span><span class=p>);</span>
+            <span class=p>});</span>
+        <span class=p>}</span>
+    <span class=p>);</span>
+</code></pre></div><p>在<code>AddOrUpdateProperty</code>方法中还可以设置表字段长度等，也可设置表的属性如索引。</p>
 <p>添加数据迁移脚本并运行*.DbMigrator更新数据库接口，可以看到表中多出一个名为<code>Gender</code>的字段。</p>
 <h2 id=查询>查询</h2>
 <p>在*.EntityFramework.Core项目中创建仓储，并创建查询方法。</p>
-<pre><code>public async Task&lt;IdentityUser&gt; GetUserByGenderAsync(string gender)
-{
-    return await (await GetDbSetAsync())
-        .FromSqlRaw($&quot;select * from AbpUsers where Gender == '{gender}'&quot;)
-        .FirstOrDefaultAsync();
-}
-</code></pre>
-<p>调用方法<code>GetUserByGenderAsync</code>并传入<code>gender</code>参数即可根据<code>Gender</code>进行查询。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=n>IdentityUser</span><span class=p>&gt;</span> <span class=n>GetUserByGenderAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>gender</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=k>return</span> <span class=k>await</span> <span class=p>(</span><span class=k>await</span> <span class=n>GetDbSetAsync</span><span class=p>())</span>
+        <span class=p>.</span><span class=n>FromSqlRaw</span><span class=p>(</span><span class=s>$&#34;select * from AbpUsers where Gender == &#39;{gender}&#39;&#34;</span><span class=p>)</span>
+        <span class=p>.</span><span class=n>FirstOrDefaultAsync</span><span class=p>();</span>
+<span class=p>}</span>
+</code></pre></div><p>调用方法<code>GetUserByGenderAsync</code>并传入<code>gender</code>参数即可根据<code>Gender</code>进行查询。</p>
 <h2 id=总结>总结</h2>
 <p>在这篇文章中，描述了如何对额外属性进行数据库映射，以及将额外属性作为查询条件检索数据。值得注意的是，将额外属性作为查询条件并不是最佳实践，如果可能的话应当尽量避免。此外，如需将拥有额外属性的<code>Entity</code>通过AutoMapper映射为<code>Dto</code>，不要忘记对<code>Dto</code>进行扩展并配置<code>AutoMapperProfile</code>。</p>
 </div><div class=post-footer id=post-footer>

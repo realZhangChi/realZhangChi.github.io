@@ -76,68 +76,66 @@
 <li>
 <p>配置launchSettings.json</p>
 <p>launchSettings.json在项目的Properties目录下，它只对本地的<strong>开发环境</strong>生效，部署时会被忽略。通过<code>dotnet new</code>或者Visual Studio生成的ASP.NET Core项目会创建launchSettings.json文件。</p>
-<pre><code>{
-  &quot;iisSettings&quot;: {
-    &quot;windowsAuthentication&quot;: false,
-    &quot;anonymousAuthentication&quot;: true,
-    &quot;iisExpress&quot;: {
-      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
-      &quot;sslPort&quot;: 44324
-    }
-  },
-  &quot;profiles&quot;: {
-    &quot;WebApplication1&quot;: {
-      &quot;commandName&quot;: &quot;Project&quot;,
-      &quot;dotnetRunMessages&quot;: true,
-      &quot;launchBrowser&quot;: true,
-      &quot;applicationUrl&quot;: &quot;https://localhost:7072;http://localhost:5072&quot;,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    },
-    &quot;IIS Express&quot;: {
-      &quot;commandName&quot;: &quot;IISExpress&quot;,
-      &quot;launchBrowser&quot;: true,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    }
-  }
-}
-</code></pre>
-<p>将<code>applicationUrl</code>从https更改为http即可更改默认的应用启动Url，若使用IIS启动，还需将<code>iisSettings</code>中的<code>sslPort</code>设为0。</p>
-<pre><code>{
-  &quot;iisSettings&quot;: {
-    &quot;windowsAuthentication&quot;: false,
-    &quot;anonymousAuthentication&quot;: true,
-    &quot;iisExpress&quot;: {
-      &quot;applicationUrl&quot;: &quot;http://localhost:16717&quot;,
-      &quot;sslPort&quot;: 0
-    }
-  },
-  &quot;profiles&quot;: {
-    &quot;WebApplication1&quot;: {
-      &quot;commandName&quot;: &quot;Project&quot;,
-      &quot;dotnetRunMessages&quot;: true,
-      &quot;launchBrowser&quot;: true,
-      &quot;applicationUrl&quot;: &quot;http://localhost:5072&quot;,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    },
-    &quot;IIS Express&quot;: {
-      &quot;commandName&quot;: &quot;IISExpress&quot;,
-      &quot;launchBrowser&quot;: true,
-      &quot;environmentVariables&quot;: {
-        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
-      }
-    }
-  }
-}
-</code></pre>
 </li>
 </ol>
-<p>此外，在launchSettings.json中，也可以通过<code>applicationUrl</code>更改应用启动的端口号。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+  <span class=nt>&#34;iisSettings&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;windowsAuthentication&#34;</span><span class=p>:</span> <span class=kc>false</span><span class=p>,</span>
+    <span class=nt>&#34;anonymousAuthentication&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+    <span class=nt>&#34;iisExpress&#34;</span><span class=p>:</span> <span class=p>{</span>
+      <span class=nt>&#34;applicationUrl&#34;</span><span class=p>:</span> <span class=s2>&#34;http://localhost:16717&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;sslPort&#34;</span><span class=p>:</span> <span class=mi>44324</span>
+    <span class=p>}</span>
+  <span class=p>},</span>
+  <span class=nt>&#34;profiles&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;WebApplication1&#34;</span><span class=p>:</span> <span class=p>{</span>
+      <span class=nt>&#34;commandName&#34;</span><span class=p>:</span> <span class=s2>&#34;Project&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;dotnetRunMessages&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+      <span class=nt>&#34;launchBrowser&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+      <span class=nt>&#34;applicationUrl&#34;</span><span class=p>:</span> <span class=s2>&#34;https://localhost:7072;http://localhost:5072&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;environmentVariables&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;ASPNETCORE_ENVIRONMENT&#34;</span><span class=p>:</span> <span class=s2>&#34;Development&#34;</span>
+      <span class=p>}</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;IIS Express&#34;</span><span class=p>:</span> <span class=p>{</span>
+      <span class=nt>&#34;commandName&#34;</span><span class=p>:</span> <span class=s2>&#34;IISExpress&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;launchBrowser&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+      <span class=nt>&#34;environmentVariables&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;ASPNETCORE_ENVIRONMENT&#34;</span><span class=p>:</span> <span class=s2>&#34;Development&#34;</span>
+      <span class=p>}</span>
+    <span class=p>}</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>将<code>applicationUrl</code>从https更改为http即可更改默认的应用启动Url，若使用IIS启动，还需将<code>iisSettings</code>中的<code>sslPort</code>设为0。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json>     <span class=p>{</span>
+       <span class=nt>&#34;iisSettings&#34;</span><span class=p>:</span> <span class=p>{</span>
+         <span class=nt>&#34;windowsAuthentication&#34;</span><span class=p>:</span> <span class=kc>false</span><span class=p>,</span>
+         <span class=nt>&#34;anonymousAuthentication&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+         <span class=nt>&#34;iisExpress&#34;</span><span class=p>:</span> <span class=p>{</span>
+           <span class=nt>&#34;applicationUrl&#34;</span><span class=p>:</span> <span class=s2>&#34;http://localhost:16717&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;sslPort&#34;</span><span class=p>:</span> <span class=mi>0</span>
+         <span class=p>}</span>
+       <span class=p>},</span>
+       <span class=nt>&#34;profiles&#34;</span><span class=p>:</span> <span class=p>{</span>
+         <span class=nt>&#34;WebApplication1&#34;</span><span class=p>:</span> <span class=p>{</span>
+           <span class=nt>&#34;commandName&#34;</span><span class=p>:</span> <span class=s2>&#34;Project&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;dotnetRunMessages&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+           <span class=nt>&#34;launchBrowser&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+           <span class=nt>&#34;applicationUrl&#34;</span><span class=p>:</span> <span class=s2>&#34;http://localhost:5072&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;environmentVariables&#34;</span><span class=p>:</span> <span class=p>{</span>
+             <span class=nt>&#34;ASPNETCORE_ENVIRONMENT&#34;</span><span class=p>:</span> <span class=s2>&#34;Development&#34;</span>
+           <span class=p>}</span>
+         <span class=p>},</span>
+         <span class=nt>&#34;IIS Express&#34;</span><span class=p>:</span> <span class=p>{</span>
+           <span class=nt>&#34;commandName&#34;</span><span class=p>:</span> <span class=s2>&#34;IISExpress&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;launchBrowser&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+           <span class=nt>&#34;environmentVariables&#34;</span><span class=p>:</span> <span class=p>{</span>
+             <span class=nt>&#34;ASPNETCORE_ENVIRONMENT&#34;</span><span class=p>:</span> <span class=s2>&#34;Development&#34;</span>
+           <span class=p>}</span>
+         <span class=p>}</span>
+       <span class=p>}</span>
+     <span class=p>}</span>
+</code></pre></div><p>此外，在launchSettings.json中，也可以通过<code>applicationUrl</code>更改应用启动的端口号。</p>
 </div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
