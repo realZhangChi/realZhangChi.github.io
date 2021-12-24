@@ -3,8 +3,7 @@ author = "张驰"
 authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-23T04:12:10Z
-description = "从控制台项目开始，轻松入门Abp框架。"
-draft = true
+description = "从手动创建项目开始，添加Abp应用、模块来集成Abp框架。"
 tags = ["Tutorials", "Abp"]
 title = "Abp极简教程-1 创建项目"
 
@@ -21,9 +20,31 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 ## 集成Abp
 
-### 第一个模块
+首先需要添加`Volo.Abp.Autofac`和`Volo.Abp.AspNetCore.Mvc` Nuget包引用至项目中以集成Abp框架。
 
-添加`Volo.Abp.Autofac`和`Volo.Abp.AspNetCore.Mvc` Nuget包引用至项目中，创建C#类文件命名为`BookStoreModule`更改代码如下：
+### Abp应用
+
+Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。将Program.cs更改如下：
+
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Host
+        .UseAutofac();
+    builder.Services.AddApplication<BookStoreModule>(
+        options =>
+        {
+            options.Services.ReplaceConfiguration(builder.Configuration);
+        });
+    var app = builder.Build();
+    app.InitializeApplication();
+    await app.RunAsync();
+
+`AddApplication`扩展方法向依赖注入系统中中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`BookStoreModule`的模块。
+
+`InitializeApplication`扩展方法初始化Abp应用，它将会根据模块的依赖关系初始化启动模块及其依赖的模块。
+
+### 模块
+
+创建C#类文件命名为`BookStoreModule`更改代码如下：
 
     [DependsOn(
         typeof(AbpAutofacModule),
@@ -58,10 +79,60 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。
 
-在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在`ConfigureServices`方法中注册了Swagger相关服务。
+在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在`ConfigureServices`方法中注册了Swagger相关服务。`ConfigureServices`方法将在实例化Abp应用的时候调用。
 
-在应用程序启动时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的`OnApplicationInitialization`方法，通常在这个方法中会构建出中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。
+初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的`OnApplicationInitialization`方法，通常在这个方法中会构建中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。
 
-### 配置Abp应用
+### 日志
 
-Abp框架中定义了`IAbpApplication`应用。项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。
+添加Nuget包引用`Serilog.AspNetCore`、`Serilog.Sinks.Async`到项目中，并更改Program.cs。
+
+    Log.Logger = new LoggerConfiguration()
+    #if DEBUG
+        .MinimumLevel.Debug()
+    #else
+        .MinimumLevel.Information()
+    #endif
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.Async(c => c.File("Logs/logs-.txt", rollingInterval: RollingInterval.Day))
+    #if DEBUG
+        .WriteTo.Async(c => c.Console())
+    #endif
+        .CreateLogger();
+    
+    try
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Host
+            .UseAutofac()
+            .UseSerilog();
+        builder.Services.AddApplication<BookStoreModule>(
+            options =>
+            {
+                options.Services.ReplaceConfiguration(builder.Configuration);
+            });
+        var app = builder.Build();
+        app.InitializeApplication();
+        await app.RunAsync();
+        return 0;
+    }
+    catch (Exception ex)
+    {
+        Log.Fatal(ex, "Host terminated unexpectedly!");
+        return 1;
+    }
+    finally
+    {
+        Log.CloseAndFlush();
+    }
+
+在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过`try`块包括起来捕获异常，在`catch`块中记录启动异常日志，在`finally`块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要`UseSerilog`扩展方法注册Serilog日志服务（第20行代码）。
+
+### 启动
+
+启动应用此时应导航到Swagger页面并可调用`WeatherForecast`接口获取数据。
+
+## 总结
+
+这篇文章展示了如何从ASP.NET Core Web Api模板开始，手动集成Abp框架并将项目模块化，以当前项目作为启动模块创建并运行Abp应用。这里简单介绍了Abp应用及Abp模块，后续文章将逐步介绍Abp中的其他概念及用法。
