@@ -16,7 +16,7 @@ title = "Abp极简教程-2 聚合"
 
 为了将我们对领域的关注点从整个软件项目中分离开来，因此创建一个类库项目名为`CatchE.Domain`，这个项目将专注于领域。
 
-Abp项目是模块化的，因此在`CatchE.Domain`项目中创建`CatchEDomainModule`类。
+Abp项目是模块化的，在`CatchE.Domain`项目中添加Nuget包`Volo.Abp.Ddd.Domain`引用并创建`CatchEDomainModule`类。
 
 ```C#
 [DependsOn(
