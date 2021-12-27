@@ -16,7 +16,7 @@
 <meta name=application-name content="zhangchi.io">
 <meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-2-aggregate/><link rel=prev href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-2 聚合","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-aggregate\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1397,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-aggregate\/","datePublished":"2021-12-27T04:12:10+00:00","dateModified":"2021-12-27T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"分析CatchE项目的问题，创建领域模型，了解Abp中的实体和聚合根。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-2-aggregate/><link rel=prev href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-2 聚合","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-aggregate\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1425,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-aggregate\/","datePublished":"2021-12-27T04:12:10+00:00","dateModified":"2021-12-27T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"分析CatchE项目的问题，创建领域模型，了解Abp中的实体和聚合根。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -57,7 +57,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-2 聚合</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-27>2021-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1397 字&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-27>2021-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1425 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/posts/abp-tutorial-2-aggregate/ class=leancloud_visitors data-flag-title="Abp极简教程-2 聚合">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
@@ -83,7 +83,7 @@
 <h2 id=领域>领域</h2>
 <p>领域即是一个组织所做的事情以及其中所包含的一切，描述了<strong>业务</strong>规则。领域即为应用软件要解决的问题空间。</p>
 <p>为了将我们对领域的关注点从整个软件项目中分离开来，因此创建一个类库项目名为<code>CatchE.Domain</code>，这个项目将专注于领域。</p>
-<p>Abp项目是模块化的，因此在<code>CatchE.Domain</code>项目中创建<code>CatchEDomainModule</code>类。</p>
+<p>Abp项目是模块化的，在<code>CatchE.Domain</code>项目中添加Nuget包<code>Volo.Abp.Ddd.Domain</code>引用并创建<code>CatchEDomainModule</code>类。</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[DependsOn(
 </span><span class=na>    typeof(AbpDddDomainModule))]</span>
 <span class=k>public</span> <span class=k>class</span> <span class=nc>CatchEDomainModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
