@@ -7,7 +7,7 @@
 <title>Abp极简教程-1 应用和模块 - zhangchi.io</title><meta name=Description content="从手动创建项目CatchE开始，添加Abp应用、模块来集成Abp框架。"><meta property="og:title" content="Abp极简教程-1 应用和模块">
 <meta property="og:description" content="从手动创建项目CatchE开始，添加Abp应用、模块来集成Abp框架。">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/abp-tutorial-application-and-module/"><meta property="article:section" content="posts">
+<meta property="og:url" content="https://zhangchi.io/posts/abp-tutorial-1-application-and-module/"><meta property="article:section" content="posts">
 <meta property="article:published_time" content="2021-12-23T04:12:10+00:00">
 <meta property="article:modified_time" content="2021-12-23T04:12:10+00:00">
 <meta name=twitter:card content="summary">
@@ -16,7 +16,7 @@
 <meta name=application-name content="zhangchi.io">
 <meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-application-and-module/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=next href=https://zhangchi.io/posts/abp-tutorial-aggregate/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-1 应用和模块","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-application-and-module\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1705,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-application-and-module\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目CatchE开始，添加Abp应用、模块来集成Abp框架。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=next href=https://zhangchi.io/posts/abp-tutorial-2-aggregate/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-1 应用和模块","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1704,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目CatchE开始，添加Abp应用、模块来集成Abp框架。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -57,8 +57,8 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-1 应用和模块</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1705 字&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/posts/abp-tutorial-application-and-module/ class=leancloud_visitors data-flag-title="Abp极简教程-1 应用和模块">
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1704 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/posts/abp-tutorial-1-application-and-module/ class=leancloud_visitors data-flag-title="Abp极简教程-1 应用和模块">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
@@ -135,7 +135,7 @@
     <span class=p>}</span>
 <span class=p>}</span>
 </code></pre></div><p>Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自<code>AbpModule</code>的类，并以<code>Module</code>后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过<code>DependsOn</code>特性来定义。每个C#项目只应定义一个模块。</p>
-<p>在<code>ConfigureServices</code>方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在<code>ConfigureServices</code>方法中注册了Swagger相关服务。<code>ConfigureServices</code>方法将在实例化Abp应用的时候调用。</p>
+<p>在<code>ConfigureServices</code>方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在<code>ConfigureServices</code>方法中注册了Swagger相关服务。<code>ConfigureServices</code>方法将在实例化Abp应用的时候调用。</p>
 <p>初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的<code>OnApplicationInitialization</code>方法，通常在这个方法中会构建中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。</p>
 <h3 id=日志>日志</h3>
 <p>添加Nuget包引用<code>Serilog.AspNetCore</code>、<code>Serilog.Sinks.Async</code>到项目中，并更改Program.cs。</p>
@@ -191,7 +191,7 @@
 </section>
 </div>
 <div class=post-nav><a href=/posts/resolve-dependencies-in-singleton-service/ class=prev rel=prev title=在单例服务中解析依赖项><i class="fas fa-angle-left fa-fw"></i>在单例服务中解析依赖项</a>
-<a href=/posts/abp-tutorial-aggregate/ class=next rel=next title="Abp极简教程-2 聚合">Abp极简教程-2 聚合<i class="fas fa-angle-right fa-fw"></i></a></div>
+<a href=/posts/abp-tutorial-2-aggregate/ class=next rel=next title="Abp极简教程-2 聚合">Abp极简教程-2 聚合<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id=comments><div id=valine class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
