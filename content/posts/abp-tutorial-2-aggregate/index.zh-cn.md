@@ -31,7 +31,15 @@ public class CatchEDomainModule : AbpModule
 
 ### 聚合根
 
-创建类`Issue`，继承`FullAuditedAggregateRoot<Guid>`。关于不同聚合根基类的区别，详见[Abp文档](https://docs.abp.io/en/abp/latest/Entities#base-classes-interfaces-for-audit-properties)。
+创建聚合根`Issue`，继承`FullAuditedAggregateRoot<Guid>`。关于不同聚合根基类的区别，详见[Abp文档](https://docs.abp.io/en/abp/latest/Entities#base-classes-interfaces-for-audit-properties)。
+
+为聚合根`Issue`添加属性`Title`、`Description`、`AnswererId`和`IsResolved`。
+
+显式将无参构造函数访问级别设为`private`(或`protected`)供ORM反序列化对象时使用，并可限制对象实例化的方式，阻止非法的实例化。
+
+创建以唯一标识、`title`、和`description`作为参数的构造函数。基于及早生成唯一标识的原则，将唯一标识作为参数传入构造函数中，并调用`base`为唯一标识`Id`赋值。在`Issue`对象正确实例化后，`Title`和`Description`绝不能为`null`，因此在构造函数中为它们赋值，并将它们的set访问器访问级别设为`private`。在构造函数中，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
+
+值得一提的是，`Issue`只能通过有参的构造函数来实例化，将创建`Issue`所需的所有信息都传递给构造函数，构造函数保证满足所有满足所有固定规则，使得创建操作是原子的。这也是构造函数这一机制的本意，对象的创建应通过构造函数来进行，构造函数保证对象的合法性。很多代码中，首先调用无参构造函数，然后通过属性的set访问器更改状态，从而完成对象的创建，创建对象的职责从构造函数转移到了编码人员，这种行为在一个长期迭代的软件系统中是相当危险的。
 
 ```C#
 public class Issue : FullAuditedAggregateRoot<Guid>
@@ -59,10 +67,6 @@ public class Issue : FullAuditedAggregateRoot<Guid>
     }
 }
 ```
-
-基于及早生成唯一标识的原则，将唯一标识作为参数传入构造函数中，并调用`base`为唯一标识`Id`赋值。在`Issue`对象正确实例化后，`Title`和`Description`绝不能为`null`，因此在构造函数中为它们赋值，并将它们的set访问器访问级别设为`private`。执行构造函数时，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
-
-显式将无参构造函数访问级别设为`private`(或`protected`)供ORM反序列化对象时使用，并可限制对象实例化的方式，阻止非法的实例化。
 
 问题可以指派给一个回答者，因此在`Issue`中添加方法：
 
