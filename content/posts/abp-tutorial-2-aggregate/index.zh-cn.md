@@ -60,7 +60,7 @@ public class Issue : FullAuditedAggregateRoot<Guid>
 }
 ```
 
-我们采取了及早生成唯一标识的原则，将唯一标识作为参数传入构造函数中，并调用`base`构造函数为唯一标识`Id`赋值。在`Issue`对象正确实例化后，`Title`和`Description`绝不能为`null`，因此在构造函数中为它们赋值，并将它们的setter访问器访问级别设为`private`。执行构造函数时，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
+基于及早生成唯一标识的原则，将唯一标识作为参数传入构造函数中，并调用`base`为唯一标识`Id`赋值。在`Issue`对象正确实例化后，`Title`和`Description`绝不能为`null`，因此在构造函数中为它们赋值，并将它们的set访问器访问级别设为`private`。执行构造函数时，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
 
 显式将无参构造函数访问级别设为`private`(或`protected`)供ORM反序列化对象时使用，并可限制对象实例化的方式，阻止非法的实例化。
 
