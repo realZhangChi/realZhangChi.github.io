@@ -6,3 +6,5 @@ npm-debug.log
 */*/.DS_Store
 *.sh
 .vscode
+resources/_gen
+.hugo_build.lock
