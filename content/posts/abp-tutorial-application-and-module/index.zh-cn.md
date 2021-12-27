@@ -3,7 +3,7 @@ author = "张驰"
 authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-23T04:12:10Z
-description = "从手动创建项目开始，添加Abp应用、模块来集成Abp框架。"
+description = "从手动创建项目CatchE开始，添加Abp应用、模块来集成Abp框架。"
 tags = ["Tutorials", "Abp"]
 title = "Abp极简教程-1 应用和模块"
 +++
@@ -12,11 +12,11 @@ Abp是一个基于.NET的开源应用程序框架，它遵循最佳实践和约�
 
 Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配置了常用的模块。启动模板中反映着领域驱动设计、软件工程中的最佳实践、设计模式等多种概念，其中任一项都值得单独讨论。对于初学者而言，启动模板中的大量知识如潮水般瞬间涌入脑海，造成知识过载，无法聚焦当前真正要学习的知识。
 
-本系列教程，将从简单的.NET Web Api应用程序开始，搭建起基于Abp的Web应用程序框架，并逐步深入细节，旨在以一种缓和的学习曲线帮助初学者快速入门。教程中的每一篇文章，都将会针对特定的几个知识点进行阐述，来帮助读者实现关注点的聚焦，区分知识学习的先后顺序。本教程面向初学者或对Abp有了初步了解的人群。
+本系列教程，将结合一个问答网站**CatchE**示例项目，从简单的.NET Web Api应用程序开始，搭建起基于Abp的Web应用程序框架，并逐步深入细节，旨在以一种缓和的学习曲线帮助初学者快速入门。教程中的每一篇文章，都将会针对特定的几个知识点进行阐述，来帮助读者实现关注点的聚焦，区分知识学习的先后顺序。教程本教程面向初学者或对Abp有了初步了解的人群。
 
 ## 创建应用
 
-通过VS创建一个名为`BookStore`Web Api应用，选择ASP.NET Core Web Api项目模板，或通过CLI执行`dotnet new webapi -n BookStore`。运行后将访问至Swagger页面。
+通过VS创建一个名为`CatchE`Web Api应用，选择ASP.NET Core Web Api项目模板，或通过CLI执行`dotnet new webapi -n CatchE`。运行后将访问至Swagger页面。
 
 ## 集成Abp
 
@@ -30,7 +30,7 @@ Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并
 var builder = WebApplication.CreateBuilder(args);
 builder.Host
     .UseAutofac();
-builder.Services.AddApplication<BookStoreModule>(
+builder.Services.AddApplication<CatchEModule>(
     options =>
     {
         options.Services.ReplaceConfiguration(builder.Configuration);
@@ -40,19 +40,19 @@ app.InitializeApplication();
 await app.RunAsync();
 ```
 
-`AddApplication`扩展方法向依赖注入系统中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`BookStoreModule`的模块。
+`AddApplication`扩展方法向依赖注入系统中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`CatchEModule`的模块。
 
 `InitializeApplication`扩展方法初始化Abp应用，它将会根据模块的依赖关系初始化启动模块及其依赖的模块。
 
 ### 模块
 
-创建C#类文件命名为`BookStoreModule`更改代码如下：
+创建C#类文件命名为`CatchEModule`更改代码如下：
 
 ```C#
 [DependsOn(
     typeof(AbpAutofacModule),
     typeof(AbpAspNetCoreMvcModule))]
-public class BookStoreModule : AbpModule
+public class CatchEModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
@@ -98,7 +98,7 @@ try
     builder.Host
         .UseAutofac()
         .UseSerilog();
-    builder.Services.AddApplication<BookStoreModule>(
+    builder.Services.AddApplication<CatchEModule>(
         options =>
         {
             options.Services.ReplaceConfiguration(builder.Configuration);
