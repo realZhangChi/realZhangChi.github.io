@@ -83,7 +83,7 @@ public class CatchEModule : AbpModule
 
 Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。每个C#项目只应定义一个模块。
 
-在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在在`ConfigureServices`方法中注册了Swagger相关服务。`ConfigureServices`方法将在实例化Abp应用的时候调用。
+在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在`ConfigureServices`方法中注册了Swagger相关服务。`ConfigureServices`方法将在实例化Abp应用的时候调用。
 
 初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的`OnApplicationInitialization`方法，通常在这个方法中会构建中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。
 
