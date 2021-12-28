@@ -178,7 +178,7 @@ CatchE中的用户，在“问答”业务的语境下，可能是一个回答�
 
 “问答”和“订单”将是不同的领域（Domain），不同领域的语境是不同的限界上下文（Bounded Context）。CatchE的用户在“问答”这一限界上下文中将是回答者，在“订单”这一上下文中将是购买者。将CatchE的用户与“问答”中的回答者、“订单”中的购买者进行映射，便形成了上下文映射图（Context Map）。“问答”上下文与“订单”上下文将采用共享内核（Shared Kernel）的方式共享CatchE的用户信息。
 
-创建类`Answerer`，并将`IdentityUser`的主键作为属性。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
+创建类`Answerer`，并将`IdentityUser`的主键作为属性以共享用户信息。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
 
 ```C#
 public class Answerer : FullAuditedAggregateRoot<Guid>
