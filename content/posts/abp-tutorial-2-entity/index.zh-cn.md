@@ -3,9 +3,9 @@ author = "张驰"
 authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-27T04:12:10Z
-description = "分析CatchE项目的问题，创建领域模型，了解Abp中的实体和聚合根。"
+description = "分析CatchE项目要解决的问题，创建领域模型，了解Abp中的实体和聚合根。"
 tags = ["Tutorials", "Abp"]
-title = "Abp极简教程-2 聚合"
+title = "Abp极简教程-2 实体、聚合根"
 +++
 
 在上一篇文章中我们手动创建了**CatchE**项目并集成了Abp框架，接下来我们将向项目中添加一些实体，并介绍实体和聚合根的基本概念及用法。
