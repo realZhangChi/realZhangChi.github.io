@@ -174,6 +174,8 @@ public virtual Answer Answer { get; set; }
 
 ### Answerer聚合
 
+TODO：限界上下文，上下文映射图、共享内核。
+
 创建类`Answerer`，继承`FullAuditedAggregateRoot<Guid>`。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
 
 ```C#
