@@ -14,7 +14,20 @@ title = "Abp极简教程-2 实体、聚合根"
 
 领域即是一个组织所做的事情以及其中所包含的一切，描述了**业务**规则。领域即为应用软件要解决的问题空间。
 
-为了将我们对领域的关注点从整个软件项目中分离开来，因此创建一个类库项目名为`CatchE.Domain`，这个项目将专注于领域。
+问答平台的需求大致可以描述为以下几点：
+
+1. 提问者创建一个问题
+2. 问题拥有标题、描述、是否解决等属性
+3. 提问者可以请求一个回答者来回答问题
+4. 问题被拒绝回答后创建者可以请求新的回答者来回答问题
+5. 问题解决后创建者可将其标记为已解决
+6. 每个问题都将拥有一个回答
+
+CatchE项目将实现上述需求。很显然，为实现上述需求，需要其他功能的支持，比如身份验证、权限控制等，但是上述需求将是我们业务成功的关键因素，因此上述需求将是我们的核心域，其他功能是支撑子域或通用子域。开发核心域的解决方案是一种关键性业务投入，CatchE项目即为我们实现核心域功能的解决方案。
+
+>如果你对子域、支撑子域、通用子域知之甚少，那么请不要考虑他们，只需要将关注点集中在上述需求和如何实现以上需求即可。
+
+为了将领域的关注点从实现细节如数据库、Web Api等分离开来，因此创建一个类库项目名为`CatchE.Domain`。领域层将专注于业务逻辑。
 
 Abp项目是模块化的，在`CatchE.Domain`项目中添加Nuget包`Volo.Abp.Ddd.Domain`引用并创建`CatchEDomainModule`类。
 
@@ -27,9 +40,15 @@ public class CatchEDomainModule : AbpModule
 
 ## 聚合
 
-在CatchE中，“问题”是一个关键成员，它由一个问题创建者创建，拥有标题、描述等属性，它可被指派给一个回答者。回答者可以选择回答此问题或拒绝回答，问题被拒绝回答后创建者可以指派新的回答者，问题解决后创建者可将其标记为已解决，每个问题都将拥有一个回答。问题和回答，围绕着问题为核心，组成了一部分完整的业务规则，因此在问题这一聚合下，将问题实体建模为聚合根，将回答建模为聚合内的普通实体。
+很显然，在我们要解决的问题中，存在提问者、问题、回答者、答案四个关键模型，我们将暂时不考虑提问者，因为任何一个用户都可以提问问题。将问题、答案、回答者命名为：`Issue`、`Answer`、`Answerer`。
 
-### 聚合根
+对于`Answer`，他将是`Issue`的一部分，无法离开`Issue`单独存在，此外，`Issue`和`Answer`还拥有事务一致性，因此将`Issue`和`Answer`划分为一个聚合，并将`Issue`建模为聚合根。
+
+`Answerer`和`Issue`聚合不存在强耦合关系，可以独立地维护`Answerer`的状态，因此以`Answerer`为聚合根建模为另一个聚合。
+
+### Issue聚合
+
+#### Issue聚合根
 
 创建聚合根`Issue`，继承`FullAuditedAggregateRoot<Guid>`。关于不同聚合根基类的区别，详见[Abp文档](https://docs.abp.io/en/abp/latest/Entities#base-classes-interfaces-for-audit-properties)。
 
@@ -107,9 +126,9 @@ public Issue Resolved()
 }
 ```
 
-### 实体
+#### Answer实体
 
-创建实体`Answer`，并继承`AuditedEntity<Guid>`。
+回答者在答案被采纳前可以修改回答。创建实体`Answer`，并继承`AuditedEntity<Guid>`。
 
 ```C#
 public class Answer : AuditedEntity<Guid>
@@ -153,7 +172,29 @@ public Answer Change(string content)
 public virtual Answer Answer { get; set; }
 ```
 
-### 区别
+### Answerer聚合
+
+创建类`Answerer`，继承`FullAuditedAggregateRoot<Guid>`。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
+
+```C#
+public class Answerer : FullAuditedAggregateRoot<Guid>
+{
+    public Guid IdentityUserId { get; set; }
+
+    public string Name { get; set; }
+
+    public Answerer(
+        Guid id,
+        Guid identityUserId,
+        string name) : base(id)
+    {
+        IdentityUserId = identityUserId;
+        Name = name;
+    }
+}
+```
+
+### AggregateRoot和Entity的区别
 
 在Abp中，聚合根和实体主要有以下区别：
 
@@ -162,4 +203,4 @@ public virtual Answer Answer { get; set; }
 
 ## 总结
 
-在这篇文章中，我们分析了CatchE项目中“问题”，并对“问题”与“答案”建模，将他们的领域知识（业务逻辑）通过代码描述出来。在下一篇文章将引入领域服务来处理实体无法完成的业务。
+在这篇文章中，我们分析了CatchE项目的业务需求，得到了核心域，识别出核心域的两个聚合并对他们进行建模。在下一篇文章将引入领域服务来处理实体无法完成的业务。
