@@ -16,7 +16,7 @@
 <meta name=application-name content="zhangchi.io">
 <meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-2-entity/><link rel=prev href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-2 聚合、实体","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-entity\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":2239,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-entity\/","datePublished":"2021-12-27T04:12:10+00:00","dateModified":"2021-12-27T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"分析CatchE项目要解决的问题，创建领域模型，了解Abp中的实体和聚合根。"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-2-entity/><link rel=prev href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-2 聚合、实体","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-entity\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":2191,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-2-entity\/","datePublished":"2021-12-27T04:12:10+00:00","dateModified":"2021-12-27T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"分析CatchE项目要解决的问题，创建领域模型，了解Abp中的实体和聚合根。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -57,7 +57,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-2 聚合、实体</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-27>2021-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2239 字&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-27>2021-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2191 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=/posts/abp-tutorial-2-entity/ class=leancloud_visitors data-flag-title="Abp极简教程-2 聚合、实体">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
@@ -81,8 +81,8 @@
 </nav></div>
 </div><div class=content id=content><p>在上一篇文章中手动创建了<strong>CatchE</strong>项目并集成了Abp框架，接下来将从业务需求开始，了解领域的基本概念，识别聚合，并对领域建模，来展示如何在Abp中实现业务逻辑。</p>
 <h2 id=领域>领域</h2>
-<p>领域即是一个组织所做的事情以及其中所包含的一切，描述了<strong>业务</strong>规则。领域即为应用软件要解决的问题空间。</p>
-<p>问答平台的需求大致可以描述为以下几点：</p>
+<p>领域即是一个组织所做的事情以及其中所包含的一切，描述了<strong>业务</strong>规则。领域是应用软件要解决的问题空间。</p>
+<p>CatchE问答平台的需求大致可以描述为以下几点：</p>
 <ol>
 <li>提问者创建一个问题</li>
 <li>问题拥有标题、描述、是否解决等属性</li>
@@ -91,7 +91,7 @@
 <li>问题解决后创建者可将其标记为已解决</li>
 <li>每个问题都将拥有一个回答</li>
 </ol>
-<p>CatchE项目将实现上述需求。为实现上述需求，需要其他功能的支持，比如身份验证、权限控制等，但是上述需求将是业务成功的关键因素，因此它将成为核心域，其他功能是支撑子域或通用子域。开发核心域的解决方案是一种关键性业务投入，CatchE项目即为实现核心域功能的解决方案。</p>
+<p>上述需求是业务成功的关键因素，因此它是。此外还需要其他功能如身份验证、权限控制的支持，这些功能模块是支撑子域或通用子域。开发核心域的解决方案是一种关键性业务投入。</p>
 <blockquote>
 <p>如果你对子域、支撑子域、通用子域知之甚少，那么请不要考虑他们，只需要将关注点集中在上述需求和如何实现以上需求即可。</p>
 </blockquote>
