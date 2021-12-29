@@ -23,6 +23,10 @@ categories: ["Abp极简教程"]
 
 创建类`IssueManager`，继承`DomainService`。Abp框架遵循了约定大于配置的概念，继承了`DomainService`的类，Abp会将其视为领域服务并注册到依赖注入容器中。
 
+{{< admonition tips >}}
+领域服务通常不会有多个不同的实现，因此无需为领域服务创建单独的接口。
+{{< /admonition >}}
+
 ```cs
 public class IssueManager : DomainService
 { }
