@@ -44,7 +44,7 @@ public class CatchEDomainModule : AbpModule
 
 在要解决的问题中，存在问题、答案、回答者，将他们命名为：`Issue`、`Answer`、`Answerer`。
 
-对于`Answer`，他将是`Issue`的一部分，无法离开`Issue`单独存在，而且它们还拥有事务一致性，因此将`Issue`和`Answer`划分为一个聚合，并将`Issue`建模为聚合根。
+对于`Answer`，它是`Issue`的一部分，无法离开`Issue`单独存在，而且它们还拥有事务一致性，因此将`Issue`和`Answer`划分为一个聚合，并将`Issue`建模为聚合根。
 
 `Answerer`和`Issue`聚合不存在强耦合关系，可以独立地维护`Answerer`的状态，因此以`Answerer`为聚合根建模为另一个聚合。
 
