@@ -4,10 +4,11 @@ authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-27T04:12:10Z
 description = "分析CatchE项目的问题空间，创建领域模型，区分聚合并建模，了解实体与聚合根，划分限界上下文（Bounded Context）并形成上下文映射图（Context Map），采用共享内核（Shared Kernel的方式处理不同上下文间的关系。"
+draft = true
 tags = ["Tutorials", "Abp"]
 title = "Abp极简教程-2 聚合、实体"
-+++
 
++++
 在上一篇文章中手动创建了**CatchE**项目并集成了Abp框架，接下来将从业务需求开始，了解领域的基本概念，识别聚合，并对领域建模，来展示如何在Abp中实现业务逻辑。这篇教程还会简要介绍限界上下文、上下文映射图、共享内核等概念。
 
 ## 领域
