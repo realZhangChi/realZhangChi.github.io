@@ -43,7 +43,7 @@ protected IRepository<Answerer, Guid> AnswererRepository =>
         LazyServiceProvider.LazyGetRequiredService<IRepository<Answerer, Guid>>();
 ```
 
-新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，`CatchEDomainModule`无需再次依赖，`Volo.Abp.DDD.Domain`包引用也可从项目中移除。
+新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，`CatchEDomainModule`无需再次依赖，`Volo.Abp.Ddd.Domain`包引用也可从项目中移除。
 
 ```cs
 [DependsOn(
