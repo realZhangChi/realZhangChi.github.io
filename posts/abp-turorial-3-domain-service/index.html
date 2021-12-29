@@ -17,7 +17,7 @@
 <meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-turorial-3-domain-service/><link rel=prev href=https://zhangchi.io/posts/abp-tutorial-2-entity/><link rel=alternate href=/posts/abp-turorial-3-domain-service/index.xml type=application/rss+xml title=zhangchi.io>
-<link rel=feed href=/posts/abp-turorial-3-domain-service/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-3 领域服务","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-turorial-3-domain-service\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1156,"url":"https:\/\/zhangchi.io\/posts\/abp-turorial-3-domain-service\/","datePublished":"2021-12-28T09:41:38+08:00","dateModified":"2021-12-28T09:41:38+08:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"在CatchE项目中引入领域服务，来处理业务逻辑。"}</script></head>
+<link rel=feed href=/posts/abp-turorial-3-domain-service/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-3 领域服务","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-turorial-3-domain-service\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1190,"url":"https:\/\/zhangchi.io\/posts\/abp-turorial-3-domain-service\/","datePublished":"2021-12-28T09:41:38+08:00","dateModified":"2021-12-28T09:41:38+08:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"在CatchE项目中引入领域服务，来处理业务逻辑。"}</script></head>
 <body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -85,7 +85,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-3 领域服务</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-28>2021-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1156 字&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-28>2021-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1190 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/posts/abp-turorial-3-domain-service/ class=leancloud_visitors data-flag-title="Abp极简教程-3 领域服务">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div>
@@ -113,6 +113,14 @@
 <p>在CatchE中，提出一个<code>Issue</code>时，应选择一个<code>Answerer</code>回答问题。若不存在<code>Answerer</code>与选中的用户匹配，则根据选中用户进行创建。</p>
 <p>通过构造函数创建<code>Issue</code>时，无法得知回答者是否存在，也无法创建<code>Answerer</code>。对<code>Answerer</code>的处理不是<code>Issue</code>的职责,因此创建领域服务来实现创建<code>Issue</code>的业务逻辑。</p>
 <p>创建类<code>IssueManager</code>，继承<code>DomainService</code>。Abp框架遵循了约定大于配置的概念，继承了<code>DomainService</code>的类，Abp会将其视为领域服务并注册到依赖注入容器中。</p>
+<div class="details admonition tips open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-pencil-alt fa-fw"></i><i class="details-icon fas fa-angle-right fa-fw"></i>
+</div>
+<div class=details-content>
+<div class=admonition-content>领域服务通常不会有多个不同的实现，因此无需为领域服务创建单独的接口。</div>
+</div>
+</div>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=k>public</span> <span class=k>class</span> <span class=nc>IssueManager</span> <span class=p>:</span> <span class=n>DomainService</span>
 <span class=p>{</span> <span class=p>}</span>
 </code></pre></div><p>需要通过仓储来判断<code>Answerer</code>是否存在，通过<code>DomainService</code>的<code>LazyServiceProvider</code>以懒加载的方式注入<code>IRepository&lt;Answerer, Guid></code>。</p>
@@ -126,7 +134,7 @@
 </div>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=k>protected</span> <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Answerer</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>AnswererRepository</span> <span class=p>=&gt;</span>
         <span class=n>LazyServiceProvider</span><span class=p>.</span><span class=n>LazyGetRequiredService</span><span class=p>&lt;</span><span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Answerer</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;&gt;();</span>
-</code></pre></div><p>新建<code>Answerer</code>时，需要确保<code>IdentityUserId</code>这一用户是存在的，因此还需注入<code>IRepository&lt;IdentityUser, Guid></code>仓储。<code>IdentityUser</code>在<code>Volo.Abp.Identity.Domain</code>中定义，将Nuget包引用添加到项目中，并更改模块依赖。<code>AbpIdentityDomainModule</code>已依赖<code>AbpDddDomainModule</code>，<code>CatchEDomainModule</code>无需再次依赖，<code>Volo.Abp.DDD.Domain</code>包引用也可从项目中移除。</p>
+</code></pre></div><p>新建<code>Answerer</code>时，需要确保<code>IdentityUserId</code>这一用户是存在的，因此还需注入<code>IRepository&lt;IdentityUser, Guid></code>仓储。<code>IdentityUser</code>在<code>Volo.Abp.Identity.Domain</code>中定义，将Nuget包引用添加到项目中，并更改模块依赖。<code>AbpIdentityDomainModule</code>已依赖<code>AbpDddDomainModule</code>，<code>CatchEDomainModule</code>无需再次依赖，<code>Volo.Abp.Ddd.Domain</code>包引用也可从项目中移除。</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=na>[DependsOn(
 </span><span class=na>    typeof(AbpIdentityDomainModule))]</span>
 <span class=k>public</span> <span class=k>class</span> <span class=nc>CatchEDomainModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
