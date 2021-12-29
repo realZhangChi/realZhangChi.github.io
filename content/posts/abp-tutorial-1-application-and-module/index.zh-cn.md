@@ -30,7 +30,7 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。将Program.cs更改如下：
 
-```C#
+```cs
 var builder = WebApplication.CreateBuilder(args);
 builder.Host
     .UseAutofac();
@@ -52,7 +52,7 @@ await app.RunAsync();
 
 创建C#类文件命名为`CatchEModule`更改代码如下：
 
-```C#
+```cs
 [DependsOn(
     typeof(AbpAutofacModule),
     typeof(AbpAspNetCoreMvcModule))]
@@ -95,7 +95,7 @@ Abp设计为模块化的应用程序框架，每一个模块都应定义一个�
 
 添加Nuget包引用`Serilog.AspNetCore`、`Serilog.Sinks.Async`到项目中，并更改Program.cs。
 
-```C#
+```cs
 try
 {
     var builder = WebApplication.CreateBuilder(args);

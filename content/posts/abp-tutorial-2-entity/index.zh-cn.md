@@ -33,7 +33,7 @@ CatchE问答平台的需求大致可以描述为以下几点：
 
 Abp项目是模块化的，在`CatchE.Domain`项目中添加Nuget包`Volo.Abp.Ddd.Domain`引用并创建`CatchEDomainModule`类。
 
-```C#
+```cs
 [DependsOn(
     typeof(AbpDddDomainModule))]
 public class CatchEDomainModule : AbpModule
@@ -66,7 +66,7 @@ public class CatchEDomainModule : AbpModule
 很多代码中，首先调用无参构造函数，然后通过属性的set访问器更改状态，从而完成对象的创建，创建对象的职责从构造函数转移到了编码人员，这种行为在一个长期迭代的软件系统中是相当危险的。
 {{< /admonition >}}
 
-```C#
+```cs
 public class Issue : FullAuditedAggregateRoot<Guid>
 {
     public string Title { get; private set; }
@@ -95,15 +95,15 @@ public class Issue : FullAuditedAggregateRoot<Guid>
 
 问题可以指派给一个回答者，因此在`Issue`中添加方法：
 
-```C#
-public Issue AssignTo(Guid answererId)
+```cs
+public Issue AssignTo(Answerer answerer)
 {
     if (AnswererId.HasValue)
     {
         throw new BusinessException(message: "不可重复指派");
     }
 
-    AnswererId = answererId;
+    AnswererId = answerer.Id;
     return this;
 }
 ```
@@ -112,7 +112,7 @@ public Issue AssignTo(Guid answererId)
 
 问题可以被取消指派（回答者拒绝回答问题）：
 
-```C#
+```cs
 public Issue CancelAssign()
 {
     AnswererId = null;
@@ -123,7 +123,7 @@ public Issue CancelAssign()
 
 问题最终将会被解决：
 
-```C#
+```cs
 public Issue Resolved()
 {
     IsResolved = true;
@@ -136,7 +136,7 @@ public Issue Resolved()
 
 回答者在答案被采纳前可以修改回答。创建实体`Answer`，并继承`AuditedEntity<Guid>`。
 
-```C#
+```cs
 public class Answer : AuditedEntity<Guid>
 {
     public Guid IssueId { get; init; }
@@ -163,7 +163,7 @@ public class Answer : AuditedEntity<Guid>
 
 回答者可以更改答案。
 
-```C#
+```cs
 public Answer Change(string content)
 {
     Content = Check.NotNullOrWhiteSpace(content, nameof(content));
@@ -174,7 +174,7 @@ public Answer Change(string content)
 
 将`Answer`作为导航属性添加到`Issue`中。
 
-```C#
+```cs
 public virtual Answer Answer { get; set; }
 ```
 
@@ -188,7 +188,7 @@ CatchE中的用户，在“问答”业务的语境下，可能是一个回答�
 
 创建类`Answerer`，并将`IdentityUser`的主键作为属性以共享用户信息。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
 
-```C#
+```cs
 public class Answerer : FullAuditedAggregateRoot<Guid>
 {
     public Guid IdentityUserId { get; set; }
@@ -215,4 +215,4 @@ public class Answerer : FullAuditedAggregateRoot<Guid>
 
 ## 总结
 
-在这篇文章中，分析了CatchE项目的业务需求，得到了核心域，识别出核心域的两个聚合并对他们进行建模。在下一篇文章将引入领域服务来处理实体无法完成的业务。
+在这篇文章中，分析了CatchE项目的业务需求，得到了核心域，识别出核心域的两个聚合并对他们进行建模。在下一篇文章将引入领域服务来实现提问`Issue`的功能。
