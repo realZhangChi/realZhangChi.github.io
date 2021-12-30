@@ -11,6 +11,38 @@ categories: ["Abp极简教程"]
 
 上篇文章中，介绍了领域服务，并用领域服务实现了创建`Issue`的业务逻辑。下面介绍应用服务以及它和领域服务的区别，并在CatchE应用程序中实现创建`Issue`的功能。
 
+## 数据传输对象
+
+数据传输对象（DTO）通常作为应用服务的参数，由展示层调用应用服务时传入；或作为应用服务的返回值类型，在应用服务方法执行完成后将结果返回给展示层。通过数据传输对象，将展示层与领域层完全隔离开来了。数据传输对象解决了阻抗失配的问题。
+
+定义`IssueDto`和`CreateIssueDto`。
+
+```cs
+public class IssueDto : EntityDto<Guid>
+{
+    public string Title { get; set; }
+
+    public string Description { get; set; }
+
+    public Guid? AnswererId { get; set; }
+
+    public bool IsResolved { get; set; }
+}
+```
+
+```cs
+public class CreateIssueDto
+{
+    [Required]
+    public string Title { get; set; }
+    
+    [Required]
+    public string Description { get; set; }
+    
+    public Guid AnswererId { get; set; }
+}
+```
+
 ## 应用服务
 
 - 应用服务实现了应用程序的用例，应用服务中的每一个方法对应着应用程序中的一个用例。“提交相关信息创建`Issue`并得到创建结果”是CatchE中的一个用例，他将对应着应用服务中的一个方法。应用服务中的方法，将负责用例的任务协调。
@@ -22,9 +54,11 @@ categories: ["Abp极简教程"]
 应用服务的职责都是和应用程序相关的，应用服务中的“应用”二字就是“应用程序”。
 {{< /admonition >}}
 
-### 创建应用层
-
 为了分离对应用程序的关注点，新建应用层类库项目`CatchE.Application`，添加Nuget包`Volo.Abp.Ddd.Application`引用，添加`CatchE.Domain`项目引用。为`CatchE.Application`创建Abp模块并添加模块依赖。
+
+{{< admonition note "Contracts">}}
+在Abp中，单独为应用服务接口、数据传输对象创建一个`Contracts`层是有必要的，我们会在后续教程中创建。
+{{< /admonition >}}
 
 ```cs
 [DependsOn(
@@ -33,3 +67,40 @@ categories: ["Abp极简教程"]
 public class CatchEApplicationModule : AbpModule
 { }
 ```
+
+创建`IIssueAppService`应用服务接口，并定义`CreateAsync`方法，它将接收`CreateIssueDto`参数，返回`IssueDto`。
+
+```cs
+public interface IIssueAppService : IApplicationService
+{
+    Task<IssueDto> CreateAsync(CreateIssueDto input);
+}
+```
+
+创建`IssueAppService`应用服务，继承`IIssueAppService`接口并实现。在`CreateAsync`方法中，首先协调领域模型进行创建`Issue`的这一应用程序用例：调用领域模型中的领域服务`IssueManager`创建一个`Issue`，然后调用领域模型中的仓储`IssueRepository`将实体`Issue`保存到仓储中。然后将创建的`Issue`映射为`IssueDto`并返回。
+
+```cs
+public class IssueAppService : ApplicationService, IIssueAppService
+{
+    protected IssueManager IssueManager =>
+        LazyServiceProvider.LazyGetRequiredService<IssueManager>();
+
+    protected IRepository<Issue, Guid> IssueRepository =>
+        LazyServiceProvider.LazyGetRequiredService<IRepository<Issue, Guid>>();
+
+    public async Task<IssueDto> CreateAsync(CreateIssueDto input)
+    {
+        var issue = await IssueManager.CreateAsync(
+            input.AnswererId,
+            input.Title,
+            input.Description);
+        await IssueRepository.InsertAsync(issue);
+
+        return ObjectMapper.Map<Issue, IssueDto>(issue);
+    }
+}
+```
+
+{{< admonition tip "跟随者模式">}}
+基于约定，Abp中的应用服务及其接口通常以`AppService`作为后缀，并分别继承`ApplicationService`和`IApplicationService`。遵循约定对于用好Abp是至关重要的，要做一个优秀的跟随着。
+{{< /admonition >}}
