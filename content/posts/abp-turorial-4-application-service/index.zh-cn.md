@@ -1,7 +1,7 @@
 ---
 title: "Abp极简教程-4 应用层及应用服务"
 date: 2021-12-29T13:24:18+08:00
-draft: false
+draft: true
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "介绍应用层（Application Layer）、数据传输对象（DTO）、应用服务（Application Service），应用服务和领域服务(Domain Service)的区别，继承AutoMapper，在CatchE项目中实现应用服务。"
