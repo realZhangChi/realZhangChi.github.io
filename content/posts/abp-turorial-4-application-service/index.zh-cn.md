@@ -1,10 +1,10 @@
 ---
-title: "Abp极简教程-4 应用服务"
+title: "Abp极简教程-4 应用层及应用服务"
 date: 2021-12-29T13:24:18+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
-description: "介绍应用服务，应用服务和领域服务的区别，在CatchE项目中实现应用服务。"
+description: "介绍应用层（Application Layer）、数据传输对象（DTO）、应用服务（Application Service），应用服务和领域服务(Domain Service)的区别，继承AutoMapper，在CatchE项目中实现应用服务。"
 tags: ["Tutorials", "Abp"]
 categories: ["Abp极简教程"]
 ---
@@ -14,6 +14,10 @@ categories: ["Abp极简教程"]
 ## 数据传输对象
 
 数据传输对象（DTO）通常作为应用服务的参数，由展示层调用应用服务时传入；或作为应用服务的返回值类型，在应用服务方法执行完成后将结果返回给展示层。通过数据传输对象，将展示层与领域层完全隔离开来了。数据传输对象解决了阻抗失配的问题。
+
+{{< admonition tip "阻抗失配">}}
+展示层接收的数据格式与接口返回值的数据格式一致为阻抗匹配，接口接收的参数数据格式与展示层传入参数的数据格式一致为阻抗匹配。反之，属性多余或少于所需均为阻抗失配。
+{{< /admonition >}}
 
 定义`IssueDto`和`CreateIssueDto`。
 
@@ -104,3 +108,45 @@ public class IssueAppService : ApplicationService, IIssueAppService
 {{< admonition tip "跟随者模式">}}
 基于约定，Abp中的应用服务及其接口通常以`AppService`作为后缀，并分别继承`ApplicationService`和`IApplicationService`。遵循约定对于用好Abp是至关重要的，要做一个优秀的跟随着。
 {{< /admonition >}}
+
+### 应用服务和领域服务的区别
+
+同为服务，他们的区别即为“应用”的“领域”的区别。
+
+应用指的是“应用程序”，应用服务是和**应用程序**相关联的服务，如应用程序用例、应用程序权限与安全、应用程序的数据库事务。
+
+领域指的是业务，领域服务则是和**业务逻辑**相关联的服务，它实现了和应用程序用例完全无关的业务逻辑。领域服务作为领域对象的一种，和实体、仓储、领域事件等共同组成了领域模型，而领域模型则是对业务的描述。
+
+## 使用AutoMapper
+
+在应用服务的`CreateAsync`方法中，使用了`ObjectMapper`将实体映射为Dto。若要使用`ObjectMapper`对象映射功能，需要配置`AutoMapper。
+
+1. 创建`CatchEApplicationAutoMapperProfile`并继承`AutoMapper.Profile`；
+2. 在构造函数中创建对象映射关系；
+3. 在`CatchEApplicationModule`中将注册AutoMapper配置文件到项目中。
+
+```cs
+public class CatchEApplicationAutoMapperProfile : Profile
+{
+    public CatchEApplicationAutoMapperProfile()
+    {
+        CreateMap<Issue, IssueDto>();
+    }
+}
+```
+
+```cs
+public override void ConfigureServices(ServiceConfigurationContext context)
+{
+    Configure<AbpAutoMapperOptions>(options =>
+    {
+        options.AddMaps<CatchEApplicationModule>();
+    });
+}
+```
+
+`AddMaps`会对`CatchEApplicationModule`程序集内所有继承了`Profile`的类进行注册。
+
+## 总结
+
+这篇文章介绍了应用服务及应用层相关的概念，分析了应用服务和领域服务的区别。下一篇教程将会创建Web Api，并与CatchE启动项目集成。
