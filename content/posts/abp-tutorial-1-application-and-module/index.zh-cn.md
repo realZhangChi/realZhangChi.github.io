@@ -98,6 +98,20 @@ Abp设计为模块化的应用程序框架，每一个模块都应定义一个�
 ```cs
 try
 {
+    Log.Logger = new LoggerConfiguration()
+#if DEBUG
+        .MinimumLevel.Debug()
+#else
+                .MinimumLevel.Information()
+#endif
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.Async(c => c.File("Logs/logs-.txt", rollingInterval: RollingInterval.Day))
+#if DEBUG
+        .WriteTo.Async(c => c.Console())
+#endif
+        .CreateLogger();
+
     var builder = WebApplication.CreateBuilder(args);
     builder.Host
         .UseAutofac()
