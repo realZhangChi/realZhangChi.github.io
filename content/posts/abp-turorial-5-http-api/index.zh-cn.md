@@ -1,7 +1,7 @@
 ---
 title: "Abp极简教程-5 Api接口"
 date: 2022-01-04T10:31:12+08:00
-draft: false
+draft: true
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "了解Abp中的HttpApi，为CatchException项目创建HttpApi接口。"
