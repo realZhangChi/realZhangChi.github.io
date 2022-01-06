@@ -3,7 +3,7 @@ title: Abp极简教程-3 领域服务
 date: 2021-12-28T09:41:38.000+08:00
 author: 张驰
 authorLink: https://github.com/realZhangChi
-description: 在CatchE项目中引入领域服务，来处理业务逻辑。
+description: 在CatchException项目中引入领域服务，来处理业务逻辑。
 tags:
 - Tutorials
 - Abp
@@ -12,7 +12,7 @@ categories:
 draft: true
 
 ---
-在上一篇教程中，分析了CatchE项目的业务逻辑，得到了核心域，并对`Issue`、`Answerer`聚合建模。这篇文章中将创建领域服务，来完成提问`Issue`的功能。
+在上一篇教程中，分析了CatchException项目的业务逻辑，得到了核心域，并对`Issue`、`Answerer`聚合建模。这篇文章中将创建领域服务，来完成提问`Issue`的功能。
 
 ## 领域服务
 
@@ -20,7 +20,7 @@ draft: true
 领域服务处理业务规则。实现业务逻辑时，首先应考虑实体。如果实体无法**独立**实现业务，或者某个操作过程不属于实体的职责时，便应该将其放在领域服务中。
 {{< /admonition >}}
 
-在CatchE中，提出一个`Issue`时，应选择一个`Answerer`回答问题。若不存在`Answerer`与选中的用户匹配，则根据选中用户进行创建。
+在CatchException中，提出一个`Issue`时，应选择一个`Answerer`回答问题。若不存在`Answerer`与选中的用户匹配，则根据选中用户进行创建。
 
 通过构造函数创建`Issue`时，无法得知回答者是否存在，也无法创建`Answerer`。对`Answerer`的处理不是`Issue`的职责,因此创建领域服务来实现创建`Issue`的业务逻辑。
 
@@ -46,12 +46,12 @@ protected IRepository<Answerer, Guid> AnswererRepository =>
         LazyServiceProvider.LazyGetRequiredService<IRepository<Answerer, Guid>>();
 ```
 
-新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，`CatchEDomainModule`无需再次依赖，`Volo.Abp.Ddd.Domain`包引用也可从项目中移除。
+新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，`CatchExceptionDomainModule`无需再次依赖，`Volo.Abp.Ddd.Domain`包引用也可从项目中移除。
 
 ```cs
 [DependsOn(
     typeof(AbpIdentityDomainModule))]
-public class CatchEDomainModule : AbpModule
+public class CatchExceptionDomainModule : AbpModule
 { }
 ```
 
@@ -105,4 +105,4 @@ public class IssueManager : DomainService
 
 ## 总结
 
-这篇文章中介绍了领域服务的概念，并通过分析创建`Issue`业务逻辑，完成了对领域服务的建模。下一篇文章将会分析CatchE应用程序的用例，并实现应用服务。
+这篇文章中介绍了领域服务的概念，并通过分析创建`Issue`业务逻辑，完成了对领域服务的建模。下一篇文章将会分析CatchException应用程序的用例，并实现应用服务。

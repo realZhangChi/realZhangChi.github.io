@@ -4,12 +4,12 @@ date: 2021-12-29T13:24:18+08:00
 draft: true
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
-description: "介绍应用层（Application Layer）、数据传输对象（DTO）、应用服务（Application Service），应用服务和领域服务(Domain Service)的区别，继承AutoMapper，在CatchE项目中实现应用服务。"
+description: "介绍应用层（Application Layer）、数据传输对象（DTO）、应用服务（Application Service），应用服务和领域服务(Domain Service)的区别，继承AutoMapper，在CatchException项目中实现应用服务。"
 tags: ["Tutorials", "Abp"]
 categories: ["Abp极简教程"]
 ---
 
-上篇文章中，介绍了领域服务，并用领域服务实现了创建`Issue`的业务逻辑。下面介绍应用服务以及它和领域服务的区别，并在CatchE应用程序中实现创建`Issue`的功能。
+上篇文章中，介绍了领域服务，并用领域服务实现了创建`Issue`的业务逻辑。下面介绍应用服务以及它和领域服务的区别，并在CatchException应用程序中实现创建`Issue`的功能。
 
 ## 数据传输对象
 
@@ -49,7 +49,7 @@ public class CreateIssueDto
 
 ## 应用服务
 
-- 应用服务实现了应用程序的用例，应用服务中的每一个方法对应着应用程序中的一个用例。“提交相关信息创建`Issue`并得到创建结果”是CatchE中的一个用例，他将对应着应用服务中的一个方法。应用服务中的方法，将负责用例的任务协调。
+- 应用服务实现了应用程序的用例，应用服务中的每一个方法对应着应用程序中的一个用例。“提交相关信息创建`Issue`并得到创建结果”是CatchException中的一个用例，他将对应着应用服务中的一个方法。应用服务中的方法，将负责用例的任务协调。
 - 应用服务是领域模型的直接客户，他将调用协调领域模型来完成一个用例。创建`Issue`的应用服务方法将会调用`Issue`、`IssueManager`、`Repository`等领域模型来完成`Issue`的创建。
 - 应用服务负责控制事务以保证对模型修改的原子提交。在Abp中，自动通过`UnitOfWork`控制事务。
 - 应用服务负责安全相关的操作如权限控制。
@@ -58,7 +58,7 @@ public class CreateIssueDto
 应用服务的职责都是和应用程序相关的，应用服务中的“应用”二字就是“应用程序”。
 {{< /admonition >}}
 
-为了分离对应用程序的关注点，新建应用层类库项目`CatchE.Application`，添加Nuget包`Volo.Abp.Ddd.Application`引用，添加`CatchE.Domain`项目引用。为`CatchE.Application`创建Abp模块并添加模块依赖。
+为了分离对应用程序的关注点，新建应用层类库项目`CatchException.Application`，添加Nuget包`Volo.Abp.Ddd.Application`引用，添加`CatchException.Domain`项目引用。为`CatchException.Application`创建Abp模块并添加模块依赖。
 
 {{< admonition note "Contracts">}}
 在Abp中，单独为应用服务接口、数据传输对象创建一个`Contracts`层是有必要的，我们会在后续教程中创建。
@@ -67,8 +67,8 @@ public class CreateIssueDto
 ```cs
 [DependsOn(
     typeof(AbpDddApplicationModule),
-    typeof(CatchEDomainModule))]
-public class CatchEApplicationModule : AbpModule
+    typeof(CatchExceptionDomainModule))]
+public class CatchExceptionApplicationModule : AbpModule
 { }
 ```
 
@@ -121,14 +121,14 @@ public class IssueAppService : ApplicationService, IIssueAppService
 
 在应用服务的`CreateAsync`方法中，使用了`ObjectMapper`将实体映射为Dto。若要使用`ObjectMapper`对象映射功能，需要配置`AutoMapper。
 
-1. 创建`CatchEApplicationAutoMapperProfile`并继承`AutoMapper.Profile`；
+1. 创建`CatchExceptionApplicationAutoMapperProfile`并继承`AutoMapper.Profile`；
 2. 在构造函数中创建对象映射关系；
-3. 在`CatchEApplicationModule`中将注册AutoMapper配置文件到项目中。
+3. 在`CatchExceptionApplicationModule`中将注册AutoMapper配置文件到项目中。
 
 ```cs
-public class CatchEApplicationAutoMapperProfile : Profile
+public class CatchExceptionApplicationAutoMapperProfile : Profile
 {
-    public CatchEApplicationAutoMapperProfile()
+    public CatchExceptionApplicationAutoMapperProfile()
     {
         CreateMap<Issue, IssueDto>();
     }
@@ -140,13 +140,13 @@ public override void ConfigureServices(ServiceConfigurationContext context)
 {
     Configure<AbpAutoMapperOptions>(options =>
     {
-        options.AddMaps<CatchEApplicationModule>();
+        options.AddMaps<CatchExceptionApplicationModule>();
     });
 }
 ```
 
-`AddMaps`会对`CatchEApplicationModule`程序集内所有继承了`Profile`的类进行注册。
+`AddMaps`会对`CatchExceptionApplicationModule`程序集内所有继承了`Profile`的类进行注册。
 
 ## 总结
 
-这篇文章介绍了应用服务及应用层相关的概念，分析了应用服务和领域服务的区别。下一篇教程将会创建Web Api，并与CatchE启动项目集成。
+这篇文章介绍了应用服务及应用层相关的概念，分析了应用服务和领域服务的区别。下一篇教程将会创建Web Api，并与CatchException启动项目集成。

@@ -3,19 +3,19 @@ author = "张驰"
 authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-27T04:12:10Z
-description = "分析CatchE项目的问题空间，创建领域模型，区分聚合并建模，了解实体与聚合根，划分限界上下文（Bounded Context）并形成上下文映射图（Context Map），采用共享内核（Shared Kernel的方式处理不同上下文间的关系。"
+description = "分析CatchException项目的问题空间，创建领域模型，区分聚合并建模，了解实体与聚合根，划分限界上下文（Bounded Context）并形成上下文映射图（Context Map），采用共享内核（Shared Kernel的方式处理不同上下文间的关系。"
 draft = true
 tags = ["Tutorials", "Abp"]
 title = "Abp极简教程-2 聚合、实体"
 
 +++
-在上一篇文章中手动创建了**CatchE**项目并集成了Abp框架，接下来将从业务需求开始，了解领域的基本概念，识别聚合，并对领域建模，来展示如何在Abp中实现业务逻辑。这篇教程还会简要介绍限界上下文、上下文映射图、共享内核等概念。
+在上一篇文章中手动创建了**CatchException**项目并集成了Abp框架，接下来将从业务需求开始，了解领域的基本概念，识别聚合，并对领域建模，来展示如何在Abp中实现业务逻辑。这篇教程还会简要介绍限界上下文、上下文映射图、共享内核等概念。
 
 ## 领域
 
 领域即是一个组织所做的事情以及其中所包含的一切，描述了**业务**规则。领域是应用软件要解决的问题空间。
 
-CatchE问答平台的需求大致可以描述为以下几点：
+CatchException问答平台的需求大致可以描述为以下几点：
 
 1. 提问者创建一个问题
 2. 问题拥有标题、描述、是否解决等属性
@@ -30,14 +30,14 @@ CatchE问答平台的需求大致可以描述为以下几点：
 如果你对子域、支撑子域、通用子域知之甚少，那么请不要考虑他们，只需要将关注点集中在上述需求和如何实现以上需求即可。
 {{< /admonition >}}
 
-为了将领域的关注点从实现细节如数据库、Web Api等分离开来，创建一个类库项目名为`CatchE.Domain`。领域层将专注于业务逻辑。
+为了将领域的关注点从实现细节如数据库、Web Api等分离开来，创建一个类库项目名为`CatchException.Domain`。领域层将专注于业务逻辑。
 
-Abp项目是模块化的，在`CatchE.Domain`项目中添加Nuget包`Volo.Abp.Ddd.Domain`引用并创建`CatchEDomainModule`类。
+Abp项目是模块化的，在`CatchException.Domain`项目中添加Nuget包`Volo.Abp.Ddd.Domain`引用并创建`CatchExceptionDomainModule`类。
 
 ```cs
 [DependsOn(
     typeof(AbpDddDomainModule))]
-public class CatchEDomainModule : AbpModule
+public class CatchExceptionDomainModule : AbpModule
 { }
 ```
 
@@ -181,10 +181,10 @@ public virtual Answer Answer { get; set; }
 
 ### Answerer聚合
 
-CatchE中的用户，在“问答”业务的语境下，可能是一个回答者。若是CatchE中存在订单系统，那么CatchE中的用户，可能又是一个购买者。反过来说，无论是“问答”中的回答者，还是“订单”中的购买者，他们都是CatchE中的用户。
+CatchException中的用户，在“问答”业务的语境下，可能是一个回答者。若是CatchException中存在订单系统，那么CatchException中的用户，可能又是一个购买者。反过来说，无论是“问答”中的回答者，还是“订单”中的购买者，他们都是CatchException中的用户。
 
 {{< admonition note "DDD" >}}
-“问答”和“订单”将是不同的领域（Domain），不同领域的语境是不同的限界上下文（Bounded Context）。CatchE的用户在“问答”这一限界上下文中将是回答者，在“订单”这一上下文中将是购买者。将CatchE的用户与“问答”中的回答者、“订单”中的购买者进行映射，便形成了上下文映射图（Context Map）。“问答”上下文与“订单”上下文将采用共享内核（Shared Kernel）的方式共享CatchE的用户信息。
+“问答”和“订单”将是不同的领域（Domain），不同领域的语境是不同的限界上下文（Bounded Context）。CatchException的用户在“问答”这一限界上下文中将是回答者，在“订单”这一上下文中将是购买者。将CatchException的用户与“问答”中的回答者、“订单”中的购买者进行映射，便形成了上下文映射图（Context Map）。“问答”上下文与“订单”上下文将采用共享内核（Shared Kernel）的方式共享CatchException的用户信息。
 {{< /admonition >}}
 
 创建类`Answerer`，并将`IdentityUser`的主键作为属性以共享用户信息。随着业务的深入，将为`Answerer`扩展更多的功能，比如设置赞赏码等。
@@ -216,4 +216,4 @@ public class Answerer : FullAuditedAggregateRoot<Guid>
 
 ## 总结
 
-在这篇文章中，分析了CatchE项目的业务需求，得到了核心域，识别出核心域的两个聚合并对他们进行建模。在下一篇文章将引入领域服务来实现提问`Issue`的功能。
+在这篇文章中，分析了CatchException项目的业务需求，得到了核心域，识别出核心域的两个聚合并对他们进行建模。在下一篇文章将引入领域服务来实现提问`Issue`的功能。
