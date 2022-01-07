@@ -28,7 +28,9 @@ Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配�
 
 ### Abp应用
 
-Abp框架中定义了`IAbpApplication`应用，项目启动时应构建应用并运行。应用包含了启动模块及其依赖，构建应用时需要指定启动模块。将Program.cs更改如下：
+Abp框架中定义了`IAbpApplication`应用，这也是Abp项目的入口点，Abp应用包含了启动模块及其依赖。在项目启动时需要将Abp应用注册到依赖注入系统中去，并指定启动模块。Abp定义了`AddApplication`泛型扩展方法，它将Abp应用注册为单例，方法的泛型参数指定了启动模块。
+
+通过`WebApplicationBuilder`编译得到`WebApplication`后，调用Abp定义的扩展方法`InitializeApplication`，他将初始化Abp应用，根据模块的依赖关系初始化启动模块及其依赖的模块。
 
 ```cs
 var builder = WebApplication.CreateBuilder(args);
@@ -44,18 +46,43 @@ app.InitializeApplication();
 await app.RunAsync();
 ```
 
-`AddApplication`扩展方法向依赖注入系统中注册单例的Abp应用，方法的泛型参数指定了启动模块，稍后在示例项目中将创建名为`CatchExceptionModule`的模块。
-
-`InitializeApplication`扩展方法初始化Abp应用，它将会根据模块的依赖关系初始化启动模块及其依赖的模块。
-
 ### 模块
 
-创建C#类文件命名为`CatchExceptionModule`更改代码如下：
+Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。每个C#项目只应定义一个模块。
+
+在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。`ConfigureServices`方法将在实例化Abp应用的时候调用以进行依赖项注册。
+
+初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用`OnApplicationInitialization`方法，通常在这个方法中会构建中间件管道。
 
 ```cs
 [DependsOn(
     typeof(AbpAutofacModule),
     typeof(AbpAspNetCoreMvcModule))]
+public class CatchExceptionModule : AbpModule
+{
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    { }
+
+    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    {
+        var app = context.GetApplicationBuilder();
+        var env = context.GetEnvironment();
+
+        app.UseRouting();
+        app.UseConfiguredEndpoints();
+    }
+}
+```
+
+### Swagger
+
+添加Nuget包引用`Volo.Abp.Swashbuckle`及其模块依赖。Abp对Swagger进行了一些功能上的完善，比如防止跨站点请求伪造攻击，因此在项目中需要使用`Volo.Abp.Swashbuckle`。`Volo.Abp.Swashbuckle`自定义了swagger所需的js文件，他位于`Volo.Abp.Swashbuckle`模块的wwwroot文件夹中，因此需要通过`UseStaticFiles`扩展方法添加静态文件中间件支持。
+
+```cs
+[DependsOn(
+    typeof(AbpAutofacModule),
+    typeof(AbpAspNetCoreMvcModule),
+    typeof(AbpSwashbuckleModule))]
 public class CatchExceptionModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -72,7 +99,10 @@ public class CatchExceptionModule : AbpModule
         if (env.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseAbpSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CatchException API");
+            });
         }
         app.UseConfiguredEndpoints();
     }
@@ -80,20 +110,16 @@ public class CatchExceptionModule : AbpModule
 
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
     {
-        context.Services.AddSwaggerGen();
+        context.Services.AddAbpSwaggerGen();
     }
 }
 ```
 
-Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自`AbpModule`的类，并以`Module`后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过`DependsOn`特性来定义。每个C#项目只应定义一个模块。
-
-在`ConfigureServices`方法中，可以将依赖项注册到依赖注入系统中。在Abp中，可以通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。示例程序在`ConfigureServices`方法中注册了Swagger相关服务。`ConfigureServices`方法将在实例化Abp应用的时候调用。
-
-初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用他的`OnApplicationInitialization`方法，通常在这个方法中会构建中间件管道。示例程序配置了路由和终结点管道，并在开发环境中配置Swagger中间件。
-
 ### 日志
 
-添加Nuget包引用`Serilog.AspNetCore`、`Serilog.Sinks.Async`到项目中，并更改Program.cs。
+添加Nuget包引用`Serilog.AspNetCore`、`Serilog.Sinks.Async`到项目中。
+
+在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过`try`块包括起来捕获异常，在`catch`块中记录启动异常日志，在`finally`块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要`UseSerilog`扩展方法注册Serilog日志服务。更改Program.cs。
 
 ```cs
 try
@@ -102,7 +128,7 @@ try
 #if DEBUG
         .MinimumLevel.Debug()
 #else
-                .MinimumLevel.Information()
+        .MinimumLevel.Information()
 #endif
         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
         .Enrich.FromLogContext()
@@ -136,8 +162,6 @@ finally
     Log.CloseAndFlush();
 }
 ```
-
-在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过`try`块包括起来捕获异常，在`catch`块中记录启动异常日志，在`finally`块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要`UseSerilog`扩展方法注册Serilog日志服务（第20行代码）。
 
 ### 启动
 
