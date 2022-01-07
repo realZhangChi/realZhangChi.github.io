@@ -1,14 +1,11 @@
 ---
-title: Abp极简教程-3 领域服务
+title: "Abp极简教程-3 领域服务"
 date: 2021-12-28T09:41:38.000+08:00
-author: 张驰
-authorLink: https://github.com/realZhangChi
-description: 在CatchException项目中引入领域服务，来处理业务逻辑。
-tags:
-- Tutorials
-- Abp
-categories:
-- Abp极简教程
+author: "张驰"
+authorLink: "https://github.com/realZhangChi"
+description: "在CatchException项目中引入领域服务，来处理业务逻辑。"
+tags: ["Tutorials", "Abp"]
+categories: ["Abp极简教程"]
 draft: true
 
 ---
@@ -37,16 +34,12 @@ public class IssueManager : DomainService
 
 需要通过仓储来判断`Answerer`是否存在，通过`DomainService`的`LazyServiceProvider`以懒加载的方式注入`IRepository<Answerer, Guid>`。
 
-{{< admonition >}}
-仓储及仓储的实现，将在后面的文章中介绍。
-{{< /admonition >}}
-
 ```cs
 protected IRepository<Answerer, Guid> AnswererRepository =>
         LazyServiceProvider.LazyGetRequiredService<IRepository<Answerer, Guid>>();
 ```
 
-新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，`CatchExceptionDomainModule`无需再次依赖，`Volo.Abp.Ddd.Domain`包引用也可从项目中移除。
+新建`Answerer`时，需要确保`IdentityUserId`这一用户是存在的，因此还需注入`IRepository<IdentityUser, Guid>`仓储。`IdentityUser`在`Volo.Abp.Identity.Domain`中定义，将Nuget包引用添加到项目中，并更改模块依赖。`AbpIdentityDomainModule`已依赖`AbpDddDomainModule`，在`CatchExceptionDomainModule`中无需重复依赖，`Volo.Abp.Ddd.Domain`包引用也可从项目中移除。
 
 ```cs
 [DependsOn(
