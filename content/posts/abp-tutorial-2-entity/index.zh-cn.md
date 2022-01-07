@@ -4,7 +4,7 @@ authorLink = "https://github.com/realZhangChi"
 categories = ["Abp极简教程"]
 date = 2021-12-27T04:12:10Z
 description = "分析CatchException项目的问题空间，创建领域模型，区分聚合并建模，了解实体与聚合根，划分限界上下文（Bounded Context）并形成上下文映射图（Context Map），采用共享内核（Shared Kernel的方式处理不同上下文间的关系。"
-draft = true
+draft = false
 tags = ["Tutorials", "Abp"]
 title = "Abp极简教程-2 领域与聚合、实体"
 

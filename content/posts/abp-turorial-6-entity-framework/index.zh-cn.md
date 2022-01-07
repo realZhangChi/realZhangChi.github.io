@@ -1,7 +1,7 @@
 ---
 title: "Abp极简教程-6 Entity Framework与仓储实现"
 date: 2022-01-06T11:22:17+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。"
