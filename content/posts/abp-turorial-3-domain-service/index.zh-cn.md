@@ -9,6 +9,7 @@ tags:
 - Abp
 categories:
 - Abp极简教程
+draft: true
 
 ---
 在上一篇教程中，分析了CatchException项目的业务逻辑，得到了核心域，并对`Issue`、`Answerer`聚合建模。这篇文章中将创建领域服务，来完成提问`Issue`的功能。
