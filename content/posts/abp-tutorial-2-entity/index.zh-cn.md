@@ -51,6 +51,8 @@ public class CatchExceptionDomainModule : AbpModule
 
 ### Issue聚合
 
+将和Issue相关的实体聚合到一起，便形成了Issue聚合。
+
 #### Issue聚合根
 
 创建聚合根`Issue`，继承`FullAuditedAggregateRoot<Guid>`。关于不同聚合根基类的区别，详见[Abp文档](https://docs.abp.io/en/abp/latest/Entities#base-classes-interfaces-for-audit-properties)。

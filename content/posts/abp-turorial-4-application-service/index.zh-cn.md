@@ -16,7 +16,7 @@ categories: ["Abp极简教程"]
 数据传输对象（DTO）通常作为应用服务的参数，由展示层调用应用服务时传入；或作为应用服务的返回值类型，在应用服务方法执行完成后将结果返回给展示层。通过数据传输对象，将展示层与领域层完全隔离开来了。数据传输对象解决了阻抗失配的问题。
 
 {{< admonition tip "阻抗失配">}}
-展示层接收的数据格式与接口返回值的数据格式一致为阻抗匹配，接口接收的参数数据格式与展示层传入参数的数据格式一致为阻抗匹配。反之，属性多余或少于所需均为阻抗失配。
+展示层接收的数据格式与接口返回值的数据格式一致为阻抗匹配，接口接收的参数数据格式与展示层传入参数的数据格式一致为阻抗匹配。反之，属性多于或少于所需均为阻抗失配。
 {{< /admonition >}}
 
 定义`IssueDto`和`CreateIssueDto`。
@@ -50,15 +50,15 @@ public class CreateIssueDto
 ## 应用服务
 
 - 应用服务实现了应用程序的用例，应用服务中的每一个方法对应着应用程序中的一个用例。“提交相关信息创建`Issue`并得到创建结果”是CatchException中的一个用例，他将对应着应用服务中的一个方法。应用服务中的方法，将负责用例的任务协调。
-- 应用服务是领域模型的直接客户，他将调用协调领域模型来完成一个用例。创建`Issue`的应用服务方法将会调用`Issue`、`IssueManager`、`Repository`等领域模型来完成`Issue`的创建。
-- 应用服务负责控制事务以保证对模型修改的原子提交。在Abp中，自动通过`UnitOfWork`控制事务。
+- 应用服务是领域模型的直接客户，调用协调领域模型来完成一个用例。创建`Issue`的应用服务方法会调用`Issue`、`IssueManager`、`Repository`等领域模型来完成`Issue`的创建。
+- 应用服务负责控制事务以保证对模型修改的原子提交。在Abp中，自动通过`UnitOfWork`中间件控制事务。
 - 应用服务负责安全相关的操作如权限控制。
 
 {{< admonition note >}}
-应用服务的职责都是和应用程序相关的，应用服务中的“应用”二字就是“应用程序”。
+应用服务的职责都是和应用程序相关的，应用服务中的“应用”指的就是“应用程序”。
 {{< /admonition >}}
 
-为了分离对应用程序的关注点，新建应用层类库项目`CatchException.Application`，添加Nuget包`Volo.Abp.Ddd.Application`引用，添加`CatchException.Domain`项目引用。为`CatchException.Application`创建Abp模块并添加模块依赖。
+为了分离对应用程序职责的关注点，新建应用层类库项目`CatchException.Application`，添加Nuget包`Volo.Abp.Ddd.Application`引用，添加`CatchException.Domain`项目引用。为`CatchException.Application`创建Abp模块并添加模块依赖。
 
 {{< admonition note "Contracts">}}
 在Abp中，单独为应用服务接口、数据传输对象创建一个`Contracts`层是有必要的，我们会在后续教程中创建。
