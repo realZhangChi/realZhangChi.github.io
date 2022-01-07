@@ -1,14 +1,16 @@
 ---
-title: "Abp极简教程-6 Entity Framework与仓储实现"
-date: 2022-01-06T11:22:17+08:00
-draft: false
-author: "张驰"
-authorLink: "https://github.com/realZhangChi"
-description: "向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。"
-tags: ["Tutorials", "Abp"]
-categories: ["Abp极简教程"]
----
+title: Abp极简教程-6 Entity Framework与仓储实现
+date: 2022-01-06T11:22:17.000+08:00
+author: 张驰
+authorLink: https://github.com/realZhangChi
+description: 向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。
+tags:
+- Tutorials
+- Abp
+categories:
+- Abp极简教程
 
+---
 在前几篇教程中，对领域进行了建模，开发了领域层，针对应用程序用例开发了应用层，还创建了负责数据适配的HttpApi接口。到目前为止，项目还无法运行起来，因为没有为仓储提供实现。这篇教程中将集成Entity Framework Core并实现仓储。
 
 ## 集成Entity Framework Core
