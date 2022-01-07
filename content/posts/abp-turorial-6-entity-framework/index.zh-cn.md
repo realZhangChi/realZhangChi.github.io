@@ -9,6 +9,7 @@ tags:
 - Abp
 categories:
 - Abp极简教程
+draft: true
 
 ---
 在前几篇教程中，对领域进行了建模，开发了领域层，针对应用程序用例开发了应用层，还创建了负责数据适配的HttpApi接口。到目前为止，项目还无法运行起来，因为没有为仓储提供实现。这篇教程中将集成Entity Framework Core并实现仓储。
