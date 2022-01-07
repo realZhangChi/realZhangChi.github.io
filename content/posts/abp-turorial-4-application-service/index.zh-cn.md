@@ -10,6 +10,7 @@ tags:
 - Abp
 categories:
 - Abp极简教程
+draft: true
 
 ---
 上篇文章中，介绍了领域服务，并用领域服务实现了创建`Issue`的业务逻辑。下面介绍应用服务以及它和领域服务的区别，并在CatchException应用程序中实现创建`Issue`的功能。
