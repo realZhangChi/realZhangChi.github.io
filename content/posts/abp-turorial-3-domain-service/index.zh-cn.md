@@ -1,12 +1,14 @@
 ---
-title: "Abp极简教程-3 领域服务"
+title: Abp极简教程-3 领域服务
 date: 2021-12-28T09:41:38.000+08:00
-author: "张驰"
-authorLink: "https://github.com/realZhangChi"
-description: "在CatchException项目中引入领域服务，来处理业务逻辑。"
-tags: ["Tutorials", "Abp"]
-categories: ["Abp极简教程"]
-draft: false
+author: 张驰
+authorLink: https://github.com/realZhangChi
+description: 在CatchException项目中引入领域服务，来处理业务逻辑。
+tags:
+- Tutorials
+- Abp
+categories:
+- Abp极简教程
 
 ---
 在上一篇教程中，分析了CatchException项目的业务逻辑，得到了核心域，并对`Issue`、`Answerer`聚合建模。这篇文章中将创建领域服务，来完成提问`Issue`的功能。
