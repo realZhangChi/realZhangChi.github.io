@@ -6,7 +6,7 @@ date = 2021-12-27T04:12:10Z
 description = "分析CatchException项目的问题空间，创建领域模型，区分聚合并建模，了解实体与聚合根，划分限界上下文（Bounded Context）并形成上下文映射图（Context Map），采用共享内核（Shared Kernel的方式处理不同上下文间的关系。"
 draft = true
 tags = ["Tutorials", "Abp"]
-title = "Abp极简教程-2 聚合、实体"
+title = "Abp极简教程-2 领域与聚合、实体"
 
 +++
 在上一篇文章中手动创建了**CatchException**项目并集成了Abp框架，接下来将从业务需求开始，了解领域的基本概念，识别聚合，并对领域建模，来展示如何在Abp中实现业务逻辑。这篇教程还会简要介绍限界上下文、上下文映射图、共享内核等概念。
@@ -59,7 +59,17 @@ public class CatchExceptionDomainModule : AbpModule
 
 显式将无参构造函数访问级别设为`private`(或`protected`)供ORM反序列化对象时使用，并可限制对象实例化的方式，阻止非法的实例化。
 
-创建以唯一标识、`title`、和`description`作为参数的构造函数。基于及早生成唯一标识的原则，将唯一标识作为参数传入构造函数中，并调用`base`为唯一标识`Id`赋值。在`Issue`对象正确实例化后，`Title`和`Description`绝不能为`null`，因此在构造函数中为它们赋值，并将它们的set访问器访问级别设为`private`。在构造函数中，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
+创建以唯一标识、`title`、和`description`作为参数的构造函数。基于**及早生成唯一标识**，将唯一标识作为参数传入构造函数中，并调用`base`为唯一标识`Id`赋值。
+
+{{< admonition note "及早生成唯一标识" >}}
+及早生成唯一标识可以使得实体在持久化之前即可被通过唯一标识来引用。
+{{< /admonition >}}
+
+在`Issue`对象正确实例化后，`Title`和`Description`绝不能且永远不能为`null`，因此在构造函数中为它们赋值，并将它们的set访问器访问级别设为`private`。在构造函数中，首先利用Abp提供的`Check`实现守卫，对参数进行非空检查，然后将其赋值给属性。
+
+{{< admonition note "不变条件" >}}
+不变条件是指，在程序执行过程或部分过程中，可始终被假定成立的条件。实体的不变条件是指在整个生命周期中都必须保持事务一致性的状态。`Issue`的不变条件要求`Title`和`Description`不能为`null`，因此需要将他们作为参数传递给构造函数。
+{{< /admonition >}}
 
 值得一提的是，`Issue`只能通过有参的构造函数来实例化，将创建`Issue`所需的所有信息都传递给构造函数，构造函数保证满足所有固定规则，使得创建操作是原子的，保证得到的对象是合法的。这也是构造函数这一机制的本意，对象的创建应通过构造函数来进行，构造函数保证对象的合法性。
 
@@ -94,14 +104,14 @@ public class Issue : FullAuditedAggregateRoot<Guid>
 }
 ```
 
-问题可以指派给一个回答者，因此在`Issue`中添加方法：
+问题可以指定一个回答者，因此在`Issue`中添加方法：
 
 ```cs
 public Issue AssignTo(Answerer answerer)
 {
     if (AnswererId.HasValue)
     {
-        throw new BusinessException(message: "不可重复指派");
+        throw new BusinessException(message: "不可重复指定回答者");
     }
 
     AnswererId = answerer.Id;
@@ -109,9 +119,9 @@ public Issue AssignTo(Answerer answerer)
 }
 ```
 
-上文描述问题的业务规则时，提到“_问题被拒绝回答后创建者可以指派新的回答者_”，这一描述隐含着另一条规则：“只有问题被拒绝回答后**才可以**指派新的回答者”。因此在`AssignTo`方法的卫语句中对`AnswererId`进行判断并处理。
+上文描述问题的业务规则时，提到“_问题被拒绝回答后创建者可以指定新的回答者_”，这一描述隐含着另一条规则：“只有问题被拒绝回答后**才可以**指定新的回答者”。因此在`AssignTo`方法的卫语句中对`AnswererId`进行判断并处理。
 
-问题可以被取消指派（回答者拒绝回答问题）：
+问题可以被取消指定（回答者拒绝回答问题）：
 
 ```cs
 public Issue CancelAssign()
