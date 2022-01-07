@@ -1,0 +1,284 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>Abp极简教程-6 Entity Framework与仓储实现 - zhangchi.io</title><meta name=Description content="向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。"><meta property="og:title" content="Abp极简教程-6 Entity Framework与仓储实现">
+<meta property="og:description" content="向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zhangchi.io/posts/abp-turorial-6-entity-framework/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-01-06T11:22:17+08:00">
+<meta property="article:modified_time" content="2022-01-06T11:22:17+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Abp极简教程-6 Entity Framework与仓储实现">
+<meta name=twitter:description content="向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。">
+<meta name=application-name content="zhangchi.io">
+<meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-turorial-6-entity-framework/><link rel=prev href=https://zhangchi.io/posts/abp-turorial-5-http-api/><link rel=alternate href=/posts/abp-turorial-6-entity-framework/index.xml type=application/rss+xml title=zhangchi.io>
+<link rel=feed href=/posts/abp-turorial-6-entity-framework/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程-6 Entity Framework与仓储实现","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-turorial-6-entity-framework\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":2050,"url":"https:\/\/zhangchi.io\/posts\/abp-turorial-6-entity-framework\/","datePublished":"2022-01-06T11:22:17+08:00","dateModified":"2022-01-06T11:22:17+08:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"向CatchException项目中集成Entity Framework Core框架，并实现仓储。了解领域驱动设计中的基础设施层。"}</script></head>
+<body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=zhangchi.io>zhangchi.io</a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/> 文章 </a><a class=menu-item href=/tags/> 标签 </a><a class=menu-item href=/categories/> 分类 </a><a class=menu-item href=/friend/> 朋友们 </a><a class=menu-item href=https://profile.zhangchi.io rel="noopener noreffer" target=_blank> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=zhangchi.io>zhangchi.io</a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+取消
+</a>
+</div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/friend/ title>朋友们</a><a class=menu-item href=https://profile.zhangchi.io title rel="noopener noreffer" target=_blank>关于我</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2>
+<div class=toc-content id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程-6 Entity Framework与仓储实现</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-01-06>2022-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2050 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=/posts/abp-turorial-6-entity-framework/ class=leancloud_visitors data-flag-title="Abp极简教程-6 Entity Framework与仓储实现">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#集成entity-framework-core>集成Entity Framework Core</a>
+<ul>
+<li><a href=#entity-framework-core模块>Entity Framework Core模块</a></li>
+<li><a href=#创建dbcontext>创建DbContext</a></li>
+<li><a href=#数据迁移>数据迁移</a></li>
+</ul>
+</li>
+<li><a href=#注册仓储>注册仓储</a></li>
+<li><a href=#整合起来>整合起来</a></li>
+<li><a href=#总结>总结</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p>在前几篇教程中，对领域进行了建模，开发了领域层，针对应用程序用例开发了应用层，还创建了负责数据适配的HttpApi接口。到目前为止，项目还无法运行起来，因为没有为仓储提供实现。这篇教程中将集成Entity Framework Core并实现仓储。</p>
+<h2 id=集成entity-framework-core>集成Entity Framework Core</h2>
+<p>数据库作为基础设施，为实体仓储的持久化提供了支持。在CatchException项目中，将创建Entity Framework Core基础设施项目，负责集成数据库，并实现领域对象和数据库之间的数据适配。</p>
+<div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw"></i>整洁架构<i class="details-icon fas fa-angle-right fa-fw"></i>
+</div>
+<div class=details-content>
+<div class=admonition-content>在整洁架构中，数据库位于最外层的“框架与驱动程序”中，而Entity Framework Core基础设施项目则位于“接口与适配器层”，它负责将数据从便于项目开发的C#类的格式，转换为便于持久化到数据库的格式。本教程最后一篇将会对分层架构进行简单的阐述。</div>
+</div>
+</div>
+<h3 id=entity-framework-core模块>Entity Framework Core模块</h3>
+<p>新建项目CatchException.EntityFrameworkCore，添加以下Nuget包引用集成Entity Framework Core。</p>
+<ul>
+<li>Microsoft.EntityFrameworkCore</li>
+<li>Microsoft.EntityFrameworkCore.Relational</li>
+<li>Microsoft.EntityFrameworkCore.Tools</li>
+</ul>
+<p>创建Abp模块<code>CatchExceptionEntityFrameworkCoreModule</code>，添加Abp的Nuget包<code>Volo.Abp.EntityFrameworkCore.MySQL</code>引用及<code>AbpEntityFrameworkCoreMySQLModule</code>模块依赖，添加项目引用<code>CatchException.Domain</code>及<code>CatchExceptionDomainModule</code>模块依赖，因为项目依赖Identity通用子域，因此还需添加<code>Volo.Abp.Identity.EntityFrameworkCore</code>包引用及<code>AbpIdentityEntityFrameworkCoreModule</code>模块依赖。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=na>[DependsOn(
+</span><span class=na>    typeof(AbpEntityFrameworkCoreMySQLModule),
+</span><span class=na>    typeof(AbpIdentityEntityFrameworkCoreModule),
+</span><span class=na>    typeof(CatchExceptionDomainModule))]</span>
+<span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionEntityFrameworkCoreModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>Configure</span><span class=p>&lt;</span><span class=n>AbpDbContextOptions</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>options</span><span class=p>.</span><span class=n>UseMySQL</span><span class=p>();</span>
+        <span class=p>});</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=创建dbcontext>创建DbContext</h3>
+<p>创建<code>CatchExceptionDbContext</code>并将聚合根的<code>DbSet</code>作为属性。在配置实体模型时，需要通过<code>ConfigureByConvention</code>扩展方法配置审计字段。<code>ConfigureIdentity</code>将配置Identity模块的实体。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionDbContext</span>
+    <span class=p>:</span> <span class=n>AbpDbContext</span><span class=p>&lt;</span><span class=n>CatchExceptionDbContext</span><span class=p>&gt;</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=n>DbSet</span><span class=p>&lt;</span><span class=n>Issue</span><span class=p>&gt;</span> <span class=n>Issues</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
+
+    <span class=k>public</span> <span class=n>DbSet</span><span class=p>&lt;</span><span class=n>Answerer</span><span class=p>&gt;</span> <span class=n>Answerers</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
+
+    <span class=k>public</span> <span class=n>CatchExceptionDbContext</span><span class=p>(</span><span class=n>DbContextOptions</span><span class=p>&lt;</span><span class=n>CatchExceptionDbContext</span><span class=p>&gt;</span> <span class=n>options</span><span class=p>)</span>
+        <span class=p>:</span> <span class=k>base</span><span class=p>(</span><span class=n>options</span><span class=p>)</span>
+    <span class=p>{</span>
+    <span class=p>}</span>
+
+    <span class=k>protected</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnModelCreating</span><span class=p>(</span><span class=n>ModelBuilder</span> <span class=n>modelBuilder</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=k>base</span><span class=p>.</span><span class=n>OnModelCreating</span><span class=p>(</span><span class=n>modelBuilder</span><span class=p>);</span>
+
+        <span class=n>modelBuilder</span><span class=p>.</span><span class=n>ConfigureIdentity</span><span class=p>();</span>
+
+        <span class=n>modelBuilder</span><span class=p>.</span><span class=n>Entity</span><span class=p>&lt;</span><span class=n>Issue</span><span class=p>&gt;(</span><span class=n>b</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>b</span><span class=p>.</span><span class=n>ToTable</span><span class=p>(</span><span class=s>&#34;Issues&#34;</span><span class=p>);</span>
+
+            <span class=n>b</span><span class=p>.</span><span class=n>ConfigureByConvention</span><span class=p>();</span>
+            <span class=n>b</span><span class=p>.</span><span class=n>Property</span><span class=p>(</span><span class=n>p</span> <span class=p>=&gt;</span> <span class=n>p</span><span class=p>.</span><span class=n>Title</span><span class=p>).</span><span class=n>HasMaxLength</span><span class=p>(</span><span class=m>128</span><span class=p>);</span>
+            <span class=n>b</span><span class=p>.</span><span class=n>Property</span><span class=p>(</span><span class=n>p</span> <span class=p>=&gt;</span> <span class=n>p</span><span class=p>.</span><span class=n>Description</span><span class=p>).</span><span class=n>HasMaxLength</span><span class=p>(</span><span class=m>2048</span><span class=p>);</span>
+        <span class=p>});</span>
+
+        <span class=n>modelBuilder</span><span class=p>.</span><span class=n>Entity</span><span class=p>&lt;</span><span class=n>Answerer</span><span class=p>&gt;(</span><span class=n>b</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>b</span><span class=p>.</span><span class=n>ToTable</span><span class=p>(</span><span class=s>&#34;Answerers&#34;</span><span class=p>);</span>
+
+            <span class=n>b</span><span class=p>.</span><span class=n>ConfigureByConvention</span><span class=p>();</span>
+        <span class=p>});</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=数据迁移>数据迁移</h3>
+<p>创建设计时<code>DbContext</code>工厂，以供执行数据迁移命令时使用。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionDbContextFactory</span> <span class=p>:</span> <span class=n>IDesignTimeDbContextFactory</span><span class=p>&lt;</span><span class=n>CatchExceptionDbContext</span><span class=p>&gt;</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=n>CatchExceptionDbContext</span> <span class=n>CreateDbContext</span><span class=p>(</span><span class=kt>string</span><span class=p>[]</span> <span class=n>args</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=kt>var</span> <span class=n>configuration</span> <span class=p>=</span> <span class=n>BuildConfiguration</span><span class=p>();</span>
+
+        <span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=k>new</span> <span class=n>DbContextOptionsBuilder</span><span class=p>&lt;</span><span class=n>CatchExceptionDbContext</span><span class=p>&gt;()</span>
+            <span class=p>.</span><span class=n>UseMySql</span><span class=p>(</span><span class=n>configuration</span><span class=p>.</span><span class=n>GetConnectionString</span><span class=p>(</span><span class=s>&#34;Default&#34;</span><span class=p>),</span> <span class=n>MySqlServerVersion</span><span class=p>.</span><span class=n>LatestSupportedServerVersion</span><span class=p>);</span>
+
+        <span class=k>return</span> <span class=k>new</span> <span class=n>CatchExceptionDbContext</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Options</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=k>private</span> <span class=k>static</span> <span class=n>IConfigurationRoot</span> <span class=n>BuildConfiguration</span><span class=p>()</span>
+    <span class=p>{</span>
+        <span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=k>new</span> <span class=n>ConfigurationBuilder</span><span class=p>()</span>
+            <span class=p>.</span><span class=n>SetBasePath</span><span class=p>(</span><span class=n>Path</span><span class=p>.</span><span class=n>Combine</span><span class=p>(</span><span class=n>Directory</span><span class=p>.</span><span class=n>GetCurrentDirectory</span><span class=p>(),</span> <span class=s>&#34;../CatchException.HttpApi.Host/&#34;</span><span class=p>))</span>
+            <span class=p>.</span><span class=n>AddJsonFile</span><span class=p>(</span><span class=s>&#34;appsettings.json&#34;</span><span class=p>,</span> <span class=n>optional</span><span class=p>:</span> <span class=k>false</span><span class=p>)</span>
+            <span class=p>.;</span>
+
+        <span class=k>return</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>在CatchException.HttpApi.Host项目中配置连接字符串。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+  <span class=nt>&#34;ConnectionStrings&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;Default&#34;</span><span class=p>:</span> <span class=s2>&#34;Server=127.0.0.1;Database=CatchException;User=root;Password=yourStrong(!)Password&#34;</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>在<code>CatchException.EntityFrameworkCore</code>项目目录下执行命令<code>dotnet ef migrations add Initial</code>生成迁移文件，并执行<code>dotnet ef database update</code>更新数据库。</p>
+<h2 id=注册仓储>注册仓储</h2>
+<p><code>AddDefaultRepositories</code>扩展方法将会为<code>CatchExceptionDbContext</code>中的聚合根<code>DbSet</code>注册默认的泛型仓储。默认地，只会为聚合根注册默认实现的反省仓储，若要为普通实体注册，将<code>includeAllEntities</code>参数改为<code>true</code>并将实体<code>DbSet</code>也添加到<code>CatchExceptionDbContext</code>中。</p>
+<p>因为<code>CatchExceptionEntityFrameworkCoreModule</code>依赖了<code>AbpIdentityEntityFrameworkCoreModule</code>模块，在应用程序初始化时调用<code>CatchExceptionEntityFrameworkCoreModule</code>的<code>ConfigureServices</code>方法之前，会先调用<code>AbpIdentityEntityFrameworkCoreModule</code>模块的<code>ConfigureServices</code>方法来为其模块内的聚合根注册泛型仓储。</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=na>[DependsOn(
+</span><span class=na>    typeof(AbpEntityFrameworkCoreMySQLModule),
+</span><span class=na>    typeof(AbpIdentityEntityFrameworkCoreModule),
+</span><span class=na>    typeof(CatchExceptionDomainModule))]</span>
+<span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionEntityFrameworkCoreModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddAbpDbContext</span><span class=p>&lt;</span><span class=n>CatchExceptionDbContext</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>options</span><span class=p>.</span><span class=n>AddDefaultRepositories</span><span class=p>(</span><span class=n>includeAllEntities</span><span class=p>:</span> <span class=k>false</span><span class=p>);</span>
+        <span class=p>});</span>
+
+        <span class=n>Configure</span><span class=p>&lt;</span><span class=n>AbpDbContextOptions</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
+        <span class=p>{</span>
+            <span class=n>options</span><span class=p>.</span><span class=n>UseMySQL</span><span class=p>();</span>
+        <span class=p>});</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=整合起来>整合起来</h2>
+<p>基于依赖倒置的原则，CatchException.Domain不会依赖CatchException.EntityFrameworkCore具体实现，而是具体实现将依赖于Domain中的仓储接口。通过项目分层，将依赖项倒置了，那么还需要通过HttpApi.Host启动项目来将其整合起来。</p>
+<div class="details admonition note open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-pencil-alt fa-fw"></i>依赖倒置<i class="details-icon fas fa-angle-right fa-fw"></i>
+</div>
+<div class=details-content>
+<div class=admonition-content>依赖于抽象，而不是具体实现。</div>
+</div>
+</div>
+<p>将CatchException.EntityFrameworkCore项目引用添加至CatchException.HttpApi.Host项目中，并将<code>CatchExceptionEntityFrameworkCoreModule</code>模块添加到<code>CatchExceptionHttpApiHostModule</code>模块依赖项中。通过Host启动项目，将所有模块整合到一起，此时运行程序并调用接口，即可实现<code>Issue</code>的创建。</p>
+<h2 id=总结>总结</h2>
+<p>在这篇教程中，集成了Entity Framework Core框架，并通过EF Core实现了仓储，此外，还了解到了整洁架构中的“框架与驱动程序”、“接口与适配器”。下一篇教程中将会创建HttpApi.Client客户端代理项目。</p>
+</div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2022-01-06</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md></div>
+<div class=post-info-share>
+<span></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/tutorials/>Tutorials</a>,&nbsp;<a href=/tags/abp/>Abp</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section>
+</div>
+<div class=post-nav><a href=/posts/abp-turorial-5-http-api/ class=prev rel=prev title="Abp极简教程-5 Api接口"><i class="fas fa-angle-left fa-fw"></i>Abp极简教程-5 Api接口</a></div>
+</div>
+<div id=comments><div id=valine class=comment></div><noscript>
+Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
+</noscript></div></article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/realZhangChi target=_blank>张驰</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{valine:{appId:"SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz",appKey:"cP0gHgQ51CAYfWlron7uSq2B",avatar:"monsterid",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!0,highlight:!0,lang:"zh-CN",meta:["nick","mail","link"],pageSize:10,placeholder:"你的评论 ...",recordIP:!0,visitor:!0}},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-7XYGV0J1G6')</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=G-7XYGV0J1G6" async></script><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?260d395bb54739f609224ea4d367d1bf",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body>
+</html>
