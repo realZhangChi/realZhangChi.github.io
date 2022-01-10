@@ -1,0 +1,16 @@
+// ==============================
+// Custom style
+// 自定义样式
+// ==============================
+
+.wechat-image {
+  margin: 5rem 0 1rem 0;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}

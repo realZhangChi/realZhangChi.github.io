@@ -5,7 +5,7 @@ categories = ["Abp极简教程"]
 date = 2021-12-23T04:12:10Z
 description = "从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"
 tags = ["Tutorials", "Abp"]
-title = "Abp极简教程-1 应用和模块"
+title = "Abp极简教程1 应用和模块"
 
 +++
 Abp是一个基于.NET的开源应用程序框架，它遵循最佳实践和约定，根据DDD模式进行设计和开发，并提供了强大的基础设施和完整的架构。
