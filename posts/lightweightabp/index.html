@@ -1,451 +1,221 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>Abp太重了？轻量化Abp框架 - zhangchi.io</title><meta name=Description content="轻量化Abp框架"><meta property="og:title" content="Abp太重了？轻量化Abp框架">
-<meta property="og:description" content="轻量化Abp框架">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/lightweightabp/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-07-23T09:48:24+08:00">
-<meta property="article:modified_time" content="2021-07-23T09:48:24+08:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Abp太重了？轻量化Abp框架">
-<meta name=twitter:description content="轻量化Abp框架">
-<meta name=application-name content="zhangchi.io">
-<meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/lightweightabp/><link rel=next href=https://zhangchi.io/posts/dependency-injection-in-maui/><link rel=alternate href=/posts/lightweightabp/index.xml type=application/rss+xml title=zhangchi.io>
-<link rel=feed href=/posts/lightweightabp/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp太重了？轻量化Abp框架","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/lightweightabp\/"},"genre":"posts","keywords":"Abp","wordcount":3373,"url":"https:\/\/zhangchi.io\/posts\/lightweightabp\/","datePublished":"2021-07-23T09:48:24+08:00","dateModified":"2021-07-23T09:48:24+08:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"轻量化Abp框架"}</script></head>
-<body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title=zhangchi.io>zhangchi.io</a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/posts/> 文章 </a><a class=menu-item href=/tags/> 标签 </a><a class=menu-item href=/categories/> 分类 </a><a class=menu-item href=/friend/> 朋友们 </a><a class=menu-item href=https://profile.zhangchi.io rel="noopener noreffer" target=_blank> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Abp太重了？轻量化Abp框架 - zhangchi.io</title><meta name=Description content="轻量化Abp框架"><meta property="og:title" content="Abp太重了？轻量化Abp框架"><meta property="og:description" content="轻量化Abp框架"><meta property="og:type" content="article"><meta property="og:url" content="https://zhangchi.io/posts/lightweightabp/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-07-23T09:48:24+08:00"><meta property="article:modified_time" content="2021-07-23T09:48:24+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Abp太重了？轻量化Abp框架"><meta name=twitter:description content="轻量化Abp框架"><meta name=application-name content="zhangchi.io"><meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/lightweightabp/><link rel=next href=https://zhangchi.io/posts/dependency-injection-in-maui/><link rel=alternate href=/posts/lightweightabp/index.xml type=application/rss+xml title=zhangchi.io><link rel=feed href=/posts/lightweightabp/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp太重了？轻量化Abp框架","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/lightweightabp\/"},"genre":"posts","keywords":"Abp","wordcount":3373,"url":"https:\/\/zhangchi.io\/posts\/lightweightabp\/","datePublished":"2021-07-23T09:48:24+08:00","dateModified":"2021-07-23T09:48:24+08:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"轻量化Abp框架"}</script></head><body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":""==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:""==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=zhangchi.io>zhangchi.io</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/friend/>朋友们 </a><a class=menu-item href=https://profile.zhangchi.io rel="noopener noreffer" target=_blank>关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title=zhangchi.io>zhangchi.io</a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-取消
-</a>
-</div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/friend/ title>朋友们</a><a class=menu-item href=https://profile.zhangchi.io title rel="noopener noreffer" target=_blank>关于我</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>目录</h2>
-<div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">Abp太重了？轻量化Abp框架</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp/><i class="far fa-folder fa-fw"></i>Abp</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-07-23>2021-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3373 字&nbsp;
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=zhangchi.io>zhangchi.io</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/friend/ title>朋友们</a><a class=menu-item href=https://profile.zhangchi.io title rel="noopener noreffer" target=_blank>关于我</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Abp太重了？轻量化Abp框架</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp/><i class="far fa-folder fa-fw"></i>Abp</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-07-23>2021-07-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3373 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id=/posts/lightweightabp/ class=leancloud_visitors data-flag-title=Abp太重了？轻量化Abp框架>
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
-</span>&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>目录</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#最小依赖>最小依赖</a></li>
-<li><a href=#功能按需使用>功能按需使用</a>
-<ul>
-<li><a href=#数据访问>数据访问</a></li>
-<li><a href=#缓存>缓存</a></li>
-</ul>
-</li>
-<li><a href=#上手难度及易用性>上手难度及易用性</a></li>
-<li><a href=#总结>总结</a></li>
-<li><a href=#致谢>致谢</a></li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>在进行框架的选型时，经常会听到“***框架太重了”之类的声音，比如“Abp太重了，不适合我们&mldr;”。事实上，Abp框架真的很重吗？</p>
-<p>框架的“轻”和“重”，我没有在网上找到明确的定义，通过阅读一些技术博客，大致可以把框架的“轻”和“重”通过以下几个方面进行区分：</p>
-<ul>
-<li>所依赖程序集的数量</li>
-<li>所实现的功能的多少</li>
-<li>上手难度及易用性</li>
-</ul>
-<p>“轻量级”的框架，大概指的是一个程序集依赖少且程序集文件小、功能虽少但足够满足需求、上手容易使用简单的框架；“重量级”的框架，大概指的是一个程序集依赖多且程序集文件大、功能丰富但大多数用不到、上手困难且使用困难的框架。</p>
-<p>这篇文章将从上述几个方面来探索Abp是一个“轻量级”还是“重量级”的框架。</p>
-<h2 id=最小依赖>最小依赖</h2>
-<p>Abp开发了一些启动模板来为我们生成项目。启动模板采用了<a href=https://docs.abp.io/en/abp/latest/Domain-Driven-Design target=_blank rel="noopener noreffer">领域驱动设计</a>的分层方案来建立项目层级，包括了<strong>展示层</strong>、<strong>应用层</strong>、<strong>领域层</strong>与<strong>基础设施层</strong>。</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=./images/Architecture.png data-srcset="./images/Architecture.png, ./images/Architecture.png 1.5x, ./images/Architecture.png 2x" data-sizes=auto alt=./images/Architecture.png title=Architecture></p>
-<p>我们通常都会通过<a href=https://docs.abp.io/en/abp/latest/CLI target=_blank rel="noopener noreffer">Abp CLI</a>或Abp.io来创建类似上图架构的项目。Abp为我们生成的项目，减少了我们初始化项目的工作量，开箱即用，因此将我们可能会使用的Nuget包预先引入到我们的项目中，也就给我们一种依赖项太多的感觉。</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=./images/Dependency.png data-srcset="./images/Dependency.png, ./images/Dependency.png 1.5x, ./images/Dependency.png 2x" data-sizes=auto alt=./images/Dependency.png title=Dependency></p>
-<p>从架构设计上来讲，<strong>模块化</strong>是Abp的核心；而从技术角度来看，<strong>依赖注入</strong>则是Abp实现众多功能的一个主要手段。只要了解Abp的<strong>模块化</strong>和<strong>依赖注入</strong>，我们就能够基于Abp框架来进行项目开发。</p>
-<p>接下来将创建一个原生的<code>ASP.NET Core Web API</code>项目，围绕<strong>模块化</strong>和<strong>依赖注入</strong>两个核心概念，来展示如何以最小依赖的方式使用Abp。</p>
-<ul>
-<li>通过VS或者dotNet cli新建一个原生的<code>ASP.NET Core Web API</code>项目，命名为<code>LightweightAbp</code>；</li>
-<li>安装Nuget包<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code>；</li>
-<li>将项目进行<strong>模块化</strong>：在项目根目录新建一个Abp<strong>模块</strong>代码文件<code>LightweightAbpModule.cs</code>，并复制以下代码：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[DependsOn(
-</span><span class=na>    typeof(AbpAutofacModule),
-</span><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
-<span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>将<code>Startup</code>中的代码调整到<code>LightweightAbpModule</code>中，代码如下：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[DependsOn(
-</span><span class=na>    typeof(AbpAutofacModule),
-</span><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
-<span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddControllers</span><span class=p>();</span>
-        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddSwaggerGen</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span>
-        <span class=p>{</span>
-            <span class=n>c</span><span class=p>.</span><span class=n>SwaggerDoc</span><span class=p>(</span><span class=s>&#34;v1&#34;</span><span class=p>,</span> <span class=k>new</span> <span class=n>OpenApiInfo</span> <span class=p>{</span> <span class=n>Title</span> <span class=p>=</span> <span class=s>&#34;LightweightAbp&#34;</span><span class=p>,</span> <span class=n>Version</span> <span class=p>=</span> <span class=s>&#34;v1&#34;</span> <span class=p>});</span>
-        <span class=p>});</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
-        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
-
-        <span class=k>if</span> <span class=p>(</span><span class=n>env</span><span class=p>.</span><span class=n>IsDevelopment</span><span class=p>())</span>
-        <span class=p>{</span>
-            <span class=n>app</span><span class=p>.</span><span class=n>UseDeveloperExceptionPage</span><span class=p>();</span>
-            <span class=n>app</span><span class=p>.</span><span class=n>UseSwagger</span><span class=p>();</span>
-            <span class=n>app</span><span class=p>.</span><span class=n>UseSwaggerUI</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>SwaggerEndpoint</span><span class=p>(</span><span class=s>&#34;/swagger/v1/swagger.json&#34;</span><span class=p>,</span> <span class=s>&#34;LightweightAbp v1&#34;</span><span class=p>));</span>
-        <span class=p>}</span>
-
-        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
-
-        <span class=n>app</span><span class=p>.</span><span class=n>UseAuthorization</span><span class=p>();</span>
-
-        <span class=n>app</span><span class=p>.</span><span class=n>UseEndpoints</span><span class=p>(</span><span class=n>endpoints</span> <span class=p>=&gt;</span>
-        <span class=p>{</span>
-            <span class=n>endpoints</span><span class=p>.</span><span class=n>MapControllers</span><span class=p>();</span>
-        <span class=p>});</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-
-</code></pre></div><ul>
-<li>更改<code>Startup</code>中的代码以使用Abp的<strong>模块化</strong>系统：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>class</span> <span class=nc>Startup</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>IServiceCollection</span> <span class=n>services</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>LightweightAbpModule</span><span class=p>&gt;();</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>void</span> <span class=n>Configure</span><span class=p>(</span><span class=n>IApplicationBuilder</span> <span class=n>app</span><span class=p>,</span> <span class=n>IWebHostEnvironment</span> <span class=n>env</span><span class=p>,</span> <span class=n>ILoggerFactory</span> <span class=n>loggerFactory</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>更改<code>Program</code>的<code>CreateHostBuilder</code>方法以使用Abp的<strong>依赖注入</strong>系统（基于Autofac）：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>static</span> <span class=n>IHostBuilder</span> <span class=n>CreateHostBuilder</span><span class=p>(</span><span class=kt>string</span><span class=p>[]</span> <span class=n>args</span><span class=p>)</span> <span class=p>=&gt;</span>
-            <span class=n>Host</span><span class=p>.</span><span class=n>CreateDefaultBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>)</span>
-                <span class=p>.</span><span class=n>ConfigureWebHostDefaults</span><span class=p>(</span><span class=n>webBuilder</span> <span class=p>=&gt;</span>
-                <span class=p>{</span>
-                    <span class=n>webBuilder</span><span class=p>.</span><span class=n>UseStartup</span><span class=p>&lt;</span><span class=n>Startup</span><span class=p>&gt;();</span>
-                <span class=p>})</span>
-                <span class=p>.</span><span class=n>UseAutofac</span><span class=p>();</span>
-</code></pre></div><ul>
-<li>将项目生成的<code>WeatherForecastController</code>基类<code>ControllerBase</code>更改为<code>AbpController</code>。</li>
-<li>按<code>F5</code>运行。</li>
-</ul>
-<p>至此项目的创建完成了。可以看到，仅仅依赖了<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code>两个Nuget包，即可利用Abp进行开发。若从所依赖Nuget包数量来评估框架的“轻”和“重”，那么Abp不可谓不轻。</p>
-<h2 id=功能按需使用>功能按需使用</h2>
-<p>得益于<strong>模块化</strong>设计，Abp将其所能提供的功能，划分并封装到了不同的<strong>模块</strong>中。要想使用Abp提供的某一功能，只需引入相关的Nuget包并依赖（<code>DependsOn</code>）模块即可。</p>
-<h3 id=数据访问>数据访问</h3>
-<p>要想实现数据访问功能，首先我们需要定义<code>Entity</code>、<code>DbContext</code>并配置数据库支持。在Abp的层次架构中，<code>Entity</code>、<code>Repository</code>属于领域层，<code>Service</code>属于应用层，<code>DbContext</code>则属于<code>EntityFramework Core</code>模块，因此我们按需引入所需模块即可。</p>
-<ul>
-<li>安装Nuget包<code>Volo.Abp.Ddd.Application</code>、<code>Volo.Abp.Ddd.Domain</code>和<code>Volo.Abp.EntityFrameworkCore.Sqlite</code>；</li>
-<li>在<code>LightweightAbpModule</code>类中配置<code>DependsOn</code>特性，将<code>AbpDddApplicationModule</code>、<code>AbpDddDomainModule</code>和<code>AbpEntityFrameworkCoreSqliteModule</code>模块依赖到我们的项目模块中。</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>    [DependsOn(
-</span><span class=na>        typeof(AbpAutofacModule),
-</span><span class=na>        typeof(AbpAspNetCoreMvcModule),
-</span><span class=na>        typeof(AbpDddApplicationModule),
-</span><span class=na>        typeof(AbpDddDomainModule),
-</span><span class=na>        typeof(AbpEntityFrameworkCoreSqliteModule))]</span>
-    <span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
-    <span class=p>{</span> <span class=p>...</span> <span class=p>}</span>
-</code></pre></div><ul>
-<li>然后创建实体<code>Book</code>及数据库上下文<code>LightweightAbpDbContext</code>:</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>using</span> <span class=nn>System</span><span class=p>;</span>
-<span class=k>using</span> <span class=nn>Volo.Abp.Domain.Entities</span><span class=p>;</span>
-
-<span class=k>namespace</span> <span class=nn>LightweightAbp</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>class</span> <span class=nc>Book</span> <span class=p>:</span> <span class=n>Entity</span><span class=p>&lt;</span><span class=n>Guid</span><span class=p>&gt;</span>
-    <span class=p>{</span>
-        <span class=k>public</span> <span class=kt>string</span> <span class=n>Name</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-
-</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[ConnectionStringName(&#34;Default&#34;)]</span>
-<span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpDbContext</span> <span class=p>:</span> <span class=n>AbpDbContext</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=n>LightweightAbpDbContext</span><span class=p>(</span><span class=n>DbContextOptions</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;</span> <span class=n>options</span><span class=p>)</span>
-        <span class=p>:</span> <span class=k>base</span><span class=p>(</span><span class=n>options</span><span class=p>)</span>
-    <span class=p>{</span> <span class=p>}</span>
-
-    <span class=k>public</span> <span class=n>DbSet</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>&gt;</span> <span class=n>Books</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
-
-    <span class=k>protected</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnModelCreating</span><span class=p>(</span><span class=n>ModelBuilder</span> <span class=n>builder</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>base</span><span class=p>.</span><span class=n>OnModelCreating</span><span class=p>(</span><span class=n>builder</span><span class=p>);</span>
-
-        <span class=n>builder</span><span class=p>.</span><span class=n>Entity</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>&gt;(</span><span class=n>b</span> <span class=p>=&gt;</span>
-        <span class=p>{</span>
-            <span class=n>b</span><span class=p>.</span><span class=n>ToTable</span><span class=p>(</span><span class=n>nameof</span><span class=p>(</span><span class=n>Books</span><span class=p>));</span>
-        <span class=p>});</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>在<code>LightweightAbpModule</code>的<code>ConfigureServices</code>方法中配置数据库访问：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=p>...</span>
-
-    <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddAbpDbContext</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
-    <span class=p>{</span>
-        <span class=n>options</span><span class=p>.</span><span class=n>AddDefaultRepositories</span><span class=p>(</span><span class=n>includeAllEntities</span><span class=p>:</span> <span class=k>true</span><span class=p>);</span>
-    <span class=p>});</span>
-
-    <span class=n>Configure</span><span class=p>&lt;</span><span class=n>AbpDbContextOptions</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
-    <span class=p>{</span>
-        <span class=n>options</span><span class=p>.</span><span class=n>UseSqlite</span><span class=p>();</span>
-    <span class=p>});</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>在<code>appsettings.json</code>中配置数据库连接字符串</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=p>{</span>
-  <span class=err>...</span>
-  <span class=nt>&#34;ConnectionStrings&#34;</span><span class=p>:</span> <span class=p>{</span>
-    <span class=nt>&#34;Default&#34;</span><span class=p>:</span> <span class=s2>&#34;Data Source=LightweightAbp.db&#34;</span>
-  <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>安装Nuget包"Microsoft.EntityFrameworkCore.Tools",并在在项目根目录下打开命令行工具，依次执行以下命令进行数据迁移和数据库更新：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd>dotnet ef migrations add InitialCreate
-dotnet ef database update
-</code></pre></div><ul>
-<li>创建<code>IBookAppService</code>及<code>BookAppService</code>:</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>interface</span> <span class=n>IBookAppService</span>
-<span class=p>{</span>
-    <span class=n>Task</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>);</span>
-<span class=p>}</span>
-</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>class</span> <span class=nc>BookAppService</span> <span class=p>:</span> <span class=n>ApplicationService</span><span class=p>,</span> <span class=n>IBookAppService</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>Repository</span> <span class=p>=&gt;</span> <span class=n>LazyServiceProvider</span><span class=p>.</span><span class=n>LazyGetRequiredService</span><span class=p>&lt;</span><span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;&gt;();</span>
-
-    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=kt>var</span> <span class=n>book</span> <span class=p>=</span> <span class=k>await</span> <span class=n>Repository</span><span class=p>.</span><span class=n>InsertAsync</span><span class=p>(</span><span class=k>new</span> <span class=n>Book</span><span class=p>()</span>
-        <span class=p>{</span>
-            <span class=n>Name</span> <span class=p>=</span> <span class=n>name</span>
-        <span class=p>});</span>
-
-        <span class=k>return</span> <span class=n>book</span><span class=p>.</span><span class=n>Name</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>在文件夹Controllers中创建<code>BookController</code>:</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=na>[ApiController]</span>
-<span class=na>[Route(&#34;[controller]</span><span class=s>&#34;)]
-</span><span class=s></span><span class=k>public</span> <span class=k>class</span> <span class=nc>BookController</span> <span class=p>:</span> <span class=n>AbpController</span>
-<span class=p>{</span>
-    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IBookAppService</span> <span class=m>_</span><span class=n>service</span><span class=p>;</span>
-
-    <span class=k>public</span> <span class=n>BookController</span><span class=p>(</span><span class=n>IBookAppService</span> <span class=n>service</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=m>_</span><span class=n>service</span> <span class=p>=</span> <span class=n>service</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=na>
-</span><span class=na>    [HttpGet]</span>
-    <span class=k>public</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=m>_</span><span class=n>service</span><span class=p>.</span><span class=n>CreateAsync</span><span class=p>(</span><span class=n>name</span><span class=p>);</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li><em>F5</em>以调试模式运行即可在Swagger页面上插入数据：</li>
-</ul>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=./images/CreateBook.png data-srcset="./images/CreateBook.png, ./images/CreateBook.png 1.5x, ./images/CreateBook.png 2x" data-sizes=auto alt=./images/CreateBook.png title=CreateBook></p>
-<p>这里我们实现了简单的数据插入。可以看到，项目中并没有使用复杂架构和复杂的领域驱动设计，仅引用并配置Abp模块，即可使用常规的 <code>ASP.NET Core Web API</code>方式进行开发。</p>
-<h3 id=缓存>缓存</h3>
-<p>接下来我们将继续实现缓存功能。</p>
-<ul>
-<li>引用Nuget包<code>Volo.Abp.Caching</code>并向<code>LightweightAbpModule</code>添加<code>AbpCachingModule</code>模块依赖；</li>
-<li>修改<code>IBookAppService</code>及<code>BookAppService</code>实现<code>GetAllAsync</code>方法：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>interface</span> <span class=n>IBookAppService</span>
-<span class=p>{</span>
-    <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>);</span>
-
-    <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>();</span>
-<span class=p>}</span>
-</code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>class</span> <span class=nc>BookAppService</span> <span class=p>:</span> <span class=n>ApplicationService</span><span class=p>,</span> <span class=n>IBookAppService</span>
-<span class=p>{</span>
-    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=m>_</span><span class=n>repository</span><span class=p>;</span>
-    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IDistributedCache</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=m>_</span><span class=n>cache</span><span class=p>;</span>
-
-    <span class=k>public</span> <span class=n>BookAppService</span><span class=p>(</span>
-        <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>repository</span><span class=p>,</span>
-        <span class=n>IDistributedCache</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>cache</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=m>_</span><span class=n>repository</span> <span class=p>=</span> <span class=n>repository</span><span class=p>;</span>
-        <span class=m>_</span><span class=n>cache</span> <span class=p>=</span> <span class=n>cache</span><span class=p>;</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
-    <span class=p>{</span> <span class=p>...</span> <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=k>await</span> <span class=m>_</span><span class=n>cache</span><span class=p>.</span><span class=n>GetOrAddAsync</span><span class=p>(</span>
-            <span class=s>&#34;AllBooksName&#34;</span><span class=p>,</span>
-            <span class=k>async</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=k>await</span> <span class=m>_</span><span class=n>repository</span><span class=p>.</span><span class=n>Select</span><span class=p>(</span><span class=n>b</span> <span class=p>=&gt;</span> <span class=n>b</span><span class=p>.</span><span class=n>Name</span><span class=p>).</span><span class=n>ToArrayAsync</span><span class=p>(),</span>
-            <span class=p>()</span> <span class=p>=&gt;</span> <span class=k>new</span> <span class=n>DistributedCacheEntryOptions</span>
-            <span class=p>{</span>
-                <span class=n>AbsoluteExpiration</span> <span class=p>=</span> <span class=n>DateTimeOffset</span><span class=p>.</span><span class=n>Now</span><span class=p>.</span><span class=n>AddHours</span><span class=p>(</span><span class=m>1</span><span class=p>)</span>
-            <span class=p>}</span>
-        <span class=p>);</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li>修改<code>BookAppService</code>实现<code>GetAllAsync</code>API接口：</li>
-</ul>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=k>public</span> <span class=k>class</span> <span class=nc>BookController</span> <span class=p>:</span> <span class=n>AbpController</span>
-<span class=p>{</span>
-    <span class=p>...</span>
-<span class=na>
-</span><span class=na>    [HttpGet(&#34;all&#34;)]</span>
-    <span class=k>public</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=m>_</span><span class=n>service</span><span class=p>.</span><span class=n>GetAllAsync</span><span class=p>();</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><ul>
-<li><em>F5</em>以调试方式运行，即可调用实现了缓存功能的<code>GetAllAsync</code>接口。</li>
-</ul>
-<p>这里我们实现了缓存功能。显而易见，按需使用缓存功能所在的Nuget包及模块即可，并没有很多繁杂的操作。</p>
-<p>众所周知，Abp实现了相当多的功能，其中有些功能也许整个项目生命周期中都不会用到。得益于<strong>模块化</strong>的方式，我们可以只依赖我所需要的Nuget包和Abp模块。如果根据功能多少来评判框架的“轻”和“重”，我们按需依赖不同模块时Abp框架不可谓不轻。由此可见，一个框架的“轻”和“重”，有时还会取决于使用方式。</p>
-<h2 id=上手难度及易用性>上手难度及易用性</h2>
-<p>学习一门新技术最好的起点便是官方文档，Abp也是如此，Abp的官方文档非常详尽介绍了各个功能。Abp还为我们提供了启动模板，模板遵循了领域驱动设计的最佳实践来进行项目分层，并且为我们继承了很多项目中常用的功能模块。</p>
-<p>对于初学者而言，面对一个复杂的分层架构及丰富的功能特性支持，一瞬间需要接受非常多的知识，因此会产生无从下手的感觉，进而得出一种上手难度高，框架很“重”的结论。</p>
-<p>如果从另外一种角度来学习Abp的话，也许情况会有所不同。在本文之初，我便提出了Abp的核心是<strong>模块化</strong>及<strong>依赖注入</strong>的观点，当我们将入门的重点放在<strong>模块化</strong>和<strong>依赖注入</strong>上，那么会发现Abp是一个极易上手并且学习曲线很平缓的框架。正如上文我所进行的代码演示，如果感觉这个演示项目简单易学，那么就证明了我这一观点。</p>
-<p>至于易用性，首先Abp实现的功能很全面，我们可以按需使用；其次，随着对Abp框架的逐步深入，会发现<strong>模块化</strong>的设计让我们的项目集成多种功能变得简单，并且随着项目的演进，Abp的<strong>模块化</strong>给我们提供了轻易切换到微服务方案的能力；<strong>依赖注入</strong>系统让我们能够轻易的定制并替换Abp默认实现的功能。因此，我认为Abp是一个易于使用的框架。</p>
-<h2 id=总结>总结</h2>
-<p>在这里我们从一个不同的角度来认识了Abp框架，显而易见，对于Abp来讲，是否太“重”，和我们对他的认知及使用方式有很大的关联。</p>
-<p>项目示例代码将托管在<a href=https://github.com/realZhangChi/LightweightAbp target=_blank rel="noopener noreffer">Github</a>中。</p>
-<h2 id=致谢>致谢</h2>
-<p>感谢Abp群（QQ群：48039003）的群友们提供的热心帮助。</p>
-</div><div class=wechat-image>
-<p>关注微信公众号“<b>捕获异常</b>”，获取最新文章推送，提升你的技能。</p>
-<img src=/images/wechat-green.png>
-</div>
-<div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>更新于 2021-07-23</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md></div>
-<div class=post-info-share>
-<span></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/abp/>Abp</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
-</section>
-</div>
-<div class=post-nav>
-<a href=/posts/dependency-injection-in-maui/ class=next rel=next title=如何在Maui中使用依赖注入>如何在Maui中使用依赖注入<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id=comments><div id=valine class=comment></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/realZhangChi target=_blank>张驰</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title=查看评论>
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{valine:{appId:"SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz",appKey:"cP0gHgQ51CAYfWlron7uSq2B",avatar:"monsterid",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!0,highlight:!0,lang:"zh-CN",meta:["nick","mail","link"],pageSize:10,placeholder:"你的评论 ...",recordIP:!0,visitor:!0}},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-7XYGV0J1G6')</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=G-7XYGV0J1G6" async></script><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?260d395bb54739f609224ea4d367d1bf",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body>
-</html>
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#最小依赖>最小依赖</a></li><li><a href=#功能按需使用>功能按需使用</a><ul><li><a href=#数据访问>数据访问</a></li><li><a href=#缓存>缓存</a></li></ul></li><li><a href=#上手难度及易用性>上手难度及易用性</a></li><li><a href=#总结>总结</a></li><li><a href=#致谢>致谢</a></li></ul></nav></div></div><div class=content id=content><p>在进行框架的选型时，经常会听到“***框架太重了”之类的声音，比如“Abp太重了，不适合我们&mldr;”。事实上，Abp框架真的很重吗？</p><p>框架的“轻”和“重”，我没有在网上找到明确的定义，通过阅读一些技术博客，大致可以把框架的“轻”和“重”通过以下几个方面进行区分：</p><ul><li>所依赖程序集的数量</li><li>所实现的功能的多少</li><li>上手难度及易用性</li></ul><p>“轻量级”的框架，大概指的是一个程序集依赖少且程序集文件小、功能虽少但足够满足需求、上手容易使用简单的框架；“重量级”的框架，大概指的是一个程序集依赖多且程序集文件大、功能丰富但大多数用不到、上手困难且使用困难的框架。</p><p>这篇文章将从上述几个方面来探索Abp是一个“轻量级”还是“重量级”的框架。</p><h2 id=最小依赖>最小依赖</h2><p>Abp开发了一些启动模板来为我们生成项目。启动模板采用了<a href=https://docs.abp.io/en/abp/latest/Domain-Driven-Design target=_blank rel="noopener noreffer">领域驱动设计</a>的分层方案来建立项目层级，包括了<strong>展示层</strong>、<strong>应用层</strong>、<strong>领域层</strong>与<strong>基础设施层</strong>。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/Architecture.png data-srcset="./images/Architecture.png, ./images/Architecture.png 1.5x, ./images/Architecture.png 2x" data-sizes=auto alt=./images/Architecture.png title=Architecture></p><p>我们通常都会通过<a href=https://docs.abp.io/en/abp/latest/CLI target=_blank rel="noopener noreffer">Abp CLI</a>或Abp.io来创建类似上图架构的项目。Abp为我们生成的项目，减少了我们初始化项目的工作量，开箱即用，因此将我们可能会使用的Nuget包预先引入到我们的项目中，也就给我们一种依赖项太多的感觉。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/Dependency.png data-srcset="./images/Dependency.png, ./images/Dependency.png 1.5x, ./images/Dependency.png 2x" data-sizes=auto alt=./images/Dependency.png title=Dependency></p><p>从架构设计上来讲，<strong>模块化</strong>是Abp的核心；而从技术角度来看，<strong>依赖注入</strong>则是Abp实现众多功能的一个主要手段。只要了解Abp的<strong>模块化</strong>和<strong>依赖注入</strong>，我们就能够基于Abp框架来进行项目开发。</p><p>接下来将创建一个原生的<code>ASP.NET Core Web API</code>项目，围绕<strong>模块化</strong>和<strong>依赖注入</strong>两个核心概念，来展示如何以最小依赖的方式使用Abp。</p><ul><li>通过VS或者dotNet cli新建一个原生的<code>ASP.NET Core Web API</code>项目，命名为<code>LightweightAbp</code>；</li><li>安装Nuget包<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code>；</li><li>将项目进行<strong>模块化</strong>：在项目根目录新建一个Abp<strong>模块</strong>代码文件<code>LightweightAbpModule.cs</code>，并复制以下代码：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>[DependsOn(
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAutofacModule),
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>将<code>Startup</code>中的代码调整到<code>LightweightAbpModule</code>中，代码如下：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>[DependsOn(
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAutofacModule),
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddControllers</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddSwaggerGen</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>c</span><span class=p>.</span><span class=n>SwaggerDoc</span><span class=p>(</span><span class=s>&#34;v1&#34;</span><span class=p>,</span> <span class=k>new</span> <span class=n>OpenApiInfo</span> <span class=p>{</span> <span class=n>Title</span> <span class=p>=</span> <span class=s>&#34;LightweightAbp&#34;</span><span class=p>,</span> <span class=n>Version</span> <span class=p>=</span> <span class=s>&#34;v1&#34;</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>env</span><span class=p>.</span><span class=n>IsDevelopment</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>app</span><span class=p>.</span><span class=n>UseDeveloperExceptionPage</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>app</span><span class=p>.</span><span class=n>UseSwagger</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>app</span><span class=p>.</span><span class=n>UseSwaggerUI</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>SwaggerEndpoint</span><span class=p>(</span><span class=s>&#34;/swagger/v1/swagger.json&#34;</span><span class=p>,</span> <span class=s>&#34;LightweightAbp v1&#34;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseAuthorization</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseEndpoints</span><span class=p>(</span><span class=n>endpoints</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>endpoints</span><span class=p>.</span><span class=n>MapControllers</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>更改<code>Startup</code>中的代码以使用Abp的<strong>模块化</strong>系统：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>Startup</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>IServiceCollection</span> <span class=n>services</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>LightweightAbpModule</span><span class=p>&gt;();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>void</span> <span class=n>Configure</span><span class=p>(</span><span class=n>IApplicationBuilder</span> <span class=n>app</span><span class=p>,</span> <span class=n>IWebHostEnvironment</span> <span class=n>env</span><span class=p>,</span> <span class=n>ILoggerFactory</span> <span class=n>loggerFactory</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>更改<code>Program</code>的<code>CreateHostBuilder</code>方法以使用Abp的<strong>依赖注入</strong>系统（基于Autofac）：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>static</span> <span class=n>IHostBuilder</span> <span class=n>CreateHostBuilder</span><span class=p>(</span><span class=kt>string</span><span class=p>[]</span> <span class=n>args</span><span class=p>)</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Host</span><span class=p>.</span><span class=n>CreateDefaultBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>.</span><span class=n>ConfigureWebHostDefaults</span><span class=p>(</span><span class=n>webBuilder</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>webBuilder</span><span class=p>.</span><span class=n>UseStartup</span><span class=p>&lt;</span><span class=n>Startup</span><span class=p>&gt;();</span>
+</span></span><span class=line><span class=cl>                <span class=p>})</span>
+</span></span><span class=line><span class=cl>                <span class=p>.</span><span class=n>UseAutofac</span><span class=p>();</span>
+</span></span></code></pre></div><ul><li>将项目生成的<code>WeatherForecastController</code>基类<code>ControllerBase</code>更改为<code>AbpController</code>。</li><li>按<code>F5</code>运行。</li></ul><p>至此项目的创建完成了。可以看到，仅仅依赖了<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code>两个Nuget包，即可利用Abp进行开发。若从所依赖Nuget包数量来评估框架的“轻”和“重”，那么Abp不可谓不轻。</p><h2 id=功能按需使用>功能按需使用</h2><p>得益于<strong>模块化</strong>设计，Abp将其所能提供的功能，划分并封装到了不同的<strong>模块</strong>中。要想使用Abp提供的某一功能，只需引入相关的Nuget包并依赖（<code>DependsOn</code>）模块即可。</p><h3 id=数据访问>数据访问</h3><p>要想实现数据访问功能，首先我们需要定义<code>Entity</code>、<code>DbContext</code>并配置数据库支持。在Abp的层次架构中，<code>Entity</code>、<code>Repository</code>属于领域层，<code>Service</code>属于应用层，<code>DbContext</code>则属于<code>EntityFramework Core</code>模块，因此我们按需引入所需模块即可。</p><ul><li>安装Nuget包<code>Volo.Abp.Ddd.Application</code>、<code>Volo.Abp.Ddd.Domain</code>和<code>Volo.Abp.EntityFrameworkCore.Sqlite</code>；</li><li>在<code>LightweightAbpModule</code>类中配置<code>DependsOn</code>特性，将<code>AbpDddApplicationModule</code>、<code>AbpDddDomainModule</code>和<code>AbpEntityFrameworkCoreSqliteModule</code>模块依赖到我们的项目模块中。</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>    [DependsOn(
+</span></span></span><span class=line><span class=cl><span class=na>        typeof(AbpAutofacModule),
+</span></span></span><span class=line><span class=cl><span class=na>        typeof(AbpAspNetCoreMvcModule),
+</span></span></span><span class=line><span class=cl><span class=na>        typeof(AbpDddApplicationModule),
+</span></span></span><span class=line><span class=cl><span class=na>        typeof(AbpDddDomainModule),
+</span></span></span><span class=line><span class=cl><span class=na>        typeof(AbpEntityFrameworkCoreSqliteModule))]</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=p>...</span> <span class=p>}</span>
+</span></span></code></pre></div><ul><li>然后创建实体<code>Book</code>及数据库上下文<code>LightweightAbpDbContext</code>:</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>using</span> <span class=nn>System</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>using</span> <span class=nn>Volo.Abp.Domain.Entities</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>namespace</span> <span class=nn>LightweightAbp</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>class</span> <span class=nc>Book</span> <span class=p>:</span> <span class=n>Entity</span><span class=p>&lt;</span><span class=n>Guid</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>public</span> <span class=kt>string</span> <span class=n>Name</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>[ConnectionStringName(&#34;Default&#34;)]</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>LightweightAbpDbContext</span> <span class=p>:</span> <span class=n>AbpDbContext</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>LightweightAbpDbContext</span><span class=p>(</span><span class=n>DbContextOptions</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;</span> <span class=n>options</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>:</span> <span class=k>base</span><span class=p>(</span><span class=n>options</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>DbSet</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>&gt;</span> <span class=n>Books</span> <span class=p>{</span> <span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>protected</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnModelCreating</span><span class=p>(</span><span class=n>ModelBuilder</span> <span class=n>builder</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>base</span><span class=p>.</span><span class=n>OnModelCreating</span><span class=p>(</span><span class=n>builder</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>builder</span><span class=p>.</span><span class=n>Entity</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>&gt;(</span><span class=n>b</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>b</span><span class=p>.</span><span class=n>ToTable</span><span class=p>(</span><span class=n>nameof</span><span class=p>(</span><span class=n>Books</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>在<code>LightweightAbpModule</code>的<code>ConfigureServices</code>方法中配置数据库访问：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddAbpDbContext</span><span class=p>&lt;</span><span class=n>LightweightAbpDbContext</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>options</span><span class=p>.</span><span class=n>AddDefaultRepositories</span><span class=p>(</span><span class=n>includeAllEntities</span><span class=p>:</span> <span class=k>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>Configure</span><span class=p>&lt;</span><span class=n>AbpDbContextOptions</span><span class=p>&gt;(</span><span class=n>options</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>options</span><span class=p>.</span><span class=n>UseSqlite</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>在<code>appsettings.json</code>中配置数据库连接字符串</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=err>...</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;ConnectionStrings&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;Default&#34;</span><span class=p>:</span> <span class=s2>&#34;Data Source=LightweightAbp.db&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>安装Nuget包"Microsoft.EntityFrameworkCore.Tools",并在在项目根目录下打开命令行工具，依次执行以下命令进行数据迁移和数据库更新：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd><span class=line><span class=cl>dotnet ef migrations add InitialCreate
+</span></span><span class=line><span class=cl>dotnet ef database update
+</span></span></code></pre></div><ul><li>创建<code>IBookAppService</code>及<code>BookAppService</code>:</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>interface</span> <span class=nc>IBookAppService</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Task</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>BookAppService</span> <span class=p>:</span> <span class=n>ApplicationService</span><span class=p>,</span> <span class=n>IBookAppService</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>Repository</span> <span class=p>=&gt;</span> <span class=n>LazyServiceProvider</span><span class=p>.</span><span class=n>LazyGetRequiredService</span><span class=p>&lt;</span><span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;&gt;();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>book</span> <span class=p>=</span> <span class=k>await</span> <span class=n>Repository</span><span class=p>.</span><span class=n>InsertAsync</span><span class=p>(</span><span class=k>new</span> <span class=n>Book</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Name</span> <span class=p>=</span> <span class=n>name</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>book</span><span class=p>.</span><span class=n>Name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>在文件夹Controllers中创建<code>BookController</code>:</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>[ApiController]</span>
+</span></span><span class=line><span class=cl><span class=na>[Route(&#34;[controller]</span><span class=s>&#34;)]
+</span></span></span><span class=line><span class=cl><span class=s></span><span class=k>public</span> <span class=k>class</span> <span class=nc>BookController</span> <span class=p>:</span> <span class=n>AbpController</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IBookAppService</span> <span class=n>_service</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>BookController</span><span class=p>(</span><span class=n>IBookAppService</span> <span class=n>service</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>_service</span> <span class=p>=</span> <span class=n>service</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=na>
+</span></span></span><span class=line><span class=cl><span class=na>    [HttpGet]</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>_service</span><span class=p>.</span><span class=n>CreateAsync</span><span class=p>(</span><span class=n>name</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li><em>F5</em>以调试模式运行即可在Swagger页面上插入数据：</li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=./images/CreateBook.png data-srcset="./images/CreateBook.png, ./images/CreateBook.png 1.5x, ./images/CreateBook.png 2x" data-sizes=auto alt=./images/CreateBook.png title=CreateBook></p><p>这里我们实现了简单的数据插入。可以看到，项目中并没有使用复杂架构和复杂的领域驱动设计，仅引用并配置Abp模块，即可使用常规的 <code>ASP.NET Core Web API</code>方式进行开发。</p><h3 id=缓存>缓存</h3><p>接下来我们将继续实现缓存功能。</p><ul><li>引用Nuget包<code>Volo.Abp.Caching</code>并向<code>LightweightAbpModule</code>添加<code>AbpCachingModule</code>模块依赖；</li><li>修改<code>IBookAppService</code>及<code>BookAppService</code>实现<code>GetAllAsync</code>方法：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>interface</span> <span class=nc>IBookAppService</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>BookAppService</span> <span class=p>:</span> <span class=n>ApplicationService</span><span class=p>,</span> <span class=n>IBookAppService</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>_repository</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>readonly</span> <span class=n>IDistributedCache</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>_cache</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>BookAppService</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>IRepository</span><span class=p>&lt;</span><span class=n>Book</span><span class=p>,</span> <span class=n>Guid</span><span class=p>&gt;</span> <span class=n>repository</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>IDistributedCache</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>cache</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>_repository</span> <span class=p>=</span> <span class=n>repository</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>_cache</span> <span class=p>=</span> <span class=n>cache</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;</span> <span class=n>CreateAsync</span><span class=p>(</span><span class=kt>string</span> <span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=p>...</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=k>await</span> <span class=n>_cache</span><span class=p>.</span><span class=n>GetOrAddAsync</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=s>&#34;AllBooksName&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=k>async</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=k>await</span> <span class=n>_repository</span><span class=p>.</span><span class=n>Select</span><span class=p>(</span><span class=n>b</span> <span class=p>=&gt;</span> <span class=n>b</span><span class=p>.</span><span class=n>Name</span><span class=p>).</span><span class=n>ToArrayAsync</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>            <span class=p>()</span> <span class=p>=&gt;</span> <span class=k>new</span> <span class=n>DistributedCacheEntryOptions</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>AbsoluteExpiration</span> <span class=p>=</span> <span class=n>DateTimeOffset</span><span class=p>.</span><span class=n>Now</span><span class=p>.</span><span class=n>AddHours</span><span class=p>(</span><span class=m>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li>修改<code>BookAppService</code>实现<code>GetAllAsync</code>API接口：</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>BookController</span> <span class=p>:</span> <span class=n>AbpController</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=na>
+</span></span></span><span class=line><span class=cl><span class=na>    [HttpGet(&#34;all&#34;)]</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=n>Task</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>[]&gt;</span> <span class=n>GetAllAsync</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>_service</span><span class=p>.</span><span class=n>GetAllAsync</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><ul><li><em>F5</em>以调试方式运行，即可调用实现了缓存功能的<code>GetAllAsync</code>接口。</li></ul><p>这里我们实现了缓存功能。显而易见，按需使用缓存功能所在的Nuget包及模块即可，并没有很多繁杂的操作。</p><p>众所周知，Abp实现了相当多的功能，其中有些功能也许整个项目生命周期中都不会用到。得益于<strong>模块化</strong>的方式，我们可以只依赖我所需要的Nuget包和Abp模块。如果根据功能多少来评判框架的“轻”和“重”，我们按需依赖不同模块时Abp框架不可谓不轻。由此可见，一个框架的“轻”和“重”，有时还会取决于使用方式。</p><h2 id=上手难度及易用性>上手难度及易用性</h2><p>学习一门新技术最好的起点便是官方文档，Abp也是如此，Abp的官方文档非常详尽介绍了各个功能。Abp还为我们提供了启动模板，模板遵循了领域驱动设计的最佳实践来进行项目分层，并且为我们继承了很多项目中常用的功能模块。</p><p>对于初学者而言，面对一个复杂的分层架构及丰富的功能特性支持，一瞬间需要接受非常多的知识，因此会产生无从下手的感觉，进而得出一种上手难度高，框架很“重”的结论。</p><p>如果从另外一种角度来学习Abp的话，也许情况会有所不同。在本文之初，我便提出了Abp的核心是<strong>模块化</strong>及<strong>依赖注入</strong>的观点，当我们将入门的重点放在<strong>模块化</strong>和<strong>依赖注入</strong>上，那么会发现Abp是一个极易上手并且学习曲线很平缓的框架。正如上文我所进行的代码演示，如果感觉这个演示项目简单易学，那么就证明了我这一观点。</p><p>至于易用性，首先Abp实现的功能很全面，我们可以按需使用；其次，随着对Abp框架的逐步深入，会发现<strong>模块化</strong>的设计让我们的项目集成多种功能变得简单，并且随着项目的演进，Abp的<strong>模块化</strong>给我们提供了轻易切换到微服务方案的能力；<strong>依赖注入</strong>系统让我们能够轻易的定制并替换Abp默认实现的功能。因此，我认为Abp是一个易于使用的框架。</p><h2 id=总结>总结</h2><p>在这里我们从一个不同的角度来认识了Abp框架，显而易见，对于Abp来讲，是否太“重”，和我们对他的认知及使用方式有很大的关联。</p><p>项目示例代码将托管在<a href=https://github.com/realZhangChi/LightweightAbp target=_blank rel="noopener noreffer">Github</a>中。</p><h2 id=致谢>致谢</h2><p>感谢Abp群（QQ群：48039003）的群友们提供的热心帮助。</p></div><div class=wechat-image><p>关注微信公众号“<b>捕获异常</b>”，获取最新文章推送，提升你的技能。</p><img src=/images/wechat-green.png></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-07-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/abp/>Abp</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/posts/dependency-injection-in-maui/ class=next rel=next title=如何在Maui中使用依赖注入>如何在Maui中使用依赖注入<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/realZhangChi target=_blank>张驰</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{valine:{appId:"SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz",appKey:"cP0gHgQ51CAYfWlron7uSq2B",avatar:"monsterid",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!0,highlight:!0,lang:"zh-CN",meta:["nick","mail","link"],pageSize:10,placeholder:"你的评论 ...",recordIP:!0,visitor:!0}},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-7XYGV0J1G6")</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=G-7XYGV0J1G6" async></script><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?260d395bb54739f609224ea4d367d1bf",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script></body></html>

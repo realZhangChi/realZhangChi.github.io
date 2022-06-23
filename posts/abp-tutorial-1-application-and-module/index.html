@@ -1,285 +1,116 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>Abp极简教程1 应用和模块 - zhangchi.io</title><meta name=Description content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"><meta property="og:title" content="Abp极简教程1 应用和模块">
-<meta property="og:description" content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://zhangchi.io/posts/abp-tutorial-1-application-and-module/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-12-23T04:12:10+00:00">
-<meta property="article:modified_time" content="2021-12-23T04:12:10+00:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Abp极简教程1 应用和模块">
-<meta name=twitter:description content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。">
-<meta name=application-name content="zhangchi.io">
-<meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=alternate href=/posts/abp-tutorial-1-application-and-module/index.xml type=application/rss+xml title=zhangchi.io>
-<link rel=feed href=/posts/abp-tutorial-1-application-and-module/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程1 应用和模块","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1936,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"}</script></head>
-<body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':''==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:''==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title=zhangchi.io>zhangchi.io</a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/posts/> 文章 </a><a class=menu-item href=/tags/> 标签 </a><a class=menu-item href=/categories/> 分类 </a><a class=menu-item href=/friend/> 朋友们 </a><a class=menu-item href=https://profile.zhangchi.io rel="noopener noreffer" target=_blank> 关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Abp极简教程1 应用和模块 - zhangchi.io</title><meta name=Description content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"><meta property="og:title" content="Abp极简教程1 应用和模块"><meta property="og:description" content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"><meta property="og:type" content="article"><meta property="og:url" content="https://zhangchi.io/posts/abp-tutorial-1-application-and-module/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-12-23T04:12:10+00:00"><meta property="article:modified_time" content="2021-12-23T04:12:10+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Abp极简教程1 应用和模块"><meta name=twitter:description content="从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"><meta name=application-name content="zhangchi.io"><meta name=apple-mobile-web-app-title content="zhangchi.io"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://zhangchi.io/posts/abp-tutorial-1-application-and-module/><link rel=prev href=https://zhangchi.io/posts/resolve-dependencies-in-singleton-service/><link rel=alternate href=/posts/abp-tutorial-1-application-and-module/index.xml type=application/rss+xml title=zhangchi.io><link rel=feed href=/posts/abp-tutorial-1-application-and-module/index.xml type=application/rss+xml title=zhangchi.io><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Abp极简教程1 应用和模块","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/"},"genre":"posts","keywords":"Tutorials, Abp","wordcount":1936,"url":"https:\/\/zhangchi.io\/posts\/abp-tutorial-1-application-and-module\/","datePublished":"2021-12-23T04:12:10+00:00","dateModified":"2021-12-23T04:12:10+00:00","publisher":{"@type":"Organization","name":"张驰"},"author":{"@type":"Person","name":"张驰"},"description":"从手动创建项目CatchException开始，添加Abp应用、模块来集成Abp框架。"}</script></head><body header-desktop header-mobile><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":""==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:""==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=zhangchi.io>zhangchi.io</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/friend/>朋友们 </a><a class=menu-item href=https://profile.zhangchi.io rel="noopener noreffer" target=_blank>关于我 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title=zhangchi.io>zhangchi.io</a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-取消
-</a>
-</div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/friend/ title>朋友们</a><a class=menu-item href=https://profile.zhangchi.io title rel="noopener noreffer" target=_blank>关于我</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>目录</h2>
-<div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程1 应用和模块</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1936 字&nbsp;
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=zhangchi.io>zhangchi.io</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a class=menu-item href=/friend/ title>朋友们</a><a class=menu-item href=https://profile.zhangchi.io title rel="noopener noreffer" target=_blank>关于我</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Abp极简教程1 应用和模块</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/realZhangChi title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>张驰</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/abp%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw"></i>Abp极简教程</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-12-23>2021-12-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1936 字&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/posts/abp-tutorial-1-application-and-module/ class=leancloud_visitors data-flag-title="Abp极简教程1 应用和模块">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
-</span>&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>目录</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#创建应用>创建应用</a></li>
-<li><a href=#集成abp>集成Abp</a>
-<ul>
-<li><a href=#abp应用>Abp应用</a></li>
-<li><a href=#模块>模块</a></li>
-<li><a href=#swagger>Swagger</a></li>
-<li><a href=#日志>日志</a></li>
-<li><a href=#启动>启动</a></li>
-</ul>
-</li>
-<li><a href=#总结>总结</a></li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>Abp是一个基于.NET的开源应用程序框架，它遵循最佳实践和约定，根据DDD模式进行设计和开发，并提供了强大的基础设施和完整的架构。</p>
-<p>Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配置了常用的模块。启动模板中反映着领域驱动设计、最佳实践等多种概念，其中任一项都值得单独讨论。对于初学者而言，启动模板中的大量知识如潮水般瞬间涌入脑海，造成知识过载，无法聚焦当前真正要学习的知识。</p>
-<p>本系列教程，将结合一个问答网站<strong>CatchException</strong>示例项目，从简单的.NET Web Api应用程序开始，搭建起基于Abp的Web应用程序框架，并逐步深入细节，旨在以一种缓和的学习曲线帮助初学者快速入门，理解Abp启动模板的分层项目。</p>
-<div class="details admonition tip open">
-<div class="details-summary admonition-title">
-<i class="icon fas fa-lightbulb fa-fw"></i>关注代码<i class="details-icon fas fa-angle-right fa-fw"></i>
-</div>
-<div class=details-content>
-<div class=admonition-content>教程中会对必要的领域驱动设计概念进行简单的描述，如果在阅读本教程时对其感到困惑，那么暂时不要深入领域驱动设计的细节，请专注于代码及代码的设计思路。</div>
-</div>
-</div>
-<h2 id=创建应用>创建应用</h2>
-<p>通过VS创建一个名为<code>CatchException</code>Web Api应用，选择ASP.NET Core Web Api项目模板，或通过CLI执行<code>dotnet new webapi -n CatchException</code>。运行后将访问至Swagger页面。</p>
-<h2 id=集成abp>集成Abp</h2>
-<p>首先需要添加<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code> Nuget包引用至项目中以集成Abp框架。</p>
-<h3 id=abp应用>Abp应用</h3>
-<p>Abp框架中定义了<code>IAbpApplication</code>应用，这也是Abp项目的入口点，Abp应用包含了启动模块及其依赖。在项目启动时需要将Abp应用注册到依赖注入系统中去，并指定启动模块。Abp定义了<code>AddApplication</code>泛型扩展方法，它将Abp应用注册为单例，方法的泛型参数指定了启动模块。</p>
-<p>通过<code>WebApplicationBuilder</code>编译得到<code>WebApplication</code>后，调用Abp定义的扩展方法<code>InitializeApplication</code>，他将初始化Abp应用，根据模块的依赖关系初始化启动模块及其依赖的模块。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
-<span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
-    <span class=p>.</span><span class=n>UseAutofac</span><span class=p>();</span>
-<span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>CatchExceptionModule</span><span class=p>&gt;(</span>
-    <span class=n>options</span> <span class=p>=&gt;</span>
-    <span class=p>{</span>
-        <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
-    <span class=p>});</span>
-<span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
-<span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
-<span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
-</code></pre></div><h3 id=模块>模块</h3>
-<p>Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自<code>AbpModule</code>的类，并以<code>Module</code>后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过<code>DependsOn</code>特性来定义。每个C#项目只应定义一个模块。</p>
-<p>在<code>ConfigureServices</code>方法中，可以将依赖项注册到依赖注入系统中。在Abp中，通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。<code>ConfigureServices</code>方法将在实例化Abp应用的时候调用以进行依赖项注册。</p>
-<p>初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用<code>OnApplicationInitialization</code>方法，通常在这个方法中会构建中间件管道。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=na>[DependsOn(
-</span><span class=na>    typeof(AbpAutofacModule),
-</span><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
-<span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span> <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
-        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
-
-        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
-        <span class=n>app</span><span class=p>.</span><span class=n>UseConfiguredEndpoints</span><span class=p>();</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><h3 id=swagger>Swagger</h3>
-<p>添加Nuget包引用<code>Volo.Abp.Swashbuckle</code>及其模块依赖。Abp对Swagger进行了一些功能上的完善，比如防止跨站点请求伪造攻击，因此在项目中需要使用<code>Volo.Abp.Swashbuckle</code>。<code>Volo.Abp.Swashbuckle</code>自定义了swagger所需的js文件，他位于<code>Volo.Abp.Swashbuckle</code>模块的wwwroot文件夹中，因此需要通过<code>UseStaticFiles</code>扩展方法添加静态文件中间件支持。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=na>[DependsOn(
-</span><span class=na>    typeof(AbpAutofacModule),
-</span><span class=na>    typeof(AbpAspNetCoreMvcModule),
-</span><span class=na>    typeof(AbpSwashbuckleModule))]</span>
-<span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>context</span><span class=p>);</span>
-    <span class=p>}</span>
-
-    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
-        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
-
-        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
-        <span class=k>if</span> <span class=p>(</span><span class=n>env</span><span class=p>.</span><span class=n>IsDevelopment</span><span class=p>())</span>
-        <span class=p>{</span>
-            <span class=n>app</span><span class=p>.</span><span class=n>UseSwagger</span><span class=p>();</span>
-            <span class=n>app</span><span class=p>.</span><span class=n>UseAbpSwaggerUI</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span>
-            <span class=p>{</span>
-                <span class=n>c</span><span class=p>.</span><span class=n>SwaggerEndpoint</span><span class=p>(</span><span class=s>&#34;/swagger/v1/swagger.json&#34;</span><span class=p>,</span> <span class=s>&#34;CatchException API&#34;</span><span class=p>);</span>
-            <span class=p>});</span>
-        <span class=p>}</span>
-        <span class=n>app</span><span class=p>.</span><span class=n>UseConfiguredEndpoints</span><span class=p>();</span>
-    <span class=p>}</span>
-
-
-    <span class=k>private</span> <span class=k>static</span> <span class=k>void</span> <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddAbpSwaggerGen</span><span class=p>();</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</code></pre></div><h3 id=日志>日志</h3>
-<p>添加Nuget包引用<code>Serilog.AspNetCore</code>、<code>Serilog.Sinks.Async</code>到项目中。</p>
-<p>在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过<code>try</code>块包括起来捕获异常，在<code>catch</code>块中记录启动异常日志，在<code>finally</code>块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要<code>UseSerilog</code>扩展方法注册Serilog日志服务。更改Program.cs。</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=k>try</span>
-<span class=p>{</span>
-    <span class=n>Log</span><span class=p>.</span><span class=n>Logger</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LoggerConfiguration</span><span class=p>()</span>
-<span class=cp>#if DEBUG
-</span><span class=cp></span>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Debug</span><span class=p>()</span>
-<span class=cp>#else
-</span><span class=cp></span>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Information</span><span class=p>()</span>
-<span class=cp>#endif
-</span><span class=cp></span>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Override</span><span class=p>(</span><span class=s>&#34;Microsoft&#34;</span><span class=p>,</span> <span class=n>LogEventLevel</span><span class=p>.</span><span class=n>Information</span><span class=p>)</span>
-        <span class=p>.</span><span class=n>Enrich</span><span class=p>.</span><span class=n>FromLogContext</span><span class=p>()</span>
-        <span class=p>.</span><span class=n>WriteTo</span><span class=p>.</span><span class=n>Async</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>File</span><span class=p>(</span><span class=s>&#34;Logs/logs-.txt&#34;</span><span class=p>,</span> <span class=n>rollingInterval</span><span class=p>:</span> <span class=n>RollingInterval</span><span class=p>.</span><span class=n>Day</span><span class=p>))</span>
-<span class=cp>#if DEBUG
-</span><span class=cp></span>        <span class=p>.</span><span class=n>WriteTo</span><span class=p>.</span><span class=n>Async</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>Console</span><span class=p>())</span>
-<span class=cp>#endif
-</span><span class=cp></span>        <span class=p>.</span><span class=n>CreateLogger</span><span class=p>();</span>
-
-    <span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
-    <span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
-        <span class=p>.</span><span class=n>UseAutofac</span><span class=p>()</span>
-        <span class=p>.</span><span class=n>UseSerilog</span><span class=p>();</span>
-    <span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>CatchExceptionModule</span><span class=p>&gt;(</span>
-        <span class=n>options</span> <span class=p>=&gt;</span>
-        <span class=p>{</span>
-            <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
-        <span class=p>});</span>
-    <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
-    <span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
-    <span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
-    <span class=k>return</span> <span class=m>0</span><span class=p>;</span>
-<span class=p>}</span>
-<span class=k>catch</span> <span class=p>(</span><span class=n>Exception</span> <span class=n>ex</span><span class=p>)</span>
-<span class=p>{</span>
-    <span class=n>Log</span><span class=p>.</span><span class=n>Fatal</span><span class=p>(</span><span class=n>ex</span><span class=p>,</span> <span class=s>&#34;Host terminated unexpectedly!&#34;</span><span class=p>);</span>
-    <span class=k>return</span> <span class=m>1</span><span class=p>;</span>
-<span class=p>}</span>
-<span class=k>finally</span>
-<span class=p>{</span>
-    <span class=n>Log</span><span class=p>.</span><span class=n>CloseAndFlush</span><span class=p>();</span>
-<span class=p>}</span>
-</code></pre></div><h3 id=启动>启动</h3>
-<p>启动应用此时应导航到Swagger页面并可调用<code>WeatherForecast</code>接口获取数据。</p>
-<h2 id=总结>总结</h2>
-<p>这篇文章展示了如何从ASP.NET Core Web Api模板开始，手动集成Abp框架并将项目模块化，以当前项目作为启动模块创建并运行Abp应用。这里简单介绍了Abp应用及Abp模块，后续文章将逐步介绍Abp中的其他概念及用法。</p>
-</div><div class=wechat-image>
-<p>关注微信公众号“<b>捕获异常</b>”，获取最新文章推送，提升你的技能。</p>
-<img src=/images/wechat-green.png>
-</div>
-<div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>更新于 2021-12-23</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md></div>
-<div class=post-info-share>
-<span></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/tutorials/>Tutorials</a>,&nbsp;<a href=/tags/abp/>Abp</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
-</section>
-</div>
-<div class=post-nav><a href=/posts/resolve-dependencies-in-singleton-service/ class=prev rel=prev title=在单例服务中解析依赖项><i class="fas fa-angle-left fa-fw"></i>在单例服务中解析依赖项</a></div>
-</div>
-<div id=comments><div id=valine class=comment></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/realZhangChi target=_blank>张驰</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title=查看评论>
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{valine:{appId:"SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz",appKey:"cP0gHgQ51CAYfWlron7uSq2B",avatar:"monsterid",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!0,highlight:!0,lang:"zh-CN",meta:["nick","mail","link"],pageSize:10,placeholder:"你的评论 ...",recordIP:!0,visitor:!0}},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-7XYGV0J1G6')</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=G-7XYGV0J1G6" async></script><script>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?260d395bb54739f609224ea4d367d1bf",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script></body>
-</html>
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#创建应用>创建应用</a></li><li><a href=#集成abp>集成Abp</a><ul><li><a href=#abp应用>Abp应用</a></li><li><a href=#模块>模块</a></li><li><a href=#swagger>Swagger</a></li><li><a href=#日志>日志</a></li><li><a href=#启动>启动</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><p>Abp是一个基于.NET的开源应用程序框架，它遵循最佳实践和约定，根据DDD模式进行设计和开发，并提供了强大的基础设施和完整的架构。</p><p>Abp提供了项目启动模板，它依据DDD模式进行分层，并预先配置了常用的模块。启动模板中反映着领域驱动设计、最佳实践等多种概念，其中任一项都值得单独讨论。对于初学者而言，启动模板中的大量知识如潮水般瞬间涌入脑海，造成知识过载，无法聚焦当前真正要学习的知识。</p><p>本系列教程，将结合一个问答网站<strong>CatchException</strong>示例项目，从简单的.NET Web Api应用程序开始，搭建起基于Abp的Web应用程序框架，并逐步深入细节，旨在以一种缓和的学习曲线帮助初学者快速入门，理解Abp启动模板的分层项目。</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>关注代码<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>教程中会对必要的领域驱动设计概念进行简单的描述，如果在阅读本教程时对其感到困惑，那么暂时不要深入领域驱动设计的细节，请专注于代码及代码的设计思路。</div></div></div><h2 id=创建应用>创建应用</h2><p>通过VS创建一个名为<code>CatchException</code>Web Api应用，选择ASP.NET Core Web Api项目模板，或通过CLI执行<code>dotnet new webapi -n CatchException</code>。运行后将访问至Swagger页面。</p><h2 id=集成abp>集成Abp</h2><p>首先需要添加<code>Volo.Abp.Autofac</code>和<code>Volo.Abp.AspNetCore.Mvc</code> Nuget包引用至项目中以集成Abp框架。</p><h3 id=abp应用>Abp应用</h3><p>Abp框架中定义了<code>IAbpApplication</code>应用，这也是Abp项目的入口点，Abp应用包含了启动模块及其依赖。在项目启动时需要将Abp应用注册到依赖注入系统中去，并指定启动模块。Abp定义了<code>AddApplication</code>泛型扩展方法，它将Abp应用注册为单例，方法的泛型参数指定了启动模块。</p><p>通过<code>WebApplicationBuilder</code>编译得到<code>WebApplication</code>后，调用Abp定义的扩展方法<code>InitializeApplication</code>，他将初始化Abp应用，根据模块的依赖关系初始化启动模块及其依赖的模块。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=line><span class=cl><span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
+</span></span><span class=line><span class=cl>    <span class=p>.</span><span class=n>UseAutofac</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>CatchExceptionModule</span><span class=p>&gt;(</span>
+</span></span><span class=line><span class=cl>    <span class=n>options</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
+</span></span></code></pre></div><h3 id=模块>模块</h3><p>Abp设计为模块化的应用程序框架，每一个模块都应定义一个继承自<code>AbpModule</code>的类，并以<code>Module</code>后缀作为类名。不同的模块间会存在依赖关系，模块的依赖关系通过<code>DependsOn</code>特性来定义。每个C#项目只应定义一个模块。</p><p>在<code>ConfigureServices</code>方法中，可以将依赖项注册到依赖注入系统中。在Abp中，通过约定大于配置的方式进行依赖项注册，项目代码通常无需在这里手动注册。<code>ConfigureServices</code>方法将在实例化Abp应用的时候调用以进行依赖项注册。</p><p>初始化Abp应用时，将会按照依赖顺序初始化所有的模块。初始化启动项模块时将会调用<code>OnApplicationInitialization</code>方法，通常在这个方法中会构建中间件管道。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=line><span class=cl><span class=na>[DependsOn(
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAutofacModule),
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAspNetCoreMvcModule))]</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseConfiguredEndpoints</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=swagger>Swagger</h3><p>添加Nuget包引用<code>Volo.Abp.Swashbuckle</code>及其模块依赖。Abp对Swagger进行了一些功能上的完善，比如防止跨站点请求伪造攻击，因此在项目中需要使用<code>Volo.Abp.Swashbuckle</code>。<code>Volo.Abp.Swashbuckle</code>自定义了swagger所需的js文件，他位于<code>Volo.Abp.Swashbuckle</code>模块的wwwroot文件夹中，因此需要通过<code>UseStaticFiles</code>扩展方法添加静态文件中间件支持。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=line><span class=cl><span class=na>[DependsOn(
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAutofacModule),
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpAspNetCoreMvcModule),
+</span></span></span><span class=line><span class=cl><span class=na>    typeof(AbpSwashbuckleModule))]</span>
+</span></span><span class=line><span class=cl><span class=k>public</span> <span class=k>class</span> <span class=nc>CatchExceptionModule</span> <span class=p>:</span> <span class=n>AbpModule</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>ConfigureServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnApplicationInitialization</span><span class=p>(</span><span class=n>ApplicationInitializationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetApplicationBuilder</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=n>context</span><span class=p>.</span><span class=n>GetEnvironment</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>env</span><span class=p>.</span><span class=n>IsDevelopment</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>app</span><span class=p>.</span><span class=n>UseSwagger</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>app</span><span class=p>.</span><span class=n>UseAbpSwaggerUI</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>c</span><span class=p>.</span><span class=n>SwaggerEndpoint</span><span class=p>(</span><span class=s>&#34;/swagger/v1/swagger.json&#34;</span><span class=p>,</span> <span class=s>&#34;CatchException API&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>});</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>app</span><span class=p>.</span><span class=n>UseConfiguredEndpoints</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>static</span> <span class=k>void</span> <span class=n>ConfigureSwaggerServices</span><span class=p>(</span><span class=n>ServiceConfigurationContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>context</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddAbpSwaggerGen</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=日志>日志</h3><p>添加Nuget包引用<code>Serilog.AspNetCore</code>、<code>Serilog.Sinks.Async</code>到项目中。</p><p>在应用程序启动时，首先创建一个Serilog日志记录器，然后将构建并运行Web应用的操作通过<code>try</code>块包括起来捕获异常，在<code>catch</code>块中记录启动异常日志，在<code>finally</code>块中重置Serilog日志记录器。上述操作针对启动过程进行了日志记录，若要使应用通过Serilog记录日志，还需要<code>UseSerilog</code>扩展方法注册Serilog日志服务。更改Program.cs。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-cs data-lang=cs><span class=line><span class=cl><span class=k>try</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Log</span><span class=p>.</span><span class=n>Logger</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LoggerConfiguration</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=cp>#if DEBUG</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Debug</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=err>#</span><span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Information</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=err>#</span><span class=n>endif</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>MinimumLevel</span><span class=p>.</span><span class=n>Override</span><span class=p>(</span><span class=s>&#34;Microsoft&#34;</span><span class=p>,</span> <span class=n>LogEventLevel</span><span class=p>.</span><span class=n>Information</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>Enrich</span><span class=p>.</span><span class=n>FromLogContext</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>WriteTo</span><span class=p>.</span><span class=n>Async</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>File</span><span class=p>(</span><span class=s>&#34;Logs/logs-.txt&#34;</span><span class=p>,</span> <span class=n>rollingInterval</span><span class=p>:</span> <span class=n>RollingInterval</span><span class=p>.</span><span class=n>Day</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=cp>#if DEBUG</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>WriteTo</span><span class=p>.</span><span class=n>Async</span><span class=p>(</span><span class=n>c</span> <span class=p>=&gt;</span> <span class=n>c</span><span class=p>.</span><span class=n>Console</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=err>#</span><span class=n>endif</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>CreateLogger</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>var</span> <span class=n>builder</span> <span class=p>=</span> <span class=n>WebApplication</span><span class=p>.</span><span class=n>CreateBuilder</span><span class=p>(</span><span class=n>args</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>builder</span><span class=p>.</span><span class=n>Host</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>UseAutofac</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>.</span><span class=n>UseSerilog</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>builder</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>AddApplication</span><span class=p>&lt;</span><span class=n>CatchExceptionModule</span><span class=p>&gt;(</span>
+</span></span><span class=line><span class=cl>        <span class=n>options</span> <span class=p>=&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>options</span><span class=p>.</span><span class=n>Services</span><span class=p>.</span><span class=n>ReplaceConfiguration</span><span class=p>(</span><span class=n>builder</span><span class=p>.</span><span class=n>Configuration</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=kt>var</span> <span class=n>app</span> <span class=p>=</span> <span class=n>builder</span><span class=p>.</span><span class=n>Build</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>app</span><span class=p>.</span><span class=n>InitializeApplication</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>await</span> <span class=n>app</span><span class=p>.</span><span class=n>RunAsync</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>catch</span> <span class=p>(</span><span class=n>Exception</span> <span class=n>ex</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Log</span><span class=p>.</span><span class=n>Fatal</span><span class=p>(</span><span class=n>ex</span><span class=p>,</span> <span class=s>&#34;Host terminated unexpectedly!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>finally</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Log</span><span class=p>.</span><span class=n>CloseAndFlush</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=启动>启动</h3><p>启动应用此时应导航到Swagger页面并可调用<code>WeatherForecast</code>接口获取数据。</p><h2 id=总结>总结</h2><p>这篇文章展示了如何从ASP.NET Core Web Api模板开始，手动集成Abp框架并将项目模块化，以当前项目作为启动模块创建并运行Abp应用。这里简单介绍了Abp应用及Abp模块，后续文章将逐步介绍Abp中的其他概念及用法。</p></div><div class=wechat-image><p>关注微信公众号“<b>捕获异常</b>”，获取最新文章推送，提升你的技能。</p><img src=/images/wechat-green.png></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2021-12-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/tutorials/>Tutorials</a>,&nbsp;<a href=/tags/abp/>Abp</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/posts/resolve-dependencies-in-singleton-service/ class=prev rel=prev title=在单例服务中解析依赖项><i class="fas fa-angle-left fa-fw"></i>在单例服务中解析依赖项</a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://github.com/realZhangChi target=_blank>张驰</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{valine:{appId:"SkpiiXJeuEA5vrub7Btk9lKd-gzGzoHsz",appKey:"cP0gHgQ51CAYfWlron7uSq2B",avatar:"monsterid",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!0,highlight:!0,lang:"zh-CN",meta:["nick","mail","link"],pageSize:10,placeholder:"你的评论 ...",recordIP:!0,visitor:!0}},search:{highlightTag:"em",lunrIndexURL:"/index.json",lunrLanguageCode:"zh",lunrSegmentitURL:"/lib/lunr/lunr.segmentit.js",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-7XYGV0J1G6")</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=G-7XYGV0J1G6" async></script><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?260d395bb54739f609224ea4d367d1bf",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script></body></html>
