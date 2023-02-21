@@ -1,7 +1,7 @@
 ---
 title: "如何在Maui中使用Autofac"
 date: 2023-02-21T13:45:20+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在Maui中使用Autofac容器来管理对象的生命周期"
