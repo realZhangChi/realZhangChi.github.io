@@ -98,4 +98,4 @@ public class MyActivity : MauiAppCompatActivity
 
 ## 推荐内容
 
-- [《如何在Maui中使用Autofac》](https://zhangchi.io/posts/dependency-injection-in-maui/)
+- [《如何在Maui中使用Autofac》](https://zhangchi.io/posts/use-autofac-in-maui/)
