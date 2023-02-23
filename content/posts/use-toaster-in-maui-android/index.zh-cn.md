@@ -51,7 +51,7 @@ public class MainApplication : MauiApplication
 
 ### 显示 Toast
 
-在 [Toaster 文档](https://github.com/getActivity/Toaster#%E6%A1%86%E6%9E%B6-api-%E4%BB%8B%E7%BB%8D)中介绍了如何调用 API 并展示 Toast ，创建一个空的 Maui 项目，并编辑 `MainPage.xaml.cs` 文件，在 `OnCounterClicked` 方法中编写调用 Toaster 的代码：
+创建一个空的 Maui 项目，并编辑 `MainPage.xaml.cs` 文件，在 `OnCounterClicked` 方法中编写调用 Toaster 的代码：
 
 ``` csharp
 private void OnCounterClicked(object sender, EventArgs e)
