@@ -73,7 +73,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 效果如下：
 
-{{< image src="./toaster.gif" caption="Toast in maui" >}}
+{{< image src="./toaster.gif" caption="Toast in maui" class="img-h-600">}}
 
 ## 更多用法
 
