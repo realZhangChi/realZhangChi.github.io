@@ -1,7 +1,7 @@
 ---
 title: "如何在 Maui 中全局处理异常（异步方法）"
 date: 2023-02-27T15:40:52+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在 Maui 中，结合 AOP 等技术，全局捕获 ViewModel 中异步方法产生的异常，并弹出 Toast 提示。"
