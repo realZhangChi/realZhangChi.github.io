@@ -5,7 +5,7 @@ draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在 Maui 中，结合 AOP 等技术，全局捕获 ViewModel 中产生的异常，并弹出 Toast 提示。"
-tags: ["maui", "aop", "全局异常处理"]
+tags: ["maui", "aop", "autofac"]
 categories: ["maui"]
 ---
 
@@ -127,7 +127,7 @@ public static class MauiProgram
 
 ## 效果测试
 
-更改 `MainPage.xaml.cd` 代码，将 `MainViewModel` 注入进去，并在 `OnCounterClicked` 方法中调用 ViewModel 中的 `RaiseException` 来模拟引发异常。
+更改 `MainPage.xaml.cs` 代码，将 `MainViewModel` 注入进去，并在 `OnCounterClicked` 方法中调用 ViewModel 中的 `RaiseException` 来模拟引发异常。
 
 ``` csharp
 public partial class MainPage : ContentPage
@@ -139,11 +139,11 @@ public partial class MainPage : ContentPage
         BindingContext = vm;
     }
 
-    private async void OnCounterClicked(object sender, EventArgs e)
+    private void OnCounterClicked(object sender, EventArgs e)
     {
         if (BindingContext is MainViewModel vm)
         {
-            await vm.RaiseExceptionAsync();
+            vm.RaiseException();
         }
     }
 }
