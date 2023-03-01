@@ -104,7 +104,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 
 运行项目并点击按钮，即可弹出浮窗。
 
-{{< image src="./easyfloat.gif" caption="Toast in maui" class="img-h-600">}}
+{{< image src="./easyfloat.gif" caption="EasyFloat in maui" class="img-h-600">}}
 
 ## 推荐内容
 
