@@ -1,7 +1,7 @@
 ---
 title: "在 Maui 中使用 DialogX 展示消息对话框"
 date: 2023-03-02T21:24:18+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在 Maui 项目中引入 DialogX 原生安卓的绑定类库，显示对话框、菜单、提示效果、输入框"
@@ -47,7 +47,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 运行项目并点击按钮，将弹出消息对话框。
 
-{{< image src="" caption="MessageDialog in maui" class="img-h-600">}}
+{{< image src="./message-dialog.gif" caption="MessageDialog in maui" class="img-h-600">}}
 
 ### 确认回调
 
@@ -94,7 +94,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 运行项目并点击按钮，点击消息对话框的“确定”按钮后，将关闭消息对话框并弹出 PopTip 提示。
 
-{{< image src="" caption="MessageDialog in maui" class="img-h-600">}}
+{{< image src="./message-dialog-callback.gif" caption="MessageDialog in maui" class="img-h-600">}}
 
 ## 推荐内容
 

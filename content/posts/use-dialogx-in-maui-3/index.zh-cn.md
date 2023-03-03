@@ -1,7 +1,7 @@
 ---
 title: "在 Maui 中使用 DialogX 展示底部菜单"
 date: 2023-03-02T22:18:33+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在 Maui 项目中引入 DialogX 原生安卓的绑定类库，显示对话框、菜单、提示效果、输入框"
@@ -47,7 +47,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 运行项目并点击按钮，将弹出底部菜单。
 
-{{< image src="" caption="BottomMenu in maui" class="img-h-600">}}
+{{< image src="./buttom-menu.gif" caption="BottomMenu in maui" class="img-h-600">}}
 
 ### 菜单项选中回调
 
@@ -95,7 +95,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 
 运行项目并点击按钮，点击底部菜单中的某一菜单项后，将关闭底部菜单并弹出 PopTip 提示，展示选中菜单名称及其索引。
 
-{{< image src="" caption="BottomMenu in maui" class="img-h-600">}}
+{{< image src="./buttom-menu-callback.gif" caption="BottomMenu in maui" class="img-h-600">}}
 
 ## 推荐内容
 

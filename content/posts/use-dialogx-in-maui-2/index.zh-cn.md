@@ -1,7 +1,7 @@
 ---
 title: "在 Maui 中使用 DialogX 展示输入对话框"
 date: 2023-03-02T22:08:35+08:00
-draft: true
+draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
 description: "在 Maui 项目中引入 DialogX 原生安卓的绑定类库，显示对话框、菜单、提示效果、输入框"
@@ -48,7 +48,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 运行项目并点击按钮，将弹出包含一个文本输入的对话框。
 
-{{< image src="" caption="InputDialog in maui" class="img-h-600">}}
+{{< image src="./input-dialog.gif" caption="InputDialog in maui" class="img-h-600">}}
 
 ### 确认回调
 
@@ -98,7 +98,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 
 运行项目并点击按钮，在输入框内输入一些内容，点击输入对话框的“确定”按钮后，关闭输入对话框并弹出 PopTip 提示。PopTip 将把输入到对话框中的内容展示出来。
 
-{{< image src="" caption="InputDialog in maui" class="img-h-600">}}
+{{< image src="./input-dialog-callback.gif" caption="InputDialog in maui" class="img-h-600">}}
 
 ## 推荐内容
 
