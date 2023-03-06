@@ -9,7 +9,7 @@ tags: ["maui"]
 categories: ["maui"]
 ---
 
-在这片文章中，将为 `MagicButton` 添加可绑定属性，并根据可绑定属性进行绘制。
+在这篇文章中，将为 `MagicButton` 添加可绑定属性，并根据可绑定属性进行绘制。
 
 ## 先决条件
 
