@@ -153,8 +153,9 @@ public partial class MainPage : ContentPage
 
 {{< image src="./exception-handle.gif" caption="异常消息提示" class="img-h-600">}}
 
-## 参考内容
+## 推荐内容
 
 - [如何在Maui中使用Autofac](https://zhangchi.io/posts/use-autofac-in-maui/)
+- [如何在 Maui 中全局处理异常（异步方法）](https://zhangchi.io/posts/handle-exception-of-async-method-in-maui/)
 - [在 Maui Android 中使用 Toaster](https://zhangchi.io/posts/use-toaster-in-maui-android/)
 - [Type Interceptors — Autofac 6.0.0 documentation](https://autofac.readthedocs.io/en/latest/advanced/interceptors.html)

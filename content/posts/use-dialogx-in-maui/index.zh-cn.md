@@ -98,4 +98,8 @@ private void OnCounterClicked(object sender, EventArgs e)
 
 ## 推荐内容
 
+- [在 Maui 中使用 DialogX 展示输入对话框](https://zhangchi.io/posts/use-dialogx-in-maui-2/)
+- [在 Maui 中使用 DialogX 展示底部菜单](https://zhangchi.io/posts/use-dialogx-in-maui-3/)
+- [在 Maui 中自绘组件1：绘制](https://zhangchi.io/posts/custom-component-in-maui-1/)
+
 请查阅 [DialogX Wiki](https://github.com/kongzue/DialogX/wiki/%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D%E6%A1%86-MessageDialog-%E5%92%8C-%E8%BE%93%E5%85%A5%E5%AF%B9%E8%AF%9D%E6%A1%86-InputDialog) 获取主题设置、自定义布局、自定义动画等更多用法。
