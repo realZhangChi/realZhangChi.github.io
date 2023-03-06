@@ -4,7 +4,7 @@ date: 2023-03-06T10:49:04+08:00
 draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
-description: "在 Maui 中基于 GraphicsView 视图，通过实现 IDrawable 来自定义绘制组件"
+description: "在 Maui 中基于 GraphicsView 视图，通过实现 IDrawable 来绘制自定义组件"
 tags: ["maui"]
 categories: ["maui"]
 ---
@@ -153,3 +153,9 @@ public class MagicButton : GraphicsView
 效果如下：
 
 {{< image src="./custom_button.png" caption="Custom Button" class="img-h-600">}}
+
+## 推荐阅读
+
+- [在 Maui 中自绘组件2：可绑定属性](https://zhangchi.io/posts/custom-component-in-maui-2/)
+- [如何在 Maui 中全局处理异常](https://zhangchi.io/posts/handle-exception-in-maui/)
+- [在 Maui 中使用 DialogX 展示底部菜单](https://zhangchi.io/posts/use-dialogx-in-maui-3/)
