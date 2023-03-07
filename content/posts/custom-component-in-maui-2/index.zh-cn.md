@@ -4,7 +4,7 @@ date: 2023-03-06T20:06:58+08:00
 draft: false
 author: "张驰"
 authorLink: "https://github.com/realZhangChi"
-description: "在 Maui 中基于 GraphicsView 视图，通过实现 IDrawable 来绘制自定义组件"
+description: "在 Maui 中基于 GraphicsView 视图，通过实现 IDrawable 来绘制自定义组件，并为自定义组件设置可绑定属性"
 tags: ["maui"]
 categories: ["maui"]
 ---
@@ -142,7 +142,7 @@ public static BindableProperty StrokeColorProperty = BindableProperty.Create(
 
 {{< image src="./custom-button.gif" caption="Custom Button" class="img-h-600">}}
 
-## 推荐阅读
+## 推荐内容
 
 - [在 Maui 中自绘组件1：绘制](https://zhangchi.io/posts/custom-component-in-maui-1/)
 - [如何在Maui中使用Autofac](https://zhangchi.io/posts/use-autofac-in-maui/)
