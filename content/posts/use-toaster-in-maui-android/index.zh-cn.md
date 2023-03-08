@@ -78,3 +78,7 @@ private void OnCounterClicked(object sender, EventArgs e)
 ## 更多用法
 
 可查看 [Toaster 文档](https://github.com/getActivity/Toaster#%E6%A1%86%E6%9E%B6-api-%E4%BB%8B%E7%BB%8D)来使用 Toaster 的更多功能。
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

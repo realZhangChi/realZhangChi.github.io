@@ -159,3 +159,7 @@ public class MagicButton : GraphicsView
 - [在 Maui 中自绘组件2：可绑定属性](https://zhangchi.io/posts/custom-component-in-maui-2/)
 - [如何在 Maui 中全局处理异常](https://zhangchi.io/posts/handle-exception-in-maui/)
 - [在 Maui 中使用 DialogX 展示底部菜单](https://zhangchi.io/posts/use-dialogx-in-maui-3/)
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

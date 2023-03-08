@@ -159,3 +159,7 @@ public partial class MainPage : ContentPage
 - [如何在 Maui 中全局处理异常（异步方法）](https://zhangchi.io/posts/handle-exception-of-async-method-in-maui/)
 - [在 Maui Android 中使用 Toaster](https://zhangchi.io/posts/use-toaster-in-maui-android/)
 - [Type Interceptors — Autofac 6.0.0 documentation](https://autofac.readthedocs.io/en/latest/advanced/interceptors.html)
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

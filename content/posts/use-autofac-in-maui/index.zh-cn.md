@@ -83,3 +83,7 @@ public partial class App : Application
 ## 推荐内容
 
 - [《如何在Maui中使用依赖注入》](https://zhangchi.io/posts/dependency-injection-in-maui/)
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

@@ -103,3 +103,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 ## 推荐内容
 
 请查阅 [DialogX Wiki](https://github.com/kongzue/DialogX/wiki/%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D%E6%A1%86-MessageDialog-%E5%92%8C-%E8%BE%93%E5%85%A5%E5%AF%B9%E8%AF%9D%E6%A1%86-InputDialog) 获取主题设置、自定义布局、自定义动画等更多用法。
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

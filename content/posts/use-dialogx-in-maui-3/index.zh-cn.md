@@ -103,3 +103,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 - [在 Maui 中使用 DialogX 展示消息对话框](https://zhangchi.io/posts/use-dialogx-in-maui/)
 
 请查阅 [DialogX Wiki](https://github.com/kongzue/DialogX/wiki/%E5%BA%95%E9%83%A8%E5%AF%B9%E8%AF%9D%E6%A1%86-BottomDialog-%E5%92%8C%E5%BA%95%E9%83%A8%E8%8F%9C%E5%8D%95-BottomMenu) 获取主题设置、自定义布局、自定义动画等更多用法。
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

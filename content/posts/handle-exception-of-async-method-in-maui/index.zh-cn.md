@@ -164,3 +164,7 @@ public class ExceptionHandleInterceptor : IInterceptor
 - [如何在 Maui 中全局处理异常](https://zhangchi.io/posts/handle-exception-in-maui/)
 - [Type Interceptors — Autofac 6.0.0 documentation](https://autofac.readthedocs.io/en/latest/advanced/interceptors.html)
 - [Castle.Core.AsyncInterceptor](https://github.com/JSkimming/Castle.Core.AsyncInterceptor)
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。

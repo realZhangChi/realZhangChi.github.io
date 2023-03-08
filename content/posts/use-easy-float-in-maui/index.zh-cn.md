@@ -109,3 +109,7 @@ private void OnCounterClicked(object sender, EventArgs e) {
 ## 推荐内容
 
 关于 EasyFloat 的更多用法，请参考 [EasyFloat 文档](https://github.com/princekin-f/EasyFloat#easyfloatandroid%E6%82%AC%E6%B5%AE%E7%AA%97%E6%A1%86%E6%9E%B6)。
+
+## 源码获取
+
+扫描下方二维码，关注公众号**捕获异常**，回复 **maui** 获取源码。
