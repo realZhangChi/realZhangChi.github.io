@@ -1,5 +1,5 @@
 ---
-title: "在 Maui 中自绘组件2：事件与命令"
+title: "在 Maui 中自绘组件3：事件与命令"
 date: 2023-03-07T22:21:41+08:00
 draft: false
 author: "张驰"
