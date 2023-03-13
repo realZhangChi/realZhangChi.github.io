@@ -1,5 +1,5 @@
 ---
-title: "在 Maui 中自绘组件3：点击动效"
+title: "在 Maui 中自绘组件4：点击动效"
 date: 2023-03-13T09:51:16+08:00
 draft: false
 author: "张驰"
