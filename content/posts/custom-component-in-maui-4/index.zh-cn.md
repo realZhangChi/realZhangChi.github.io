@@ -127,7 +127,7 @@ private void OnStartInteraction(object sender, TouchEventArgs e) {
 
 运行并点击按钮，效果如下：
 
-{{< image src="./animation.gif" caption="BottomMenu in maui" class="img-h-600">}}
+{{< image src="./animation.gif" caption="Animation" class="img-h-600">}}
 
 ## 推荐内容
 
